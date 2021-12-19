@@ -1,5 +1,6 @@
-struct Cell {
+#define size 100
+typedef struct Cell {
     char typeplace, idplace;
-    Food foodplace;
-    Animal animalplace;
-};
+    Food foodplace[size];
+    Animal animalplace[size];
+} Cell;

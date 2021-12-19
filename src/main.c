@@ -9,5 +9,5 @@ int main(){
     Animal animal;
     animal.healthPoint = 5;
 
-    printf("%d", animal.healthPoint);
+    printf("%d ", animal.healthPoint);
 }
