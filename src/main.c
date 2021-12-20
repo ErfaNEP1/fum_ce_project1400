@@ -6,7 +6,6 @@
 #include "Models/Cell.h"
 #include "Models/World.h"
 
-
 int main(){
     int worldSize;
     World world;
@@ -19,5 +18,5 @@ int main(){
     initWorld(world,world.size,board);
 
     printWorld(world.size,board);
-    
+
 }
