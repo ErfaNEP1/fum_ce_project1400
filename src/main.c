@@ -3,6 +3,7 @@
 #include "Models/Animal.h"
 #include "Models/Cell.h"
 #include "Models/Food.h"
+#include "Models/World.h"
 
 
 int main(){
