@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "Models/Genome.h"
 #include "Models/Animal.h"
 #include "Models/Food.h"
@@ -11,9 +12,12 @@ int main(){
     scanf("%d",game.x);
     game.y = game.x;
     Cell board[game.x][game.y];
+    Cell defaultCell;
+    strcpy(defaultCell.idPlace,".");
+    strcpy(defaultCell.typePlace,"default"); 
     for (int i = 0;i < game.x;i ++) {
         for (int j = 0;j < game.y;j ++) {
-            board[i][j] = '.';
+            board[i][j] = defaultCell;
         }
     }
     return 0;
