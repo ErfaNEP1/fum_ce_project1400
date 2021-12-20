@@ -5,14 +5,12 @@
 #include "Models/Cell.h"
 #include "Models/World.h"
 
-#define boardsize 20
-
 int main(){
 
     World game;
     scanf("%d",game.x);
     game.y = game.x;
-    char board[boardsize][boardsize];
+    Cell board[game.x][game.y];
     for (int i = 0;i < game.x;i ++) {
         for (int j = 0;j < game.y;j ++) {
             board[i][j] = '.';
