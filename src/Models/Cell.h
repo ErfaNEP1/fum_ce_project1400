@@ -1,5 +1,5 @@
 typedef struct Cell {
-    char typePlace, idPlace;
+    char typePlace[10], idPlace[2];
     Food foodPlace;
     Animal animalPlace;
 } Cell;

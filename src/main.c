@@ -9,7 +9,7 @@
 int main(){
 
     World game;
-    scanf("%d",game.x);
+    scanf("%d",&game.x);
     game.y = game.x;
     Cell board[game.x][game.y];
     Cell defaultCell;
@@ -19,6 +19,12 @@ int main(){
         for (int j = 0;j < game.y;j ++) {
             board[i][j] = defaultCell;
         }
+    }
+    for (int i = 0;i < game.x;i ++) {
+        for (int j = 0;j < game.y;j ++) {
+            printf("%s",board[i][j].typePlace);
+        }
+        printf("\n");
     }
     return 0;
 }
