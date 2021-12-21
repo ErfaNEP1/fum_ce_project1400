@@ -64,22 +64,44 @@ int main(){
             }
         }
         else if(*tok == 'F'){
-
             tok = strtok(NULL,"\n");
             Food energyCell = {
                 .energy = sscanf(tok,"%d",&energyCell.energy)
             };
-            
-            tok = strtok(NULL,"\n");
+
             Cell foodCell = {
                 .typePlace = "food",
                 .identifierPlace = "F",
-                .food = energyCell
+                .foodPlace = energyCell
             };
-            int x,y;
-            sscanf(tok, "(%d,%d)", &x, &y);
+            tok += 4;
+            int x, y;
+            sscanf(tok,"(%d,%d)", &x, &y);
             board[x][y] = foodCell;
             
+        }
+        else if (*tok >= 'A' && *tok <= 'Z') {
+
+            Cell typeanimal = {
+                .typePlace = "animal",
+                .identifierPlace = *tok,
+            };
+            int nu_typeanimal;
+            tok = strtok(NULL," \n");
+            sscanf(tok, "%d", &nu_typeanimal);
+            tok = strtok(NULL," \n");
+    
+            for (int i = 0; i < nu_typeanimal; i++) {
+                int x, y;
+    
+                sscanf(tok, "(%d,%d)", &x, &y);
+                board[x][y] = typeanimal;
+    
+                tok = strchr(tok,')');
+                if (tok == NULL)
+                    break;
+                ++tok;
+            }
         }
     }
 
