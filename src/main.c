@@ -63,6 +63,24 @@ int main(){
                 ++tok;
             }
         }
+        else if(*tok == 'F'){
+
+            tok = strtok(NULL,"\n");
+            Food energyCell = {
+                .energy = sscanf(tok,"%d",&energyCell.energy)
+            };
+            
+            tok = strtok(NULL,"\n");
+            Cell foodCell = {
+                .typePlace = "food",
+                .identifierPlace = "F",
+                .food = energyCell
+            };
+            int x,y;
+            sscanf(tok, "(%d,%d)", &x, &y);
+            board[x][y] = foodCell;
+            
+        }
     }
 
     printWorld(world.size,board);
