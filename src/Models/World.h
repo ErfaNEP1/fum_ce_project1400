@@ -6,9 +6,11 @@ typedef struct World {
 
 
 void initWorld(struct World world,int worldSize, struct Cell board[][worldSize]){
-    Cell defaultCell;
-    snprintf(defaultCell.typePlace,8,"default");
-    snprintf(defaultCell.identifierPlace,2,".");
+    Cell defaultCell = {
+        .typePlace = "default",
+        .identifierPlace = "."
+    };
+    
     for(int i=0; i<worldSize; i++){
         for(int j=0; j<worldSize;j++){
             board[i][j] = defaultCell;
@@ -19,7 +21,7 @@ void initWorld(struct World world,int worldSize, struct Cell board[][worldSize])
 void printWorld(int worldSize, struct Cell board[][worldSize]){
     for(int i=0; i<worldSize; i++){
         for(int j=0; j<worldSize;j++){
-            printf("%s ",board[i][j].typePlace);
+            printf("%s ",board[i][j].identifierPlace);
         }
         printf("\n");
     }
