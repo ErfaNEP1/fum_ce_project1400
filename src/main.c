@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include "Models/Genome.h"
 #include "Models/Animal.h"
 #include "Models/Food.h"
@@ -18,6 +19,8 @@ int main(){
     char *tok;
     char line[100];
     while (fgets(line, 100, stdin) != NULL && line[0] != '\n') {
+        char lineCopy[100];
+        strcpy(lineCopy, line);
         tok = strtok(line," \n");
         
         if (*tok == '#'){
@@ -64,9 +67,11 @@ int main(){
             }
         }
         else if(*tok == 'F'){
-            tok = strtok(NULL,"\n");
+            tok = strtok(NULL," ");
+            int energy;
+            sscanf(tok,"%d",&energy);
             Food energyCell = {
-                .energy = sscanf(tok,"%d",&energyCell.energy)
+                .energy = energy
             };
 
             Cell foodCell = {
@@ -74,14 +79,14 @@ int main(){
                 .identifierPlace = "F",
                 .foodPlace = energyCell
             };
-            tok += 4;
+
+            tok = strtok(NULL," ");
+
             int x, y;
             sscanf(tok,"(%d,%d)", &x, &y);
             board[x][y] = foodCell;
             
-        }
-        else if (*tok >= 'A' && *tok <= 'Z') {
-
+        }else if (isalpha(*tok) && strlen(lineCopy) > 3) {
             Cell typeanimal = {
                 .typePlace = "animal",
                 .identifierPlace = *tok,
@@ -102,11 +107,17 @@ int main(){
                     break;
                 ++tok;
             }
+        }else if(isalpha(*tok) && strlen(lineCopy) < 3){
+            snprintf(world.animalToControl,2,tok);
         }
     }
 
     printWorld(world.size,board);
-
+    printf("\n");
+    printFoodsDetails(world.size,board);
+    printf("\n");
+    printf("%s",world.animalToControl);
+    
     return 0;
 
 }
