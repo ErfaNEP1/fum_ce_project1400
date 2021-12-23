@@ -62,12 +62,11 @@ int main(){
                 .typePlace = "heaven",
                 .identifierPlace = "H"
             };
-            int nu_heaven;
             tok = strtok(NULL," \n");
             sscanf(tok, "%d", &world.heavenCount);
             tok = strtok(NULL," \n");
     
-            for (int i = 0; i < nu_heaven; i++) {
+            for (int i = 0; i < world.heavenCount; i++) {
                 int x, y;
                 
                 sscanf(tok, "(%d,%d)", &x, &y);
