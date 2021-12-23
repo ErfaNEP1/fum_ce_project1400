@@ -3,4 +3,5 @@ typedef struct Cell {
     char typePlace[10];
     Food foodPlace;
     Animal animalPlace;
+    int x,y;
 } Cell;
