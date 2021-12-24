@@ -161,7 +161,7 @@ int main(){
     printf("%s",world.animalToControl);
     printf("\n");
 
-    searchTypeanimalposition(world.animalToControl,world.size,board,world.animalposition);
+    int number = searchTypeanimalposition(world.animalToControl,world.size,board,world.animalposition);
 
 
     textcolor(6);
@@ -173,7 +173,8 @@ int main(){
     while ((ch = _getch()) != 27)
     {
 
-        animalTocontrol(world.animalToControl,2,world.size,board);
+        for (int i = 0;i < number;i ++) 
+            i = animalTocontrol(world.animalToControl,number,world.size,board,world.animalposition[i].x,world.animalposition[i].y,i);
         printf("\n");
         printWorld(world.size,board);
 

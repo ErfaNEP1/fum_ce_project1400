@@ -1,4 +1,4 @@
-void animalTocontrol(char player[], int n, int worldsize, struct Cell board[][worldsize]) {
+int animalTocontrol(char player[], int n, int worldsize, struct Cell board[][worldsize], int x, int y, int i) {
     Cell animalTocontrolcell = {
         .typePlace = "animal",
         .identifierPlace = *player
@@ -8,16 +8,6 @@ void animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wo
         .identifierPlace = "."
     };
 
-    for (int i = 0;i < n;i ++) {
-        int x, y, j;
-
-        for (x = 0, j = i;x < worldsize && j >= 0;x ++) {
-            for (y = 0;y <worldsize;y ++) {
-                if (strcmp(board[x][y].identifierPlace,player) == 0) j --;
-                if (j < 0) break;
-            }
-        }
-        x--;
         printf("you control player(%s%d)\n",player,i);
 
         char ch = getch();
@@ -63,7 +53,7 @@ void animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wo
                 else {
                     printf("you can't go hear");
                     printf("\n");
-                    i--;
+                    i --;
                 }
                     break;
 
@@ -92,6 +82,7 @@ void animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wo
                         printf("you can't go hear (%s)",board[x+1][y].identifierPlace);
                         printf("\n");
                         i --;
+                        
                         break;
                     }
                     else {
@@ -106,7 +97,8 @@ void animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wo
                 else {
                     printf("you can't go hear");
                     printf("\n");
-                    i--;
+                    i --;
+                    
                 }
                     break;
 
@@ -117,6 +109,7 @@ void animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wo
                         printf("you can't go hear (#)");
                         printf("\n");
                         i --;
+
                         break;
 
                     }
@@ -135,6 +128,7 @@ void animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wo
                         printf("you can't go hear (%s)",board[x][y+1].identifierPlace);
                         printf("\n");
                         i --;
+                        
                         break;
                     }
                     else {
@@ -149,7 +143,8 @@ void animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wo
                 else {
                     printf("you can't go hear");
                     printf("\n");
-                    i--;
+                    i --;
+                    
                 }
                     break;
 
@@ -160,6 +155,7 @@ void animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wo
                         printf("you can't go hear (#)");
                         printf("\n");
                         i --;
+                        
                         break;
 
                     }
@@ -178,6 +174,7 @@ void animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wo
                         printf("you can't go hear (%s)",board[x][y-1].identifierPlace);
                         printf("\n");
                         i --;
+                        
                         break;
                     }
                     else {
@@ -192,7 +189,8 @@ void animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wo
                 else {
                     printf("you can't go hear");
                     printf("\n");
-                    i--;
+                    i --;
+                    
 
                 }
                     break;
@@ -202,5 +200,5 @@ void animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wo
 
             }
         }
-    }
+        return i;
 }
