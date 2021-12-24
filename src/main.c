@@ -174,7 +174,7 @@ int main(){
     {
 
         for (int i = 0;i < number;i ++) 
-            i = animalTocontrol(world.animalToControl,number,world.size,board,world.animalposition[i].x,world.animalposition[i].y,i);
+            i = animalTocontrol(world.animalToControl,number,world.size,board,world.animalposition[i].x,world.animalposition[i].y,i,world.animalposition);
         printf("\n");
         printWorld(world.size,board);
 
