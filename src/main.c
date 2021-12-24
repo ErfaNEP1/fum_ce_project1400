@@ -172,7 +172,7 @@ int main()
                     int clickedKey = getch();
                     if(clickedKey != 0){
                         animalTocontrol(world.animalToControl, number, world.size, board, world.animalposition[i].x, world.animalposition[i].y, i, world.animalposition,clickedKey);
-                        clearScreen();
+                        // clearScreen();
                         printWorld(world.size, board);
                     }
                     if(i != number-1)
