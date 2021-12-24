@@ -11,6 +11,8 @@
 #include "Models/Food.h"
 #include "Models/Cell.h"
 #include "Models/World.h"
+#include "playermove/typeanimalcount.h"
+#include "playermove/animalTocontrol.h"
 
 int main(){
     int worldSize;
@@ -163,34 +165,16 @@ int main(){
     printf("THE GAME HAS STARTED, TO CANCEL THE GAME CLICK ON \"ESC\" \n");
 
     int ch;
+    textcolor(2);
 
     while ((ch = _getch()) != 27)
     {
-        if (ch == 0 || ch == 224){
-            switch (_getch ())
-            {
-                case 72:
-                    printf("UP ARROW");
-                    printf("\n");
-                    break;
 
-                case 80:
-                    printf("DOWN ARROW");
-                    printf("\n");
-                    break;
-                case 77:
-                    printf("RIGHT ARROW");
-                    printf("\n");
-                    break;
-                case 75:
-                    printf("LEFT ARROW");
-                    printf("\n");
-                    break;
-                default:
-                    break;
-            }
+        animalTocontrol(world.animalToControl,typeanimalcount(world.animalToControl,world.size,board),world.size,board);
+        printf("\n");
+        printWorld(world.size,board);
 
-        }
+
     }
     
     return 0;
