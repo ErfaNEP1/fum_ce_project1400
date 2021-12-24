@@ -5,6 +5,7 @@ typedef struct World {
     Cell deadEnds[100];
     Cell heavenCell[100];
     Cell foodCell[100];
+    Animal [100];
 } World;
 
 
