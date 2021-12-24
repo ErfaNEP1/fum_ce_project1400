@@ -161,6 +161,9 @@ int main(){
     printf("%s",world.animalToControl);
     printf("\n");
 
+    searchTypeanimalposition(world.animalToControl,world.size,board,world.animalposition);
+
+
     textcolor(6);
     printf("THE GAME HAS STARTED, TO CANCEL THE GAME CLICK ON \"ESC\" \n");
 
@@ -170,7 +173,7 @@ int main(){
     while ((ch = _getch()) != 27)
     {
 
-        animalTocontrol(world.animalToControl,typeanimalcount(world.animalToControl,world.size,board),world.size,board);
+        animalTocontrol(world.animalToControl,2,world.size,board);
         printf("\n");
         printWorld(world.size,board);
 
