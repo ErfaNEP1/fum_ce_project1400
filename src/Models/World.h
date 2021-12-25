@@ -22,7 +22,7 @@ void initWorld(struct World world,int worldSize, struct Cell board[][worldSize])
     }
 }
 
-void printWorld(int worldSize, struct Cell board[][worldSize]){
+void printWorld(int worldSize, struct Cell board[][worldSize], int index, struct World world){
     for(int i=0; i<worldSize; i++){
         for(int j=0; j<worldSize;j++){
             if(*board[i][j].identifierPlace == 'F')
@@ -33,6 +33,8 @@ void printWorld(int worldSize, struct Cell board[][worldSize]){
                 textcolor(8);
             else if(*board[i][j].identifierPlace == '.')
                 textcolor(2);
+            else if(i==world.animalposition[index].x  &&  j==world.animalposition[index].y)
+                textcolor(3);
             else
                 textcolor(7);
 
