@@ -171,7 +171,7 @@ int main()
             for (int i = 0; i < number; i++){
                     int clickedKey = getch();
                     if(clickedKey != 0){
-                        animalTocontrol(world.animalToControl, number, world.size, board, world.animalposition[i].x, world.animalposition[i].y, i, world.animalposition,clickedKey);
+                        i = animalTocontrol(world.animalToControl, number, world.size, board, world.animalposition[i].x, world.animalposition[i].y, i, world.animalposition,clickedKey);
                         // clearScreen();
                         printWorld(world.size, board);
                     }
