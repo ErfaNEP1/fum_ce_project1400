@@ -160,7 +160,7 @@ int main()
 
     textcolor(6);
     printf("THE GAME HAS STARTED, TO CANCEL THE GAME CLICK ON \"ESC\" \n");
-    printWorld(world.size, board);
+    printWorld(world.size, board ,0,world);
     textcolor(7);
     int ch;
     textcolor(2);
@@ -172,7 +172,8 @@ int main()
                     int clickedKey = getch();
                     if(clickedKey != 0){
                         i = animalTocontrol(world.animalToControl, number, world.size, board, world.animalposition[i].x, world.animalposition[i].y, i, world.animalposition,clickedKey);
-                        printWorld(world.size, board);
+                        // clearScreen();
+                        printWorld(world.size, board, i ,world);
                     }
                     if(i != number-1)
                         getch();
