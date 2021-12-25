@@ -165,14 +165,13 @@ int main()
     int ch;
     textcolor(2);
 
-    while ((ch = getch()) != 27 && ch != 224)
+    while ((ch = getch()) != 27)
     {
         if (ch == 224 || ch == 0){
             for (int i = 0; i < number; i++){
                     int clickedKey = getch();
                     if(clickedKey != 0){
                         i = animalTocontrol(world.animalToControl, number, world.size, board, world.animalposition[i].x, world.animalposition[i].y, i, world.animalposition,clickedKey);
-                        // clearScreen();
                         printWorld(world.size, board);
                     }
                     if(i != number-1)
