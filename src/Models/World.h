@@ -5,7 +5,9 @@ typedef struct World {
     Cell deadEnds[100];
     Cell heavenCell[100];
     Cell foodCell[100];
-    Animal animalposition[100];
+    Animal alliedanimalposition[100];
+    Animal enemyanimalposition[100];
+
 } World;
 
 
@@ -33,7 +35,7 @@ void printWorld(int worldSize, struct Cell board[][worldSize], int index, struct
                 textcolor(8);
             else if(*board[i][j].identifierPlace == '.')
                 textcolor(2);
-            else if(i == world.animalposition[index].x  &&  j == world.animalposition[index].y)
+            else if(i == world.alliedanimalposition[index].x  &&  j == world.alliedanimalposition[index].y)
                 textcolor(3);
             else
                 textcolor(7);

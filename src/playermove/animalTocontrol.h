@@ -1,4 +1,4 @@
-int animalTocontrol(char player[], int n, int worldsize, struct Cell board[][worldsize], int x, int y, int i, struct Animal animalposition[], int clickedKey)
+int animalTocontrol(char player[], int n, int worldsize, struct Cell board[][worldsize], int x, int y, int i, struct Animal alliedanimalposition[], int clickedKey)
 {
     Cell animalTocontrolcell = {
         .typePlace = "animal",
@@ -26,7 +26,7 @@ int animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wor
 
                 board[x - 1][y] = animalTocontrolcell;
                 board[x][y] = defaultCell;
-                animalposition[i].x--;
+                alliedanimalposition[i].x--;
 
                 printf("move to Up");
                 printf("\n");
@@ -44,7 +44,7 @@ int animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wor
             {
                 board[x - 1][y] = animalTocontrolcell;
                 board[x][y] = defaultCell;
-                animalposition[i].x--;
+                alliedanimalposition[i].x--;
 
                 printf("move to Up");
                 printf("\n");
@@ -74,7 +74,7 @@ int animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wor
 
                 board[x + 1][y] = animalTocontrolcell;
                 board[x][y] = defaultCell;
-                animalposition[i].x++;
+                alliedanimalposition[i].x++;
 
                 printf("move to Down");
                 printf("\n");
@@ -93,7 +93,7 @@ int animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wor
             {
                 board[x + 1][y] = animalTocontrolcell;
                 board[x][y] = defaultCell;
-                animalposition[i].x++;
+                alliedanimalposition[i].x++;
 
                 printf("move to Down");
                 printf("\n");
@@ -124,7 +124,7 @@ int animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wor
 
                 board[x][y + 1] = animalTocontrolcell;
                 board[x][y] = defaultCell;
-                animalposition[i].y++;
+                alliedanimalposition[i].y++;
 
                 printf("move to Right");
                 printf("\n");
@@ -143,7 +143,7 @@ int animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wor
             {
                 board[x][y + 1] = animalTocontrolcell;
                 board[x][y] = defaultCell;
-                animalposition[i].y++;
+                alliedanimalposition[i].y++;
 
                 printf("move to Right");
                 printf("\n");
@@ -174,7 +174,7 @@ int animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wor
 
                 board[x][y - 1] = animalTocontrolcell;
                 board[x][y] = defaultCell;
-                animalposition[i].y--;
+                alliedanimalposition[i].y--;
 
                 printf("move to Left");
                 printf("\n");
@@ -193,7 +193,7 @@ int animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wor
             {
                 board[x][y - 1] = animalTocontrolcell;
                 board[x][y] = defaultCell;
-                animalposition[i].y--;
+                alliedanimalposition[i].y--;
 
                 printf("move to Left");
                 printf("\n");

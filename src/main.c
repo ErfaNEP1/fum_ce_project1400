@@ -156,9 +156,15 @@ int main()
     }
 
     printf("\n");
-    int number = searchTypeanimalposition(world.animalToControl, world.size, board, world.animalposition);
+    int nPlayer = searchTypeanimalposition(world.animalToControl, world.size, board, world.alliedanimalposition,world.enemyanimalposition);
+    int nEnemy = world.animalCount-nPlayer;
 
     textcolor(6);
+
+    for (int i = 0;i < nEnemy;i ++) 
+        printf("%d %d // ",world.enemyanimalposition[i].x,world.enemyanimalposition[i].y);
+
+        
     printf("THE GAME HAS STARTED, TO CANCEL THE GAME CLICK ON \"ESC\" \n");
     printWorld(world.size, board ,0,world);
     textcolor(7);
@@ -168,14 +174,14 @@ int main()
     while ((ch = getch()) != 27)
     {
         if (ch == 224 || ch == 0){
-            for (int i = 0; i < number; i++){
+            for (int i = 0; i < nPlayer; i++){
                     int clickedKey = getch();
                     if(clickedKey != 0){
-                        i = animalTocontrol(world.animalToControl, number, world.size, board, world.animalposition[i].x, world.animalposition[i].y, i, world.animalposition,clickedKey);
+                        i = animalTocontrol(world.animalToControl, nPlayer, world.size, board, world.alliedanimalposition[i].x, world.alliedanimalposition[i].y, i, world.alliedanimalposition,clickedKey);
                         // clearScreen();
                         printWorld(world.size, board, i ,world);
                     }
-                    if(i != number-1)
+                    if(i != nPlayer-1)
                         getch();
             }
 

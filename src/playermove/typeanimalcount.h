@@ -1,15 +1,22 @@
-int searchTypeanimalposition(char player[], int worldsize, struct Cell board[][worldsize], struct Animal animalposition[]) {
-    int n = 0;
+int searchTypeanimalposition(char player[], int worldsize, struct Cell board[][worldsize], struct Animal alliedanimalposition[],Animal enemyanimalposition[]) {
+    int nPlayer = 0, nEnemy = 0;
     for (int i = 0;i < worldsize;i ++) {
         for (int j = 0;j < worldsize;j ++) {
-            if (strcmp(board[i][j].identifierPlace,player) == 0) {
+            if (strcmp(board[i][j].typePlace,"animal") == 0) {
+               if (strcmp(board[i][j].identifierPlace,player) == 0) {
 
-                 animalposition[n].x = i;
-                 animalposition[n].y = j;
-                 n ++;
+                   alliedanimalposition[nPlayer].x = i;
+                   alliedanimalposition[nPlayer].y = j;
+                   nPlayer ++;
 
+                }
+                else {
+                    enemyanimalposition[nEnemy].x = i;
+                    enemyanimalposition[nEnemy].y = j;
+                    nEnemy ++;
+                }
             }
         }
     }
-    return (n);
+    return (nPlayer);
 }
