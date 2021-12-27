@@ -4,6 +4,7 @@
 #include <windows.h>
 #include <conio.h>
 #include <time.h>
+#include <math.h>
 
 #include "inc/helpers.h"
 #include "Models/Genome.h"
@@ -13,6 +14,7 @@
 #include "Models/World.h"
 #include "playermove/typeanimalcount.h"
 #include "playermove/animalTocontrol.h"
+#include "enemymove.h"
 
 int main()
 {
@@ -156,17 +158,11 @@ int main()
     }
 
     printf("\n");
-    int nPlayer = searchTypeanimalposition(world.animalToControl, world.size, board, world.alliedanimalposition,world.enemyanimalposition);
-    int nEnemy = world.animalCount-nPlayer;
+    int number = searchTypeanimalposition(world.animalToControl, world.size, board, world.animalposition);
 
     textcolor(6);
-
-    for (int i = 0;i < nEnemy;i ++) 
-        printf("%d %d // ",world.enemyanimalposition[i].x,world.enemyanimalposition[i].y);
-
-        
     printf("THE GAME HAS STARTED, TO CANCEL THE GAME CLICK ON \"ESC\" \n");
-    printWorld(world.size, board ,0,world);
+    printWorld(world.size, board , 0,world);
     textcolor(7);
     int ch;
     textcolor(2);
@@ -174,14 +170,14 @@ int main()
     while ((ch = getch()) != 27)
     {
         if (ch == 224 || ch == 0){
-            for (int i = 0; i < nPlayer; i++){
+            for (int i = 0; i < number; i++){
                     int clickedKey = getch();
                     if(clickedKey != 0){
-                        i = animalTocontrol(world.animalToControl, nPlayer, world.size, board, world.alliedanimalposition[i].x, world.alliedanimalposition[i].y, i, world.alliedanimalposition,clickedKey);
+                        i = animalTocontrol(world.animalToControl, number, world.size, board, world.animalposition[i].x, world.animalposition[i].y, i, world.animalposition,clickedKey);
                         // clearScreen();
                         printWorld(world.size, board, i ,world);
                     }
-                    if(i != nPlayer-1)
+                    if(i != number-1)
                         getch();
             }
 
@@ -190,6 +186,17 @@ int main()
 
             // implement AI
 
+
+        }
+        for(int i=0; i<nEnemy; i++){
+            int v=FindtheClosestWaytoH(enemyanimalposition[i].x,  enemyanimalposition[i].y, world.heavencell, world.heavenCount);
+            struct point start ={
+                .x = enemyanimalposition[i].x ,
+                .y = enemyanimalposition[i].y};
+            struct point end ={
+                .x = heavencell[i].x,
+                .y = heavencell[i].y};
+            printPath(world.size, board, enemyanimal, start, end, i, board[enemyanimalposition[i].x][enemyanimalposition[i].y].identifierplace);
 
         }
     }
