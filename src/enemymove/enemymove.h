@@ -16,14 +16,10 @@ int FindtheClosestWaytoH(int enemyX, int enemyY, struct Cell heavencell[], int h
 #define COL 20
 
 
-struct point
-{
-    int x, y;
-};
 
 struct QueueNode
 {
-    struct point p;
+    struct Point p;
     int distance;
 };
 
@@ -96,7 +92,7 @@ int isValid(int row, int col)
 int row[4] = {-1, 0, 0, 1};
 int col[4] = {0, -1, 1, 0};
 
-int printPath(int worldsize , struct Cell board[][worldsize], struct Animal enemyanimalposition[], struct point start, struct point end, int n, char enemy[])
+int printPath(struct Point start, struct Point end, struct Animal pointTomove[])
 {
     Cell enemyanimal = {
         .typePlace = "animal",
@@ -128,46 +124,52 @@ int printPath(int worldsize , struct Cell board[][worldsize], struct Animal enem
     {
 
         struct QueueNode curr = items[front];
-        struct point pt = curr.p;
+        struct Point pt = curr.p;
         if (pt.x == end.x && pt.y == end.y)
         {
             int xx = pt.x, yy = pt.y;
             int dist = curr.distance;
 
             while (xx != start.x || yy != start.y) {
+                int index = 0;
 
                 if (xx > 0 && d[xx - 1][yy] == dist - 1) {
-                    board[xx-1][yy]=enemyanimal;
-                    board[xx][yy]=defaultCell;
-                    enemyanimalposition[n].x--;
-                    printf("enemy(%s) go to Up",enemy);
+                    // board[xx-1][yy]=enemyanimal;
+                    // board[xx][yy]=defaultCell;
+                    // enemyanimalposition[n].x--;
+                    // printf("enemy(%s) go to Up",enemy);
+                    pointTomove[index].x = xx-1;
+                    pointTomove[index].y = yy;
                     xx--;
                 }
 
                 if (xx < ROW - 1 && d[xx + 1][yy] == dist - 1) {
-                    board[xx + 1][yy]=enemyanimal;
-                    board[xx][yy]=defaultCell;
-                    enemyanimalposition[n].x++;
-                    printf("enemy(%s) go to Down",enemy);
-                    
+                    // board[xx + 1][yy]=enemyanimal;
+                    // board[xx][yy]=defaultCell;
+                    // enemyanimalposition[n].x++;
+                    // printf("enemy(%s) go to Down",enemy);
+                    pointTomove[index].x = xx+1;
+                    pointTomove[index].y = yy;
                     xx++;
                 }
 
                 if (yy > 0 && d[xx][yy - 1] == dist - 1) {
-                    board[xx][yy-1]=enemyanimal;
-                    board[xx][yy]=defaultCell;
-                    enemyanimalposition[n].y--;
-                    printf("enemy(%s) go to Left",enemy);
-
+                    // board[xx][yy-1]=enemyanimal;
+                    // board[xx][yy]=defaultCell;
+                    // enemyanimalposition[n].y--;
+                    // printf("enemy(%s) go to Left",enemy);
+                    pointTomove[index].x = xx;
+                    pointTomove[index].y = yy-1;
                     yy--;
                 }
 
                 if (yy < COL - 1 && d[xx][yy + 1] == dist - 1) {
-                    board[xx][yy+1]=enemyanimal;
-                    board[xx][yy]=defaultCell;
-                    enemyanimalposition[n].y++;
-                    printf("enemy(%s) go to Right",enemy);
-
+                    // board[xx][yy+1]=enemyanimal;
+                    // board[xx][yy]=defaultCell;
+                    // enemyanimalposition[n].y++;
+                    // printf("enemy(%s) go to Right",enemy);
+                    pointTomove[index].x = xx;
+                    pointTomove[index].y = yy+1;
                     yy++;
                 }
                 dist--;

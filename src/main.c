@@ -7,6 +7,7 @@
 #include <math.h>
 
 #include "inc/helpers.h"
+#include "Models/Point.h"
 #include "Models/Genome.h"
 #include "Models/Animal.h"
 #include "Models/Food.h"
@@ -187,21 +188,22 @@ int main()
             printf("player input is done ! %d\n",ch);
 
             // implement AI
-
-
-        }
         for(int i=0; i<nEnemy; i++){
             int v=FindtheClosestWaytoH(world.enemyanimalposition[i].x, world.enemyanimalposition[i].y, world.heavenCell, world.heavenCount);
-            struct point start ={
+            struct Point start ={
                 .x = world.enemyanimalposition[i].x ,
                 .y = world.enemyanimalposition[i].y};
-            struct point end ={
+            struct Point end ={
                 .x = world.heavenCell[i].x,
                 .y = world.heavenCell[i].y};
-            printPath(world.size, board, world.enemyanimalposition, start, end, i, board[world.enemyanimalposition[i].x][world.enemyanimalposition[i].y].identifierPlace);
+            printPath(end, start,world.enemyanimalposition[i].pointTomove);
             printWorld(world.size, board, i ,world);
 
         }
+
+
+        }
+
     }
 
     return 0;
