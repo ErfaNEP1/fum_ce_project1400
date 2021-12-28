@@ -1,3 +1,16 @@
+
+int FindtheClosestWaytoH(int enemyX, int enemyY, struct Cell heavencell[], int heavencount){
+    int dis, mindis =40,mukhtasat ;
+    for(int i=0; i<heavencount; i++){
+        dis=sqrt( pow(abs(enemyX-heavencell[i].x) ,2) + pow(abs(enemyY-heavencell[i].y) ,2) );
+        if(dis < mindis){
+            mindis=dis;
+            mukhtasat=i;
+        }
+    }
+    return mukhtasat;
+}
+
 #define SIZE 400
 #define ROW 20
 #define COL 20
@@ -83,7 +96,7 @@ int isValid(int row, int col)
 int row[4] = {-1, 0, 0, 1};
 int col[4] = {0, -1, 1, 0};
 
-int printPath(int worldsize , struct Cell board[][worldsize], struct Animal enemyanimalposition[], struct point start, struct point end, int n, char enemy)
+int printPath(int worldsize , struct Cell board[][worldsize], struct Animal enemyanimalposition[], struct point start, struct point end, int n, char enemy[])
 {
     Cell enemyanimal = {
         .typePlace = "animal",
@@ -91,12 +104,12 @@ int printPath(int worldsize , struct Cell board[][worldsize], struct Animal enem
     Cell defaultCell = {
         .typePlace = "default",
         .identifierPlace = "."};
-    
+
     int sw = 0;
-    
+
     int visited[ROW][COL];
     memset(visited, 0, sizeof visited);
-    
+
 
     int d[ROW][COL];
     memset(d, -1, sizeof d);
@@ -122,32 +135,39 @@ int printPath(int worldsize , struct Cell board[][worldsize], struct Animal enem
             int dist = curr.distance;
 
             while (xx != start.x || yy != start.y) {
- 
+
                 if (xx > 0 && d[xx - 1][yy] == dist - 1) {
                     board[xx-1][yy]=enemyanimal;
-                    board(xx,yy)=defaultCell;
+                    board[xx][yy]=defaultCell;
                     enemyanimalposition[n].x--;
+                    printf("enemy(%s) go to Up",enemy);
                     xx--;
                 }
- 
+
                 if (xx < ROW - 1 && d[xx + 1][yy] == dist - 1) {
                     board[xx + 1][yy]=enemyanimal;
-                    board(xx,yy)=defaultCell;
+                    board[xx][yy]=defaultCell;
                     enemyanimalposition[n].x++;
+                    printf("enemy(%s) go to Down",enemy);
+                    
                     xx++;
                 }
- 
+
                 if (yy > 0 && d[xx][yy - 1] == dist - 1) {
                     board[xx][yy-1]=enemyanimal;
-                    board(xx,yy)=defaultCell;
+                    board[xx][yy]=defaultCell;
                     enemyanimalposition[n].y--;
+                    printf("enemy(%s) go to Left",enemy);
+
                     yy--;
                 }
- 
+
                 if (yy < COL - 1 && d[xx][yy + 1] == dist - 1) {
                     board[xx][yy+1]=enemyanimal;
-                    board(xx,yy)=defaultCell;
+                    board[xx][yy]=defaultCell;
                     enemyanimalposition[n].y++;
+                    printf("enemy(%s) go to Right",enemy);
+
                     yy++;
                 }
                 dist--;
@@ -165,7 +185,7 @@ int printPath(int worldsize , struct Cell board[][worldsize], struct Animal enem
 
             if (isValid(x, y) == 1  )
             {
-                if(strcmp(board[x][y].identifierplace , "F")==0  || strcmp(board[x][y].identifierplace , "H")==0  || strcmp(board[x][y].identifierplace , ".")==0 )
+                if(strcmp(board[x][y].identifierPlace,"F")==0  || strcmp(board[x][y].identifierPlace , "H")==0  || strcmp(board[x][y].identifierPlace , ".")==0 )
                 {
                     visited[x][y] = 1;
                     struct QueueNode newNode = {
@@ -186,14 +206,3 @@ int printPath(int worldsize , struct Cell board[][worldsize], struct Animal enem
 
 
 
-int FindtheClosestWaytoH(int enemyX, int enemyY, struct world heavencell[], int heavencount){
-    int dis, mindis =40,mukhtasat ;
-    for(int i=0; i<heavencount; i++){
-        dis=sqrt( pow(abs(enemyX-heavencell[i].x) ,2) + pow(abs(enemyY-heavencell[i]) ,2) );
-        if(dis < mindis){
-            mindis=dis;
-            mukhtasat=i;
-        }
-    }
-    return mukhtasat;
-}
