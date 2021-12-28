@@ -26,23 +26,23 @@ struct QueueNode
 struct QueueNode items[SIZE];
 int front = -1, rear = -1;
 
-int isFull()
+int isFull(int front, int rear)
 {
     if ((front == rear + 1) || (front == 0 && rear == SIZE - 1))
         return 1;
     return 0;
 }
 
-int isEmpty()
+int isEmpty(int front, int rear)
 {
     if (front == -1)
         return 1;
     return 0;
 }
 
-void push(struct QueueNode element)
+void push(struct QueueNode element, int front, int rear, struct QueueNode items[])
 {
-    if (isFull() == 0)
+    if (isFull(front,rear) == 0)
     {
         if (front == -1)
             front = 0;
@@ -51,10 +51,10 @@ void push(struct QueueNode element)
     }
 }
 
-void pop()
+void pop(int front, int rear, struct QueueNode items[])
 {
     struct QueueNode element;
-    if (isEmpty() == 0)
+    if (isEmpty(front,rear) == 0)
     {
         element = items[front];
         if (front == rear)
@@ -70,20 +70,6 @@ void pop()
     }
 }
 
-void display()
-{
-    int i;
-    if (isEmpty())
-        printf(" \n Empty Queue\n");
-    else
-    {
-        for (i = front; i != rear; i = (i + 1) % SIZE)
-        {
-            printf("%d %d\n", items[i].p.x,items[i].p.y);
-        }
-    }
-}
-
 int isValid(int row, int col)
 {
     return ((row >= 0) && (col >= 0) && (row < ROW) && (col < COL)) ? 1 : 0;
@@ -92,14 +78,8 @@ int isValid(int row, int col)
 int row[4] = {-1, 0, 0, 1};
 int col[4] = {0, -1, 1, 0};
 
-int printPath(struct Point start, struct Point end, struct Animal pointTomove[])
+int printPath(int worldsize, struct Cell board[][worldsize], struct Point start, struct Point end, struct Point pointTomove[], int pointindex)
 {
-    Cell enemyanimal = {
-        .typePlace = "animal",
-        .identifierPlace = *enemy};
-    Cell defaultCell = {
-        .typePlace = "default",
-        .identifierPlace = "."};
 
     int sw = 0;
 
@@ -118,9 +98,9 @@ int printPath(struct Point start, struct Point end, struct Animal pointTomove[])
     visited[start.x][start.y] = 1;
     d[start.x][start.y] = 0;
 
-    push(node);
+    push(node,front,rear,items);
 
-    while (isEmpty() == 0)
+    while (isEmpty(front,rear) == 0)
     {
 
         struct QueueNode curr = items[front];
@@ -131,45 +111,32 @@ int printPath(struct Point start, struct Point end, struct Animal pointTomove[])
             int dist = curr.distance;
 
             while (xx != start.x || yy != start.y) {
-                int index = 0;
 
                 if (xx > 0 && d[xx - 1][yy] == dist - 1) {
-                    // board[xx-1][yy]=enemyanimal;
-                    // board[xx][yy]=defaultCell;
-                    // enemyanimalposition[n].x--;
-                    // printf("enemy(%s) go to Up",enemy);
-                    pointTomove[index].x = xx-1;
-                    pointTomove[index].y = yy;
+
+                    pointTomove[pointindex].x = -1;
+                    pointTomove[pointindex].y = 0;
                     xx--;
                 }
 
                 if (xx < ROW - 1 && d[xx + 1][yy] == dist - 1) {
-                    // board[xx + 1][yy]=enemyanimal;
-                    // board[xx][yy]=defaultCell;
-                    // enemyanimalposition[n].x++;
-                    // printf("enemy(%s) go to Down",enemy);
-                    pointTomove[index].x = xx+1;
-                    pointTomove[index].y = yy;
+
+                    pointTomove[pointindex].x = 1;
+                    pointTomove[pointindex].y = 0;
                     xx++;
                 }
 
                 if (yy > 0 && d[xx][yy - 1] == dist - 1) {
-                    // board[xx][yy-1]=enemyanimal;
-                    // board[xx][yy]=defaultCell;
-                    // enemyanimalposition[n].y--;
-                    // printf("enemy(%s) go to Left",enemy);
-                    pointTomove[index].x = xx;
-                    pointTomove[index].y = yy-1;
+
+                    pointTomove[pointindex].x = 0;
+                    pointTomove[pointindex].y = -1;
                     yy--;
                 }
 
                 if (yy < COL - 1 && d[xx][yy + 1] == dist - 1) {
-                    // board[xx][yy+1]=enemyanimal;
-                    // board[xx][yy]=defaultCell;
-                    // enemyanimalposition[n].y++;
-                    // printf("enemy(%s) go to Right",enemy);
-                    pointTomove[index].x = xx;
-                    pointTomove[index].y = yy+1;
+
+                    pointTomove[pointindex].x = 0;
+                    pointTomove[pointindex].y = 1;
                     yy++;
                 }
                 dist--;
@@ -179,7 +146,7 @@ int printPath(struct Point start, struct Point end, struct Animal pointTomove[])
             break;
         }
 
-        pop();
+        pop(front,rear,items);
         for (int i = 0; i < 4; i++)
         {
             int x = pt.x + row[i];
@@ -194,7 +161,7 @@ int printPath(struct Point start, struct Point end, struct Animal pointTomove[])
                         {x,
                         y},
                         curr.distance + 1};
-                    push(newNode);
+                    push(newNode,front,rear,items);
                     d[x][y] = curr.distance + 1;
 
                 }

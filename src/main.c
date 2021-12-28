@@ -196,7 +196,7 @@ int main()
             struct Point end ={
                 .x = world.heavenCell[i].x,
                 .y = world.heavenCell[i].y};
-            printPath(end, start,world.enemyanimalposition[i].pointTomove);
+            printPath(world.size, board, end, start,world.enemyanimalposition[i].pointTomove,world.enemyanimalposition[i].pointindex);
             printWorld(world.size, board, i ,world);
 
         }
