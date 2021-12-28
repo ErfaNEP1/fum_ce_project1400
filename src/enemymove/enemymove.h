@@ -23,8 +23,6 @@ struct QueueNode
     int distance;
 };
 
-struct QueueNode items[SIZE];
-int front = -1, rear = -1;
 
 int isFull(int front, int rear)
 {
@@ -78,7 +76,7 @@ int isValid(int row, int col)
 int row[4] = {-1, 0, 0, 1};
 int col[4] = {0, -1, 1, 0};
 
-int printPath(int worldsize, struct Cell board[][worldsize], struct Point start, struct Point end, struct Point pointTomove[], int pointindex)
+int printPath(int worldsize, struct Cell board[][worldsize], struct Point start, struct Point end, struct Point pointTomove[], int pointindex,struct QueueNode items[],int front, int rear)
 {
 
     int sw = 0;
@@ -102,6 +100,7 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
 
     while (isEmpty(front,rear) == 0)
     {
+        pointindex ++;
 
         struct QueueNode curr = items[front];
         struct Point pt = curr.p;

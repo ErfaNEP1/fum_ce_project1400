@@ -190,13 +190,15 @@ int main()
             // implement AI
         for(int i=0; i<nEnemy; i++){
             int v=FindtheClosestWaytoH(world.enemyanimalposition[i].x, world.enemyanimalposition[i].y, world.heavenCell, world.heavenCount);
+            struct QueueNode items[SIZE];
+            int front = -1, rear = -1;
             struct Point start ={
                 .x = world.enemyanimalposition[i].x ,
                 .y = world.enemyanimalposition[i].y};
             struct Point end ={
                 .x = world.heavenCell[i].x,
                 .y = world.heavenCell[i].y};
-            printPath(world.size, board, end, start,world.enemyanimalposition[i].pointTomove,world.enemyanimalposition[i].pointindex);
+            printPath(world.size, board, end, start,world.enemyanimalposition[i].pointTomove,world.enemyanimalposition[i].pointindex,items,front,rear);
             printWorld(world.size, board, i ,world);
 
         }
