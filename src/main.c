@@ -193,12 +193,12 @@ int main()
             struct QueueNode items[400];
             int front = -1, rear = -1;
             int *frontPtr = &front, *rearPtr = &rear;
-            struct Point start ={
+            struct Point end ={
                 .x = world.enemyanimalposition[i].x ,
                 .y = world.enemyanimalposition[i].y};
-            struct Point end ={
-                .x = world.heavenCell[i].x,
-                .y = world.heavenCell[i].y};
+            struct Point start ={
+                .x = world.heavenCell[v].x,
+                .y = world.heavenCell[v].y};
             int n = printPath(world.size, board, start, end, world.enemyanimalposition[i].pointTomove,items,frontPtr,rearPtr);
 
             for (int k = 0;k < n;k ++) {
