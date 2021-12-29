@@ -14,6 +14,7 @@
 #include "Models/Cell.h"
 #include "Models/World.h"
 #include "enemymove/enemymove.h"
+#include "enemymove/move.h"
 #include "playermove/typeanimalcount.h"
 #include "playermove/animalTocontrol.h"
 
@@ -193,13 +194,16 @@ int main()
             struct QueueNode items[400];
             int front = -1, rear = -1;
             int *frontPtr = &front, *rearPtr = &rear;
-            struct Point end ={
+            struct Point start ={
                 .x = world.enemyanimalposition[i].x ,
                 .y = world.enemyanimalposition[i].y};
-            struct Point start ={
+            struct Point end ={
                 .x = world.heavenCell[v].x,
                 .y = world.heavenCell[v].y};
             int n = printPath(world.size, board, start, end, world.enemyanimalposition[i].pointTomove,items,frontPtr,rearPtr);
+
+            revrese(world.enemyanimalposition[i].pointTomove,n);
+            n --;
 
             for (int k = 0;k < n;k ++) {
                 printf("%d %d // ",world.enemyanimalposition[i].pointTomove[k].x,world.enemyanimalposition[i].pointTomove[k].y);

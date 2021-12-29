@@ -114,16 +114,16 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
 
                 if (xx > 0 && d[xx - 1][yy] == dist - 1) {
 
-                    pointTomove[counter].x = -1;
-                    pointTomove[counter].y = 0;
+                    pointTomove[counter].x = xx-1;
+                    pointTomove[counter].y = yy;
                     xx--;
                     counter ++;
                 }
 
                 if (xx < ROW - 1 && d[xx + 1][yy] == dist - 1) {
 
-                    pointTomove[counter].x = 1;
-                    pointTomove[counter].y = 0;
+                    pointTomove[counter].x = xx+1;
+                    pointTomove[counter].y = yy;
                     xx++;
                     counter ++;
 
@@ -131,8 +131,8 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
 
                 if (yy > 0 && d[xx][yy - 1] == dist - 1) {
 
-                    pointTomove[counter].x = 0;
-                    pointTomove[counter].y = -1;
+                    pointTomove[counter].x = xx;
+                    pointTomove[counter].y = yy-1;
                     yy--;
                     counter ++;
 
@@ -140,8 +140,8 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
 
                 if (yy < COL - 1 && d[xx][yy + 1] == dist - 1) {
 
-                    pointTomove[counter].x = 0;
-                    pointTomove[counter].y = 1;
+                    pointTomove[counter].x = xx;
+                    pointTomove[counter].y = yy+1;
                     yy++;
                     counter ++;
 

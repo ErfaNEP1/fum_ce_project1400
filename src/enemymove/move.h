@@ -1,9 +1,14 @@
-int moveChech(int worldsize, struct Cell board[][worldsize], int enemyX, int enemyY, struct Point pointTomove[], int index) {
+void revrese(struct Point pointTomove[], int number) {
+    int i, j;
 
-    if (index == -1) index = 0;
-    int x = enemyX + pointTomove[index].x;
-    int y = enemyY + pointTomove[index].y;
+    for (i = 0,j = number-2;j > i;i ++,j --) {
 
-    if (strcmp(board[x][y].identifierplace,"animal") != 0) return 1;
-    else return 0;
+        int tempX = pointTomove[i].x;
+        int tempY = pointTomove[i].y;
+        pointTomove[i].x = pointTomove[j].x;
+        pointTomove[i].y = pointTomove[j].y;
+        pointTomove[j].x = tempX;
+        pointTomove[j].y = tempY;
+    }
+    return;
 }
