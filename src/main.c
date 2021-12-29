@@ -126,7 +126,7 @@ int main()
             Cell typeanimal = {
                 .typePlace = "animal",
                 .identifierPlace = *tok,
-            };
+                .animalPlace.pointindex =-1};
             int nu_typeanimal;
 
             tok = strtok(NULL, " \n");
@@ -190,7 +190,7 @@ int main()
 
             // implement AI
         for(int i=0; i<nEnemy; i++){
-            int v=FindtheClosestWaytoH(world.enemyanimalposition[i].x, world.enemyanimalposition[i].y, world.heavenCell, world.heavenCount);
+            int mindist=FindtheClosestWaytoH(world.enemyanimalposition[i].x, world.enemyanimalposition[i].y, world.heavenCell, world.heavenCount);
             struct QueueNode items[400];
             int front = -1, rear = -1;
             int *frontPtr = &front, *rearPtr = &rear;
@@ -198,12 +198,32 @@ int main()
                 .x = world.enemyanimalposition[i].x ,
                 .y = world.enemyanimalposition[i].y};
             struct Point end ={
-                .x = world.heavenCell[v].x,
-                .y = world.heavenCell[v].y};
+                .x = world.heavenCell[mindist].x,
+                .y = world.heavenCell[mindist].y};
             int n = printPath(world.size, board, start, end, world.enemyanimalposition[i].pointTomove,items,frontPtr,rearPtr);
+            
+            if(world.enemyanimalposition[i].pointindex == -1){
+                if(n != -1){
+                    revrese(world.enemyanimalposition[i].pointTomove,n);
+                    move();
+                    n--;
+                }
+            }
+            else{
+                if(check( worldSize, board, world.enemyanimalposition[i].pointTomove[n].x, world.enemyanimalposition[i].pointTomove[n].y)){
+                    move();
+                }
+                else{
+                    if(n != -1){
+                        revrese(world.enemyanimalposition[i].pointTomove,n);
+                        move();
+                    }
+                }
+            }
+            
 
-            revrese(world.enemyanimalposition[i].pointTomove,n);
-            n --;
+            
+            
 
             for (int k = 0;k < n;k ++) {
                 printf("%d %d // ",world.enemyanimalposition[i].pointTomove[k].x,world.enemyanimalposition[i].pointTomove[k].y);

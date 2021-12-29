@@ -178,5 +178,5 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
     }
 
     if (sw == 0)
-        printf("Impossible !");
+        return -1;
 }
