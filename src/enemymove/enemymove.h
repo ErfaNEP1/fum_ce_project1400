@@ -1,11 +1,14 @@
 
-int FindtheClosestWaytoH(int enemyX, int enemyY, struct Cell heavencell[], int heavencount){
-    int dis, mindis =40,mukhtasat ;
-    for(int i=0; i<heavencount; i++){
-        dis=abs(enemyX-heavencell[i].x) + abs(enemyY-heavencell[i].y);
-        if(dis < mindis){
-            mindis=dis;
-            mukhtasat=i;
+int FindtheClosestWaytoH(int enemyX, int enemyY, struct Cell heavencell[], int heavencount)
+{
+    int dis, mindis = 40, mukhtasat;
+    for (int i = 0; i < heavencount; i++)
+    {
+        dis = abs(enemyX - heavencell[i].x) + abs(enemyY - heavencell[i].y);
+        if (dis < mindis)
+        {
+            mindis = dis;
+            mukhtasat = i;
         }
     }
     return mukhtasat;
@@ -15,14 +18,11 @@ int FindtheClosestWaytoH(int enemyX, int enemyY, struct Cell heavencell[], int h
 #define ROW 20
 #define COL 20
 
-
-
 struct QueueNode
 {
     struct Point p;
     int distance;
 };
-
 
 int isFull(int front, int rear)
 {
@@ -40,7 +40,7 @@ int isEmpty(int front, int rear)
 
 void push(struct QueueNode element, int *front, int *rear, struct QueueNode items[])
 {
-    if (isFull(*front,*rear) == 0)
+    if (isFull(*front, *rear) == 0)
     {
         if (*front == -1)
             *front = 0;
@@ -52,7 +52,7 @@ void push(struct QueueNode element, int *front, int *rear, struct QueueNode item
 void pop(int *front, int *rear, struct QueueNode items[])
 {
     struct QueueNode element;
-    if (isEmpty(*front,*rear) == 0)
+    if (isEmpty(*front, *rear) == 0)
     {
         element = items[*front];
         if (*front == *rear)
@@ -76,7 +76,7 @@ int isValid(int row, int col)
 int row[4] = {-1, 0, 0, 1};
 int col[4] = {0, -1, 1, 0};
 
-int printPath(int worldsize, struct Cell board[][worldsize], struct Point start, struct Point end , struct Point pointTomove[],struct QueueNode items[],int *front, int *rear)
+int printPath(int worldsize, struct Cell board[][worldsize], struct Point start, struct Point end, struct Point pointTomove[], struct QueueNode items[], int *front, int *rear)
 {
 
     int sw = 0;
@@ -84,10 +84,8 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
     int visited[ROW][COL];
     memset(visited, 0, sizeof visited);
 
-
     int d[ROW][COL];
     memset(d, -1, sizeof d);
-
 
     struct QueueNode node = {
         start,
@@ -96,9 +94,9 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
     visited[start.x][start.y] = 1;
     d[start.x][start.y] = 0;
 
-    push(node,front,rear,items);
+    push(node, front, rear, items);
 
-    while (isEmpty(*front,*rear) == 0)
+    while (isEmpty(*front, *rear) == 0)
     {
 
         struct QueueNode curr = items[*front];
@@ -107,44 +105,47 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
         {
             int xx = pt.x, yy = pt.y;
             int dist = curr.distance;
-                int counter = 0;
+            int counter = 0;
+            pointTomove[counter].x = xx;
+            pointTomove[counter].y = yy;
+            counter++;
+            while (xx != start.x || yy != start.y)
+            {
 
-            while (xx != start.x || yy != start.y) {
+                if (xx > 0 && d[xx - 1][yy] == dist - 1)
+                {
 
-
-                if (xx > 0 && d[xx - 1][yy] == dist - 1) {
-
-                    pointTomove[counter].x = xx-1;
+                    pointTomove[counter].x = xx - 1;
                     pointTomove[counter].y = yy;
                     xx--;
-                    counter ++;
+                    counter++;
                 }
 
-                if (xx < ROW - 1 && d[xx + 1][yy] == dist - 1) {
+                if (xx < ROW - 1 && d[xx + 1][yy] == dist - 1)
+                {
 
-                    pointTomove[counter].x = xx+1;
+                    pointTomove[counter].x = xx + 1;
                     pointTomove[counter].y = yy;
                     xx++;
-                    counter ++;
-
+                    counter++;
                 }
 
-                if (yy > 0 && d[xx][yy - 1] == dist - 1) {
+                if (yy > 0 && d[xx][yy - 1] == dist - 1)
+                {
 
                     pointTomove[counter].x = xx;
-                    pointTomove[counter].y = yy-1;
+                    pointTomove[counter].y = yy - 1;
                     yy--;
-                    counter ++;
-
+                    counter++;
                 }
 
-                if (yy < COL - 1 && d[xx][yy + 1] == dist - 1) {
+                if (yy < COL - 1 && d[xx][yy + 1] == dist - 1)
+                {
 
                     pointTomove[counter].x = xx;
-                    pointTomove[counter].y = yy+1;
+                    pointTomove[counter].y = yy + 1;
                     yy++;
-                    counter ++;
-
+                    counter++;
                 }
                 dist--;
             }
@@ -154,33 +155,28 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
             break;
         }
 
-        pop(front,rear,items);
+        pop(front, rear, items);
         for (int i = 0; i < 4; i++)
         {
             int x = pt.x + row[i];
             int y = pt.y + col[i];
 
-            if (isValid(x, y) == 1  && visited[x][y] == 0)
+            if (isValid(x, y) == 1 && visited[x][y] == 0)
             {
-                if(strcmp(board[x][y].identifierPlace,"F")==0  || strcmp(board[x][y].identifierPlace , "H")==0  || strcmp(board[x][y].identifierPlace , ".")==0 )
+                if (strcmp(board[x][y].identifierPlace, "F") == 0 || strcmp(board[x][y].identifierPlace, "H") == 0 || strcmp(board[x][y].identifierPlace, ".") == 0)
                 {
                     visited[x][y] = 1;
                     struct QueueNode newNode = {
                         {x,
-                        y},
+                         y},
                         curr.distance + 1};
-                    push(newNode,front,rear,items);
+                    push(newNode, front, rear, items);
                     d[x][y] = curr.distance + 1;
-
                 }
             }
         }
     }
 
-    if(sw == 0)
+    if (sw == 0)
         printf("Impossible !");
-
 }
-
-
-
