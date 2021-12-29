@@ -1,3 +1,17 @@
+int FindtheClosestWaytoH(int enemyX, int enemyY, struct Cell heavencell[], int heavencount){
+    int dis, mindis = 40, mukhtasat;
+    for (int i = 0; i < heavencount; i++)
+    {
+        dis = abs(enemyX - heavencell[i].x) + abs(enemyY - heavencell[i].y);
+        if (dis < mindis)
+        {
+            mindis = dis;
+            mukhtasat = i;
+        }
+    }
+    return mukhtasat;
+}
+
 void revrese(struct Point pointTomove[], int number) {
     int i, j;
 
