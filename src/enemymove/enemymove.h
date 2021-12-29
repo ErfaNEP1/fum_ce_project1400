@@ -38,31 +38,31 @@ int isEmpty(int front, int rear)
     return 0;
 }
 
-void push(struct QueueNode element, int front, int rear, struct QueueNode items[])
+void push(struct QueueNode element, int *front, int *rear, struct QueueNode items[])
 {
-    if (isFull(front,rear) == 0)
+    if (isFull(*front,*rear) == 0)
     {
-        if (front == -1)
-            front = 0;
-        rear = (rear + 1) % SIZE;
-        items[rear] = element;
+        if (*front == -1)
+            *front = 0;
+        *rear = (*rear + 1) % SIZE;
+        items[*rear] = element;
     }
 }
 
-void pop(int front, int rear, struct QueueNode items[])
+void pop(int *front, int *rear, struct QueueNode items[])
 {
     struct QueueNode element;
-    if (isEmpty(front,rear) == 0)
+    if (isEmpty(*front,*rear) == 0)
     {
-        element = items[front];
-        if (front == rear)
+        element = items[*front];
+        if (*front == *rear)
         {
-            front = -1;
-            rear = -1;
+            *front = -1;
+            *rear = -1;
         }
         else
         {
-            front = (front + 1) % SIZE;
+            *front = (*front + 1) % SIZE;
         }
         return;
     }
@@ -76,7 +76,7 @@ int isValid(int row, int col)
 int row[4] = {-1, 0, 0, 1};
 int col[4] = {0, -1, 1, 0};
 
-int printPath(int worldsize, struct Cell board[][worldsize], struct Point start, struct Point end, struct Point pointTomove[], int pointindex,struct QueueNode items[],int front, int rear)
+int printPath(int worldsize, struct Cell board[][worldsize], struct Point start, struct Point end , struct Point pointTomove[],struct QueueNode items[],int *front, int *rear)
 {
 
     int sw = 0;
@@ -98,50 +98,59 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
 
     push(node,front,rear,items);
 
-    while (isEmpty(front,rear) == 0)
+    while (isEmpty(*front,*rear) == 0)
     {
-        pointindex ++;
 
-        struct QueueNode curr = items[front];
+        struct QueueNode curr = items[*front];
         struct Point pt = curr.p;
         if (pt.x == end.x && pt.y == end.y)
         {
             int xx = pt.x, yy = pt.y;
             int dist = curr.distance;
+                int counter = 0;
 
             while (xx != start.x || yy != start.y) {
 
+
                 if (xx > 0 && d[xx - 1][yy] == dist - 1) {
 
-                    pointTomove[pointindex].x = -1;
-                    pointTomove[pointindex].y = 0;
+                    pointTomove[counter].x = -1;
+                    pointTomove[counter].y = 0;
                     xx--;
+                    counter ++;
                 }
 
                 if (xx < ROW - 1 && d[xx + 1][yy] == dist - 1) {
 
-                    pointTomove[pointindex].x = 1;
-                    pointTomove[pointindex].y = 0;
+                    pointTomove[counter].x = 1;
+                    pointTomove[counter].y = 0;
                     xx++;
+                    counter ++;
+
                 }
 
                 if (yy > 0 && d[xx][yy - 1] == dist - 1) {
 
-                    pointTomove[pointindex].x = 0;
-                    pointTomove[pointindex].y = -1;
+                    pointTomove[counter].x = 0;
+                    pointTomove[counter].y = -1;
                     yy--;
+                    counter ++;
+
                 }
 
                 if (yy < COL - 1 && d[xx][yy + 1] == dist - 1) {
 
-                    pointTomove[pointindex].x = 0;
-                    pointTomove[pointindex].y = 1;
+                    pointTomove[counter].x = 0;
+                    pointTomove[counter].y = 1;
                     yy++;
+                    counter ++;
+
                 }
                 dist--;
             }
 
             sw = 1;
+            return counter;
             break;
         }
 
@@ -151,7 +160,7 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
             int x = pt.x + row[i];
             int y = pt.y + col[i];
 
-            if (isValid(x, y) == 1  )
+            if (isValid(x, y) == 1  && visited[x][y] == 0)
             {
                 if(strcmp(board[x][y].identifierPlace,"F")==0  || strcmp(board[x][y].identifierPlace , "H")==0  || strcmp(board[x][y].identifierPlace , ".")==0 )
                 {
@@ -170,6 +179,7 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
 
     if(sw == 0)
         printf("Impossible !");
+
 }
 
 

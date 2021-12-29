@@ -3,6 +3,6 @@ typedef struct Animal {
     Genome gene;
     int x, y;
     Point pointTomove[100];
-    int pointindex; = -1;
+    int pointindex;
 } Animal;
 

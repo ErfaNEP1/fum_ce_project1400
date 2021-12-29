@@ -13,9 +13,9 @@
 #include "Models/Food.h"
 #include "Models/Cell.h"
 #include "Models/World.h"
+#include "enemymove/enemymove.h"
 #include "playermove/typeanimalcount.h"
 #include "playermove/animalTocontrol.h"
-#include "enemymove.h"
 
 int main()
 {
@@ -190,15 +190,21 @@ int main()
             // implement AI
         for(int i=0; i<nEnemy; i++){
             int v=FindtheClosestWaytoH(world.enemyanimalposition[i].x, world.enemyanimalposition[i].y, world.heavenCell, world.heavenCount);
-            struct QueueNode items[SIZE];
+            struct QueueNode items[400];
             int front = -1, rear = -1;
+            int *frontPtr = &front, *rearPtr = &rear;
             struct Point start ={
                 .x = world.enemyanimalposition[i].x ,
                 .y = world.enemyanimalposition[i].y};
             struct Point end ={
                 .x = world.heavenCell[i].x,
                 .y = world.heavenCell[i].y};
-            printPath(world.size, board, end, start,world.enemyanimalposition[i].pointTomove,world.enemyanimalposition[i].pointindex,items,front,rear);
+            int n = printPath(world.size, board, start, end, world.enemyanimalposition[i].pointTomove,items,frontPtr,rearPtr);
+
+            for (int k = 0;k < n;k ++) {
+                printf("%d %d // ",world.enemyanimalposition[i].pointTomove[k].x,world.enemyanimalposition[i].pointTomove[k].y);
+            }
+            printf("\n");
             printWorld(world.size, board, i ,world);
 
         }
