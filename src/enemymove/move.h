@@ -34,14 +34,20 @@ int check(int worldSize, struct Cell board[][worldSize] , int x, int y){
     else return 1;
 }
 
-int move(int worldSize,struct Cell board[][worldSize], char enemy, int x, int y, int xx, int yy){
+void move(int worldSize,struct Cell board[][worldSize], char enemy[], int x, int y, int xx, int yy, struct Animal enemyanimalposition[], int i){
     Cell enemyCell ={
-        .typePlace="enemy",
+        .typePlace="animal",
         .identifierPlace=*enemy};
     Cell defaultCell ={
         .typePlace ="default",
         .identifierPlace ="."};
+    if (xx > x) printf("enemy(%s(%d,%d)) move to Down",enemy,x,y);
+    if (xx < x) printf("enemy(%s(%d,%d)) move to Up",enemy,x,y);
+    if (yy > y) printf("enemy(%s(%d,%d)) move to Right",enemy,x,y);
+    if (yy < y) printf("enemy(%s(%d,%d)) move to Left",enemy,x,y);
     board[xx][yy] = enemyCell;
     board[x][y] = defaultCell;
+    enemyanimalposition[i].x = xx;
+    enemyanimalposition[i].y = yy;
     
 }

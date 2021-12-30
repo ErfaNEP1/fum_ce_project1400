@@ -13,6 +13,7 @@ int searchTypeanimalposition(char player[], int worldsize, struct Cell board[][w
                 else {
                     enemyanimalposition[nEnemy].x = i;
                     enemyanimalposition[nEnemy].y = j;
+                    enemyanimalposition[nEnemy].pointindex = -1;
                     nEnemy ++;
                 }
             }
