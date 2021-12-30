@@ -206,20 +206,34 @@ int main()
                     if(n != -1){
                         reverse(world.enemyanimalposition[i].pointTomove,n);
                         n--;
-                        world.enemyanimalposition[i].pointindex++;
-                        for (int k = 0;k < n;k ++) 
-                            printf("%d %d // ",world.enemyanimalposition[i].pointTomove[k].x,world.enemyanimalposition[i].pointTomove[k].y);
-                        move(worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y,world.enemyanimalposition,i);
-
+                        move(worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointindex[i].x, world.enemyanimalposition[i].pointTomove[i].y);
                     }
                     else{
-                        //harkat randum
+                        if(strcmp(board[world.enemyanimalposition[i].pointTomove.x +1][world.enemyanimalposition[i].pointTomove.y] ,"default") != 0  &&  strcmp(board[world.enemyanimalposition[i].pointTomove.x +1][world.enemyanimalposition[i].pointTomove.y] ,"animal") != 0 ){
+                            start.x=world.enemyanimalposition[i].pointTomove.x +1 ;
+                            start.y=world.enemyanimalposition[i].pointTomove.y ;
+                            world.enemyanimalposition[i].pointindex = -1;
+                        }
+                        else if(strcmp(board[world.enemyanimalposition[i].pointTomove.x -1][world.enemyanimalposition[i].pointTomove.y] ,"default") != 0  &&  strcmp(board[world.enemyanimalposition[i].pointTomove.x +1][world.enemyanimalposition[i].pointTomove.y] ,"animal") != 0 ){
+                            start.x=world.enemyanimalposition[i].pointTomove.x -1 ;
+                            start.y=world.enemyanimalposition[i].pointTomove.y ;
+                            world.enemyanimalposition[i].pointindex = -1;
+                        }
+                        else if(strcmp(board[world.enemyanimalposition[i].pointTomove.x][world.enemyanimalposition[i].pointTomove.y] ,"default") != 0  &&  strcmp(board[world.enemyanimalposition[i].pointTomove.x +1][world.enemyanimalposition[i].pointTomove.y +1] ,"animal") != 0 ){
+                            start.x=world.enemyanimalposition[i].pointTomove.x ;
+                            start.y=world.enemyanimalposition[i].pointTomove.y +1;
+                            world.enemyanimalposition[i].pointindex = -1;
+                        }
+                        else if(strcmp(board[world.enemyanimalposition[i].pointTomove.x][world.enemyanimalposition[i].pointTomove.y-1] ,"default") != 0  &&  strcmp(board[world.enemyanimalposition[i].pointTomove.x +1][world.enemyanimalposition[i].pointTomove.y] ,"animal") != 0 ){
+                            start.x=world.enemyanimalposition[i].pointTomove.x ;
+                            start.y=world.enemyanimalposition[i].pointTomove.y -1;
+                            world.enemyanimalposition[i].pointindex = -1;
+                        }
                     }
                 }
                 else{
                     if(check( worldSize, board, world.enemyanimalposition[i].pointTomove[i].x, world.enemyanimalposition[i].pointTomove[i].y)){
-                        world.enemyanimalposition[i].pointindex++;
-                        move(worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y,world.enemyanimalposition,i);
+                        move(worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointindex[i].x, world.enemyanimalposition[i].pointTomove[i].y);
                     }
                     else{
                         world.enemyanimalposition[i].pointindex =-1;
@@ -227,6 +241,9 @@ int main()
                     }
                 }
 
+                for (int k = 0;k < n;k ++) {
+                    printf("%d %d // ",world.enemyanimalposition[i].pointTomove[k].x,world.enemyanimalposition[i].pointTomove[k].y);
+                }
                 printf("\n");
                 printWorld(world.size, board, i ,world);
 
