@@ -166,6 +166,17 @@ int main()
     textcolor(6);
     printf("THE GAME HAS STARTED, TO CANCEL THE GAME CLICK ON \"ESC\" \n");
     printWorld(world.size, board, 0, world);
+    textcolor(6);
+    printf("************* WAIT FOR 5 SECONDS ************* \n");
+    for (int i = 0; i < 5; i++)
+    {
+        sleep(1000);
+        printf("%d ", i + 1);
+    }
+    clearScreen();
+
+    printf("\nSTART !!! ( Move With Arrow Keys. )\n");
+    printWorld(world.size, board, 0, world);
 
     textcolor(7);
     int ch;
@@ -181,7 +192,6 @@ int main()
                 if (clickedKey != 0)
                 {
                     i = animalTocontrol(world.animalToControl, nPlayer, world.size, board, world.alliedanimalposition[i].x, world.alliedanimalposition[i].y, i, world.alliedanimalposition, clickedKey);
-                    // clearScreen();
                     printWorld(world.size, board, i, world);
                 }
                 if (i != nPlayer - 1)
@@ -189,6 +199,7 @@ int main()
             }
 
             printf("PLAYER TURN DONE, AI TURN.\n");
+            clearScreen();
 
             // implement AI
             for (int i = 0; i < nEnemy; i++)
@@ -212,11 +223,13 @@ int main()
                         reverse(world.enemyanimalposition[i].pointTomove, n);
                         n--;
                         world.enemyanimalposition[i].pointindex++;
-                        for (int k = 0; k < n; k++)
-                            printf("%d %d // ", world.enemyanimalposition[i].pointTomove[k].x, world.enemyanimalposition[i].pointTomove[k].y);
+
                         move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y, world.enemyanimalposition, i);
                         if (winSwitch == 1)
+                        {
                             snprintf(world.winner, 2, "%s", board[world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x][world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y].identifierPlace);
+                            break;
+                        }
                     }
                     else
                     {
@@ -246,7 +259,10 @@ int main()
                     {
                         move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y, world.enemyanimalposition, i);
                         if (winSwitch == 1)
+                        {
                             snprintf(world.winner, 2, "%s", board[world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x][world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y].identifierPlace);
+                            break;
+                        }
                     }
                     else
                     {
@@ -256,10 +272,29 @@ int main()
                 }
                 printf("\n");
                 printWorld(world.size, board, i, world);
+                sleep(1500);
+                clearScreen();
+            }
+            if (winSwitch == 1)
+            {
+                break;
+            }
+            else
+            {
+                printf("ROUND FINISHED, WAIT FOR 3 SECONDS\n");
+                for (int i = 0; i < 3; i++)
+                {
+                    sleep(1000);
+                    printf("%d ", i + 1);
+                }
+                clearScreen();
+                printf("NEXT ROUND STARTED, MOVE !\n");
+                printWorld(world.size, board, 0, world);
             }
         }
     }
-
+    clearScreen();
+    textcolor(6);
     if (winSwitch == 1)
         printf("PLAYER %s WON THE GAME !", world.winner);
 
