@@ -212,24 +212,24 @@ int main()
                         move(worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y,world.enemyanimalposition,i);
                     }
                     else{
-                        if(strcmp(board[world.enemyanimalposition[i].pointTomove.x +1][world.enemyanimalposition[i].pointTomove.y] ,"default") != 0  &&  strcmp(board[world.enemyanimalposition[i].pointTomove.x +1][world.enemyanimalposition[i].pointTomove.y] ,"animal") != 0 ){
-                            start.x=world.enemyanimalposition[i].pointTomove.x +1 ;
-                            start.y=world.enemyanimalposition[i].pointTomove.y ;
+                        if(strcmp(board[world.enemyanimalposition[i].x +1][world.enemyanimalposition[i].y] ,"default") != 0  &&  strcmp(board[world.enemyanimalposition[i].x +1][world.enemyanimalposition[i].y] ,"animal") != 0 ){
+                            start.x=world.enemyanimalposition[i].x +1 ;
+                            start.y=world.enemyanimalposition[i].y ;
                             world.enemyanimalposition[i].pointindex = -1;
                         }
-                        else if(strcmp(board[world.enemyanimalposition[i].pointTomove.x -1][world.enemyanimalposition[i].pointTomove.y] ,"default") != 0  &&  strcmp(board[world.enemyanimalposition[i].pointTomove.x +1][world.enemyanimalposition[i].pointTomove.y] ,"animal") != 0 ){
-                            start.x=world.enemyanimalposition[i].pointTomove.x -1 ;
-                            start.y=world.enemyanimalposition[i].pointTomove.y ;
+                        else if(strcmp(board[world.enemyanimalposition[i].x -1][world.enemyanimalposition[i].y] ,"default") != 0  &&  strcmp(board[world.enemyanimalposition[i].x -1][world.enemyanimalposition[i].y] ,"animal") != 0 ){
+                            start.x=world.enemyanimalposition[i].x -1 ;
+                            start.y=world.enemyanimalposition[i].y ;
                             world.enemyanimalposition[i].pointindex = -1;
                         }
-                        else if(strcmp(board[world.enemyanimalposition[i].pointTomove.x][world.enemyanimalposition[i].pointTomove.y] ,"default") != 0  &&  strcmp(board[world.enemyanimalposition[i].pointTomove.x +1][world.enemyanimalposition[i].pointTomove.y +1] ,"animal") != 0 ){
-                            start.x=world.enemyanimalposition[i].pointTomove.x ;
-                            start.y=world.enemyanimalposition[i].pointTomove.y +1;
+                        else if(strcmp(board[world.enemyanimalposition[i].x][world.enemyanimalposition[i].y+1] ,"default") != 0  &&  strcmp(board[world.enemyanimalposition[i].x ][world.enemyanimalposition[i].y +1] ,"animal") != 0 ){
+                            start.x=world.enemyanimalposition[i].x ;
+                            start.y=world.enemyanimalposition[i].y +1;
                             world.enemyanimalposition[i].pointindex = -1;
                         }
-                        else if(strcmp(board[world.enemyanimalposition[i].pointTomove.x][world.enemyanimalposition[i].pointTomove.y-1] ,"default") != 0  &&  strcmp(board[world.enemyanimalposition[i].pointTomove.x +1][world.enemyanimalposition[i].pointTomove.y] ,"animal") != 0 ){
-                            start.x=world.enemyanimalposition[i].pointTomove.x ;
-                            start.y=world.enemyanimalposition[i].pointTomove.y -1;
+                        else if(strcmp(board[world.enemyanimalposition[i].x][world.enemyanimalposition[i].y-1] ,"default") != 0  &&  strcmp(board[world.enemyanimalposition[i].x ][world.enemyanimalposition[i].y-1] ,"animal") != 0 ){
+                            start.x=world.enemyanimalposition[i].x ;
+                            start.y=world.enemyanimalposition[i].y -1;
                             world.enemyanimalposition[i].pointindex = -1;
                         }
                     }
