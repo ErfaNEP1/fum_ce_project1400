@@ -34,7 +34,7 @@ int check(int worldSize, struct Cell board[][worldSize] , int x, int y){
     else return 1;
 }
 
-int move(int worldSize,struct Cel board[][worldSize], char enemy, int x, int y, int xx, int yy){
+int move(int worldSize,struct Cell board[][worldSize], char enemy, int x, int y, int xx, int yy){
     Cell enemyCell ={
         .typePlace="enemy",
         .identifierPlace=*enemy};
