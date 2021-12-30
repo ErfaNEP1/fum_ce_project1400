@@ -56,10 +56,10 @@ void move(World world, int *winSwitch, int worldSize, struct Cell board[][worldS
         printf("enemy(%s(%d,%d)) move to Right", enemy, x, y);
     if (yy < y)
         printf("enemy(%s(%d,%d)) move to Left", enemy, x, y);
-    
-    if(*board[xx][yy].identifierPlace == 'H'){
+
+    if (*board[xx][yy].identifierPlace == 'H')
+    {
         *winSwitch = 1;
-        strcpy(world.winner,enemy);
     }
 
     board[xx][yy] = enemyCell;
