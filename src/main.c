@@ -237,7 +237,6 @@ int main()
                 else{
                     world.enemyanimalposition[i].pointindex++;
                     if(check( worldSize, board, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y)){
-                        world.enemyanimalposition[i].pointindex++;
                         move(worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y,world.enemyanimalposition,i);
                     }
                     else{
