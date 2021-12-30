@@ -126,7 +126,7 @@ int main()
             Cell typeanimal = {
                 .typePlace = "animal",
                 .identifierPlace = *tok,
-                .animalPlace.pointindex =-1};
+                .animalPlace.pointindex = -1};
             int nu_typeanimal;
 
             tok = strtok(NULL, " \n");
@@ -160,79 +160,85 @@ int main()
     }
 
     printf("\n");
-    int nPlayer = searchTypeanimalposition(world.animalToControl, world.size, board, world.alliedanimalposition,world.enemyanimalposition);
-    int nEnemy = world.animalCount-nPlayer;
+    int nPlayer = searchTypeanimalposition(world,world.animalToControl, world.size, board, world.alliedanimalposition, world.enemyanimalposition);
+    int nEnemy = world.animalCount - nPlayer;
 
     textcolor(6);
     printf("THE GAME HAS STARTED, TO CANCEL THE GAME CLICK ON \"ESC\" \n");
-    printWorld(world.size, board, 0 ,world);
+    printWorld(world.size, board, 0, world);
 
     textcolor(7);
     int ch;
     textcolor(2);
-
-    while ((ch = getch()) != 27)
+    int winSwitch = 0;
+    while ((ch = getch()) != 27 && winSwitch == 0)
     {
-        if (ch == 224 || ch == 0){
-            for (int i = 0; i < nPlayer; i++){
-                    int clickedKey = getch();
-                    if(clickedKey != 0){
-                        i = animalTocontrol(world.animalToControl, nPlayer, world.size, board, world.alliedanimalposition[i].x, world.alliedanimalposition[i].y, i, world.alliedanimalposition,clickedKey);
-                        // clearScreen();
-                        printWorld(world.size, board, i ,world);
-                    }
-                    if(i != nPlayer-1)
-                        getch();
+        if (ch == 224 || ch == 0)
+        {
+            for (int i = 0; i < nPlayer; i++)
+            {
+                int clickedKey = getch();
+                if (clickedKey != 0)
+                {
+                    i = animalTocontrol(world.animalToControl, nPlayer, world.size, board, world.alliedanimalposition[i].x, world.alliedanimalposition[i].y, i, world.alliedanimalposition, clickedKey);
+                    // clearScreen();
+                    printWorld(world.size, board, i, world);
+                }
+                if (i != nPlayer - 1)
+                    getch();
             }
 
-            
-            printf("player input is done ! %d\n",ch);
+            printf("player input is done ! %d\n", ch);
 
             // implement AI
-            for(int i=0; i<nEnemy; i++){
-                int mindist=FindtheClosestWaytoH(world.enemyanimalposition[i].x, world.enemyanimalposition[i].y, world.heavenCell, world.heavenCount);
+            for (int i = 0; i < nEnemy; i++)
+            {
+                int mindist = FindtheClosestWaytoH(world.enemyanimalposition[i].x, world.enemyanimalposition[i].y, world.heavenCell, world.heavenCount);
                 struct QueueNode items[400];
                 int front = -1, rear = -1;
                 int *frontPtr = &front, *rearPtr = &rear;
-                struct Point start ={
-                    .x = world.enemyanimalposition[i].x ,
+                struct Point start = {
+                    .x = world.enemyanimalposition[i].x,
                     .y = world.enemyanimalposition[i].y};
-                struct Point end ={
+                struct Point end = {
                     .x = world.heavenCell[mindist].x,
                     .y = world.heavenCell[mindist].y};
                 int n;
-                if(world.enemyanimalposition[i].pointindex == -1){
-                    n = printPath(world.size, board, start, end, world.enemyanimalposition[i].pointTomove,items,frontPtr,rearPtr);
-                    if(n != -1){
-                        reverse(world.enemyanimalposition[i].pointTomove,n);
+                if (world.enemyanimalposition[i].pointindex == -1)
+                {
+                    n = printPath(world.size, board, start, end, world.enemyanimalposition[i].pointTomove, items, frontPtr, rearPtr);
+                    if (n != -1)
+                    {
+                        reverse(world.enemyanimalposition[i].pointTomove, n);
                         n--;
                         world.enemyanimalposition[i].pointindex++;
-                        for (int k = 0;k < n;k ++) 
-                            printf("%d %d // ",world.enemyanimalposition[i].pointTomove[k].x,world.enemyanimalposition[i].pointTomove[k].y);
-                        move(worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y,world.enemyanimalposition,i);
-
+                        for (int k = 0; k < n; k++)
+                            printf("%d %d // ", world.enemyanimalposition[i].pointTomove[k].x, world.enemyanimalposition[i].pointTomove[k].y);
+                        move(world,&winSwitch,worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y, world.enemyanimalposition, i);
                     }
-                    else{
+                    else
+                    {
                         //harkat randum
                     }
                 }
-                else{
-                    if(check( worldSize, board, world.enemyanimalposition[i].pointTomove[i].x, world.enemyanimalposition[i].pointTomove[i].y)){
+                else
+                {
+                    if (check(worldSize, board, world.enemyanimalposition[i].pointTomove[i].x, world.enemyanimalposition[i].pointTomove[i].y))
+                    {
                         world.enemyanimalposition[i].pointindex++;
-                        move(worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y,world.enemyanimalposition,i);
+                        move(world,&winSwitch,worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y, world.enemyanimalposition, i);
                     }
-                    else{
-                        world.enemyanimalposition[i].pointindex =-1;
-                        i-- ;
+                    else
+                    {
+                        world.enemyanimalposition[i].pointindex = -1;
+                        i--;
                     }
                 }
 
                 printf("\n");
-                printWorld(world.size, board, i ,world);
-
+                printWorld(world.size, board, i, world);
             }
         }
-
     }
 
     return 0;

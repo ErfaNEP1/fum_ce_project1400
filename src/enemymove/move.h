@@ -1,4 +1,5 @@
-int FindtheClosestWaytoH(int enemyX, int enemyY, struct Cell heavencell[], int heavencount){
+int FindtheClosestWaytoH(int enemyX, int enemyY, struct Cell heavencell[], int heavencount)
+{
     int dis, mindis = 40, mukhtasat;
     for (int i = 0; i < heavencount; i++)
     {
@@ -12,10 +13,12 @@ int FindtheClosestWaytoH(int enemyX, int enemyY, struct Cell heavencell[], int h
     return mukhtasat;
 }
 
-void reverse(struct Point pointTomove[], int number) {
+void reverse(struct Point pointTomove[], int number)
+{
     int i, j;
 
-    for (i = 0,j = number-2;j > i;i ++,j --) {
+    for (i = 0, j = number - 2; j > i; i++, j--)
+    {
 
         int tempX = pointTomove[i].x;
         int tempY = pointTomove[i].y;
@@ -27,27 +30,40 @@ void reverse(struct Point pointTomove[], int number) {
     return;
 }
 
-int check(int worldSize, struct Cell board[][worldSize] , int x, int y){
-    if( strcmp (board[x][y].typePlace, "animal")==0){
+int check(int worldSize, struct Cell board[][worldSize], int x, int y)
+{
+    if (strcmp(board[x][y].typePlace, "animal") == 0)
+    {
         return 0;
     }
-    else return 1;
+    else
+        return 1;
 }
 
-void move(int worldSize,struct Cell board[][worldSize], char enemy[], int x, int y, int xx, int yy, struct Animal enemyanimalposition[], int i){
-    Cell enemyCell ={
-        .typePlace="animal",
-        .identifierPlace=*enemy};
-    Cell defaultCell ={
-        .typePlace ="default",
-        .identifierPlace ="."};
-    if (xx > x) printf("enemy(%s(%d,%d)) move to Down",enemy,x,y);
-    if (xx < x) printf("enemy(%s(%d,%d)) move to Up",enemy,x,y);
-    if (yy > y) printf("enemy(%s(%d,%d)) move to Right",enemy,x,y);
-    if (yy < y) printf("enemy(%s(%d,%d)) move to Left",enemy,x,y);
+void move(World world, int *winSwitch, int worldSize, struct Cell board[][worldSize], char enemy[], int x, int y, int xx, int yy, struct Animal enemyanimalposition[], int i)
+{
+    Cell enemyCell = {
+        .typePlace = "animal",
+        .identifierPlace = *enemy};
+    Cell defaultCell = {
+        .typePlace = "default",
+        .identifierPlace = "."};
+    if (xx > x)
+        printf("enemy(%s(%d,%d)) move to Down", enemy, x, y);
+    if (xx < x)
+        printf("enemy(%s(%d,%d)) move to Up", enemy, x, y);
+    if (yy > y)
+        printf("enemy(%s(%d,%d)) move to Right", enemy, x, y);
+    if (yy < y)
+        printf("enemy(%s(%d,%d)) move to Left", enemy, x, y);
+    
+    if(*board[xx][yy].identifierPlace == 'H'){
+        *winSwitch = 1;
+        strcpy(world.winner,enemy);
+    }
+
     board[xx][yy] = enemyCell;
     board[x][y] = defaultCell;
     enemyanimalposition[i].x = xx;
     enemyanimalposition[i].y = yy;
-    
 }

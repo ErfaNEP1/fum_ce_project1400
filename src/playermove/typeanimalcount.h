@@ -1,4 +1,4 @@
-int searchTypeanimalposition(char player[], int worldsize, struct Cell board[][worldsize], struct Animal alliedanimalposition[],Animal enemyanimalposition[]) {
+int searchTypeanimalposition(World world,char player[], int worldsize, struct Cell board[][worldsize], struct Animal alliedanimalposition[],Animal enemyanimalposition[]) {
     int nPlayer = 0, nEnemy = 0;
     for (int i = 0;i < worldsize;i ++) {
         for (int j = 0;j < worldsize;j ++) {
@@ -19,5 +19,8 @@ int searchTypeanimalposition(char player[], int worldsize, struct Cell board[][w
             }
         }
     }
+    world.alliedCount = nPlayer;
+    world.enemyCount = nEnemy;
+
     return (nPlayer);
 }
