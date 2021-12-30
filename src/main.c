@@ -189,51 +189,46 @@ int main()
             printf("player input is done ! %d\n",ch);
 
             // implement AI
-        for(int i=0; i<nEnemy; i++){
-            int mindist=FindtheClosestWaytoH(world.enemyanimalposition[i].x, world.enemyanimalposition[i].y, world.heavenCell, world.heavenCount);
-            struct QueueNode items[400];
-            int front = -1, rear = -1;
-            int *frontPtr = &front, *rearPtr = &rear;
-            struct Point start ={
-                .x = world.enemyanimalposition[i].x ,
-                .y = world.enemyanimalposition[i].y};
-            struct Point end ={
-                .x = world.heavenCell[mindist].x,
-                .y = world.heavenCell[mindist].y};
-            int n = printPath(world.size, board, start, end, world.enemyanimalposition[i].pointTomove,items,frontPtr,rearPtr);
-            
-            if(world.enemyanimalposition[i].pointindex == -1){
-                if(n != -1){
-                    revrese(world.enemyanimalposition[i].pointTomove,n);
-                    move();
-                    n--;
-                }
-            }
-            else{
-                if(check( worldSize, board, world.enemyanimalposition[i].pointTomove[n].x, world.enemyanimalposition[i].pointTomove[n].y)){
-                    move();
-                }
-                else{
+            for(int i=0; i<nEnemy; i++){
+                int mindist=FindtheClosestWaytoH(world.enemyanimalposition[i].x, world.enemyanimalposition[i].y, world.heavenCell, world.heavenCount);
+                struct QueueNode items[400];
+                int front = -1, rear = -1;
+                int *frontPtr = &front, *rearPtr = &rear;
+                struct Point start ={
+                    .x = world.enemyanimalposition[i].x ,
+                    .y = world.enemyanimalposition[i].y};
+                struct Point end ={
+                    .x = world.heavenCell[mindist].x,
+                    .y = world.heavenCell[mindist].y};
+                int n;
+                if(world.enemyanimalposition[i].pointindex == -1){
+                    n = printPath(world.size, board, start, end, world.enemyanimalposition[i].pointTomove,items,frontPtr,rearPtr);
                     if(n != -1){
-                        revrese(world.enemyanimalposition[i].pointTomove,n);
-                        move();
+                        reverse(world.enemyanimalposition[i].pointTomove,n);
+                        n--;
+                        move(worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointindex[i].x, world.enemyanimalposition[i].pointTomove[i].y);
+                    }
+                    else{
+                        //harkat randum
                     }
                 }
+                else{
+                    if(check( worldSize, board, world.enemyanimalposition[i].pointTomove[i].x, world.enemyanimalposition[i].pointTomove[i].y)){
+                        move(worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointindex[i].x, world.enemyanimalposition[i].pointTomove[i].y);
+                    }
+                    else{
+                        world.enemyanimalposition[i].pointindex =-1;
+                        i-- ;
+                    }
+                }
+
+                for (int k = 0;k < n;k ++) {
+                    printf("%d %d // ",world.enemyanimalposition[i].pointTomove[k].x,world.enemyanimalposition[i].pointTomove[k].y);
+                }
+                printf("\n");
+                printWorld(world.size, board, i ,world);
+
             }
-            
-
-            
-            
-
-            for (int k = 0;k < n;k ++) {
-                printf("%d %d // ",world.enemyanimalposition[i].pointTomove[k].x,world.enemyanimalposition[i].pointTomove[k].y);
-            }
-            printf("\n");
-            printWorld(world.size, board, i ,world);
-
-        }
-
-
         }
 
     }

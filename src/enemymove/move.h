@@ -12,7 +12,7 @@ int FindtheClosestWaytoH(int enemyX, int enemyY, struct Cell heavencell[], int h
     return mukhtasat;
 }
 
-void revrese(struct Point pointTomove[], int number) {
+void reverse(struct Point pointTomove[], int number) {
     int i, j;
 
     for (i = 0,j = number-2;j > i;i ++,j --) {
@@ -32,4 +32,16 @@ int check(int worldSize, struct Cell board[][worldSize] , int x, int y){
         return 0;
     }
     else return 1;
+}
+
+int move(int worldSize,struct Cel board[][worldSize], char enemy, int x, int y, int xx, int yy){
+    Cell enemyCell ={
+        .typePlace="enemy",
+        .identifierPlace=*enemy};
+    Cell defaultCell ={
+        .typePlace ="default",
+        .identifierPlace ="."};
+    board[xx][yy] = enemyCell;
+    board[x][y] = defaultCell;
+    
 }
