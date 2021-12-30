@@ -160,7 +160,7 @@ int main()
     }
 
     printf("\n");
-    int nPlayer = searchTypeanimalposition(world,world.animalToControl, world.size, board, world.alliedanimalposition, world.enemyanimalposition);
+    int nPlayer = searchTypeanimalposition(world, world.animalToControl, world.size, board, world.alliedanimalposition, world.enemyanimalposition);
     int nEnemy = world.animalCount - nPlayer;
 
     textcolor(6);
@@ -188,7 +188,7 @@ int main()
                     getch();
             }
 
-            printf("player input is done ! %d\n", ch);
+            printf("PLAYER TURN DONE, AI TURN.\n");
 
             // implement AI
             for (int i = 0; i < nEnemy; i++)
@@ -214,19 +214,36 @@ int main()
                         world.enemyanimalposition[i].pointindex++;
                         for (int k = 0; k < n; k++)
                             printf("%d %d // ", world.enemyanimalposition[i].pointTomove[k].x, world.enemyanimalposition[i].pointTomove[k].y);
-                        move(world,&winSwitch,worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y, world.enemyanimalposition, i);
+                        move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y, world.enemyanimalposition, i);
                     }
                     else
                     {
-                        //harkat randum
+                        //Random Move
+                        if ((*board[start.x + 1][start.y].identifierPlace == '.' || *board[start.x + 1][start.y].identifierPlace == 'F') && isValid(start.x + 1, start.y, world.size))
+                        {
+                            move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x + 1, start.y, world.enemyanimalposition, i);
+                        }
+                        else if ((*board[start.x - 1][start.y].identifierPlace == '.' || *board[start.x - 1][start.y].identifierPlace == 'F') && isValid(start.x - 1, start.y, world.size))
+                        {
+                            move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x - 1, start.y, world.enemyanimalposition, i);
+                        }
+                        else if ((*board[start.x][start.y + 1].identifierPlace == '.' || *board[start.x][start.y + 1].identifierPlace == 'F') && isValid(start.x, start.y + 1, world.size))
+                        {
+                            move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x, start.y + 1, world.enemyanimalposition, i);
+                        }
+                        else if ((*board[start.x][start.y - 1].identifierPlace == '.' || *board[start.x][start.y - 1].identifierPlace == 'F') && isValid(start.x, start.y - 1, world.size))
+                        {
+                            move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x, start.y - 1, world.enemyanimalposition, i);
+                        }
                     }
                 }
                 else
                 {
-                    if (check(worldSize, board, world.enemyanimalposition[i].pointTomove[i].x, world.enemyanimalposition[i].pointTomove[i].y))
+                    world.enemyanimalposition[i].pointindex++;
+                    if (check(worldSize, board, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y))
                     {
                         world.enemyanimalposition[i].pointindex++;
-                        move(world,&winSwitch,worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y, world.enemyanimalposition, i);
+                        move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y, world.enemyanimalposition, i);
                     }
                     else
                     {
@@ -234,12 +251,15 @@ int main()
                         i--;
                     }
                 }
-
                 printf("\n");
                 printWorld(world.size, board, i, world);
             }
         }
     }
+
+
+    if(winSwitch == 1)
+        printf("PLAYER %s WON THE GAME !" , world.winner);
 
     return 0;
 }

@@ -52,9 +52,9 @@ void pop(int *front, int *rear, struct QueueNode items[])
     }
 }
 
-int isValid(int row, int col)
+int isValid(int row, int col, int worldSize)
 {
-    return ((row >= 0) && (col >= 0) && (row < ROW) && (col < COL)) ? 1 : 0;
+    return ((row >= 0) && (col >= 0) && (row < worldSize) && (col < worldSize)) ? 1 : 0;
 }
 
 int row[4] = {-1, 0, 0, 1};
@@ -145,7 +145,7 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
             int x = pt.x + row[i];
             int y = pt.y + col[i];
 
-            if (isValid(x, y) == 1 && visited[x][y] == 0)
+            if (isValid(x, y,worldsize) == 1 && visited[x][y] == 0)
             {
                 if (strcmp(board[x][y].identifierPlace, "F") == 0 || strcmp(board[x][y].identifierPlace, "H") == 0 || strcmp(board[x][y].identifierPlace, ".") == 0)
                 {
