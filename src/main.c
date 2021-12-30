@@ -242,7 +242,6 @@ int main()
                     world.enemyanimalposition[i].pointindex++;
                     if (check(worldSize, board, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y))
                     {
-                        world.enemyanimalposition[i].pointindex++;
                         move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y, world.enemyanimalposition, i);
                     }
                     else
@@ -257,9 +256,8 @@ int main()
         }
     }
 
-
-    if(winSwitch == 1)
-        printf("PLAYER %s WON THE GAME !" , world.winner);
+    if (winSwitch == 1)
+        printf("PLAYER %s WON THE GAME !", world.winner);
 
     return 0;
 }
