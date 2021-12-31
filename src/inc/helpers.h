@@ -6,7 +6,11 @@ void textcolor(unsigned short color)
 
 void clearScreen()
 {
-    system("cls");
+    for (int i = 0; i < 25; i++)
+    {
+        printf("\n");
+    }
+    
 }
 
 void goToXY(int x, int y)
