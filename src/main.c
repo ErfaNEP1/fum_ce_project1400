@@ -191,11 +191,16 @@ int main()
                 int clickedKey = getch();
                 if (clickedKey != 0)
                 {
-                    i = animalTocontrol(world.animalToControl, nPlayer, world.size, board, world.alliedanimalposition[i].x, world.alliedanimalposition[i].y, i, world.alliedanimalposition, clickedKey);
+                    i = animalTocontrol(&winSwitch,world.animalToControl, nPlayer, world.size, board, world.alliedanimalposition[i].x, world.alliedanimalposition[i].y, i, world.alliedanimalposition, clickedKey);
                     printWorld(world.size, board, i, world);
                 }
                 if (i != nPlayer - 1)
                     getch();
+            }
+
+            if(winSwitch == 1) {
+                snprintf(world.winner, 2, "%s", world.animalToControl);
+                break;
             }
 
             printf("PLAYER TURN DONE, AI TURN.\n");

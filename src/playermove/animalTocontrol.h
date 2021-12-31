@@ -1,4 +1,4 @@
-int animalTocontrol(char player[], int n, int worldsize, struct Cell board[][worldsize], int x, int y, int i, struct Animal alliedanimalposition[], int clickedKey)
+int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct Cell board[][worldsize], int x, int y, int i, struct Animal alliedanimalposition[], int clickedKey)
 {
     Cell animalTocontrolcell = {
         .typePlace = "animal",
@@ -16,7 +16,7 @@ int animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wor
             if (*board[x - 1][y].identifierPlace == '#')
             {
 
-                printf("you can't go hear (#)");
+                printf("YOU CAN'T GO THERE ! (#)");
                 printf("\n");
                 i--;
                 break;
@@ -30,12 +30,12 @@ int animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wor
 
                 printf("move to Up");
                 printf("\n");
-                printf("you win");
+                *winSwitch = 1;
                 printf("\n");
             }
             else if (isalpha(*board[x - 1][y].identifierPlace) && *board[x - 1][y].identifierPlace != 'F')
             {
-                printf("you can't go hear (%s)", board[x - 1][y].identifierPlace);
+                printf("YOU CAN'T GO THERE ! (%s)", board[x - 1][y].identifierPlace);
                 printf("\n");
                 i--;
                 break;
@@ -52,7 +52,7 @@ int animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wor
         }
         else
         {
-            printf("you can't go hear");
+            printf("YOU CAN'T GO THERE !");
             printf("\n");
             i--;
         }
@@ -64,7 +64,7 @@ int animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wor
             if (*board[x + 1][y].identifierPlace == '#')
             {
 
-                printf("you can't go hear (#)");
+                printf("YOU CAN'T GO THERE ! (#)");
                 printf("\n");
                 i--;
                 break;
@@ -78,12 +78,12 @@ int animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wor
 
                 printf("move to Down");
                 printf("\n");
-                printf("you win");
+                *winSwitch = 1;
                 printf("\n");
             }
             else if (isalpha(*board[x + 1][y].identifierPlace) && *board[x + 1][y].identifierPlace != 'F')
             {
-                printf("you can't go hear (%s)", board[x + 1][y].identifierPlace);
+                printf("YOU CAN'T GO THERE ! (%s)", board[x + 1][y].identifierPlace);
                 printf("\n");
                 i--;
 
@@ -101,7 +101,7 @@ int animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wor
         }
         else
         {
-            printf("you can't go hear");
+            printf("YOU CAN'T GO THERE !");
             printf("\n");
             i--;
         }
@@ -113,7 +113,7 @@ int animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wor
             if (*board[x][y + 1].identifierPlace == '#')
             {
 
-                printf("you can't go hear (#)");
+                printf("YOU CAN'T GO THERE ! (#)");
                 printf("\n");
                 i--;
 
@@ -128,12 +128,12 @@ int animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wor
 
                 printf("move to Right");
                 printf("\n");
-                printf("you win");
+                *winSwitch = 1;
                 printf("\n");
             }
             else if (isalpha(*board[x][y + 1].identifierPlace) && *board[x][y + 1].identifierPlace != 'F')
             {
-                printf("you can't go hear (%s)", board[x][y + 1].identifierPlace);
+                printf("YOU CAN'T GO THERE ! (%s)", board[x][y + 1].identifierPlace);
                 printf("\n");
                 i--;
 
@@ -151,7 +151,7 @@ int animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wor
         }
         else
         {
-            printf("you can't go hear");
+            printf("YOU CAN'T GO THERE !");
             printf("\n");
             i--;
         }
@@ -163,7 +163,7 @@ int animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wor
             if (*board[x][y - 1].identifierPlace == '#')
             {
 
-                printf("you can't go hear (#)");
+                printf("YOU CAN'T GO THERE ! (#)");
                 printf("\n");
                 i--;
 
@@ -178,12 +178,12 @@ int animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wor
 
                 printf("move to Left");
                 printf("\n");
-                printf("you win");
+                *winSwitch = 1;
                 printf("\n");
             }
             else if (isalpha(*board[x][y - 1].identifierPlace) && *board[x][y - 1].identifierPlace != 'F')
             {
-                printf("you can't go hear (%s)", board[x][y - 1].identifierPlace);
+                printf("YOU CAN'T GO THERE ! (%s)", board[x][y - 1].identifierPlace);
                 printf("\n");
                 i--;
 
@@ -201,7 +201,7 @@ int animalTocontrol(char player[], int n, int worldsize, struct Cell board[][wor
         }
         else
         {
-            printf("you can't go hear");
+            printf("YOU CAN'T GO THERE !");
             printf("\n");
             i--;
         }
