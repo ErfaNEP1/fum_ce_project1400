@@ -6,7 +6,7 @@ void textcolor(unsigned short color)
 
 void clearScreen()
 {
-    for (int i = 0; i < 25; i++)
+    for (int i = 0; i < 40; i++)
     {
         printf("\n");
     }
