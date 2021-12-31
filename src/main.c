@@ -164,24 +164,18 @@ int main()
     int nEnemy = world.animalCount - nPlayer;
 
     textcolor(6);
-    printf("THE GAME HAS STARTED, TO CANCEL THE GAME CLICK ON \"ESC\" \n");
     printWorld(world.size, board, 0, world);
     textcolor(6);
-    printf("************* WAIT FOR 5 SECONDS ************* \n");
-    for (int i = 0; i < 5; i++)
-    {
-        sleep(1000);
-        printf("%d ", i + 1);
-    }
     clearScreen();
 
-    printf("\nSTART !!! ( Move With Arrow Keys. )\n");
+    printf("\nSTART !!! ( Move With Arrow Keys. ) ( PRESS \"ESC\" TO EXIT )\n");
     printWorld(world.size, board, 0, world);
 
     textcolor(7);
     int ch;
     textcolor(2);
     int winSwitch = 0;
+    
     while ((ch = getch()) != 27 && winSwitch == 0)
     {
         if (ch == 224 || ch == 0)
@@ -277,8 +271,6 @@ int main()
                     }
                 }
                 printf("\n");
-                printWorld(world.size, board, i, world);
-                sleep(1500);
                 clearScreen();
             }
             if (winSwitch == 1)
@@ -287,6 +279,7 @@ int main()
             }
             else
             {
+                printWorld(world.size, board, 0, world);
                 printf("ROUND FINISHED, WAIT FOR 3 SECONDS\n");
                 for (int i = 0; i < 3; i++)
                 {
@@ -300,6 +293,7 @@ int main()
         }
     }
     clearScreen();
+    printWorld(world.size, board, 0, world);
     textcolor(6);
     if (winSwitch == 1)
         printf("PLAYER %s WON THE GAME !", world.winner);
