@@ -1,3 +1,26 @@
+enum
+{
+  KEY_ESC     = 27,
+  ARROW_UP    = 72,
+  ARROW_DOWN  = 80,
+  ARROW_LEFT  = 75,
+  ARROW_RIGHT = 77,
+  ARROW_LEFTUP  = 71,
+  ARROW_LEFTDOWN  = 79,
+  ARROW_RIGHTUP  = 73,
+  ARROW_RIGHTDOWN  = 81
+};
+
+int get_code()
+{
+    int ch = getch();
+
+    if (ch == 0 || ch == 224)
+        return getch();
+
+    return getch();
+}
+
 int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct Cell board[][worldsize], int x, int y, int i, struct Animal alliedanimalposition[], int clickedKey, int cellsToMove)
 {
     int sw=1;
@@ -12,13 +35,11 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
     printf("Maximum number for moving:%d\n",cellsToMove);
     printf("Enter number");
     int Mcells;
-    do{
-        scanf("%d",&Mcells);
-    }while(Mcells>cellsToMove || Mcells<=0);
+    scanf("%d",&Mcells);
 
     switch (clickedKey)
     {
-    case 72:
+    case ARROW_UP:
         if (x - Mcells >= 0)
         {
             for(int k=1; k<=Mcells; k++){
@@ -44,6 +65,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
                     sw=0;
                     *winSwitch = 1;
                     printf("\n");
+                    break;
                 }
                 else if (isalpha(*board[x - k][y].identifierPlace) && *board[x - k][y].identifierPlace != 'F')
                 {
@@ -73,7 +95,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
         }
         break;
 
-    case 80:
+    case ARROW_DOWN:
         if (x + Mcells < worldsize)
         {
             for(int k=1; k<=Mcells; k++){
@@ -98,6 +120,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
                     sw=0;
                     *winSwitch = 1;
                     printf("\n");
+                    break;
                 }
                 else if (isalpha(*board[x + k][y].identifierPlace) && *board[x + k][y].identifierPlace != 'F')
                 {
@@ -127,7 +150,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
         }
         break;
 
-    case 77:
+    case ARROW_RIGHT:
         if (y + Mcells < worldsize)
         {
             for(int k=1; k<=Mcells; k++){
@@ -153,6 +176,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
                     sw=0;
                     *winSwitch = 1;
                     printf("\n");
+                    break;
                 }
                 else if (isalpha(*board[x][y + k].identifierPlace) && *board[x][y + k].identifierPlace != 'F')
                 {
@@ -182,7 +206,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
         }
         break;
 
-    case 75:
+    case ARROW_LEFT:
         if (y - Mcells >= 0)
         {
             for(int k=1; k<=Mcells; k++){
@@ -208,6 +232,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
                     sw=0;
                     *winSwitch = 1;
                     printf("\n");
+                    break;
                 }
                 else if (isalpha(*board[x][y - k].identifierPlace) && *board[x][y - k].identifierPlace != 'F')
                 {
@@ -236,10 +261,241 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
             i--;
         }
         break;
+    case ARROW_LEFTUP:
+        if (y - Mcells >= 0 && x - Mcells >= 0)
+        {
+            for(int k=1; k<=Mcells; k++){
+                if (*board[x-k][y - k].identifierPlace == '#')
+                {
+
+                    printf("YOU CAN'T GO THERE ! (#)");
+                    printf("\n");
+                    sw=0;
+                    i--;
+
+                    break;
+                }
+                else if (*board[x-k][y - k].identifierPlace == 'H')
+                {
+
+                    board[x-k][y - k] = animalTocontrolcell;
+                    board[x][y] = defaultCell;
+                    alliedanimalposition[i].y-= k;
+                    alliedanimalposition[i].x-= k;
+
+                    printf("move to LefttoUp");
+                    printf("\n");
+                    sw=0;
+                    *winSwitch = 1;
+                    printf("\n");
+                    break;
+                }
+                else if (isalpha(*board[x-k][y - k].identifierPlace) && *board[x-k][y - k].identifierPlace != 'F')
+                {
+                    printf("YOU CAN'T GO THERE ! (%s)", board[x-k][y - k].identifierPlace);
+                    printf("\n");
+                    sw=0;
+                    i--;
+
+                    break;
+                }
+            }
+            if(sw==1)
+            {
+                board[x-Mcells][y - Mcells] = animalTocontrolcell;
+                board[x][y] = defaultCell;
+                alliedanimalposition[i].y-= Mcells;
+                alliedanimalposition[i].x-= Mcells;
+
+                printf("move to LefttoUp");
+                printf("\n");
+            }
+        }
+        else
+        {
+            printf("YOU CAN'T GO THERE !");
+            printf("\n");
+            i--;
+        }
+        break;
+   case ARROW_RIGHTUP:
+        if (y + Mcells < worldsize && x - Mcells >= 0)
+        {
+            for(int k=1; k<=Mcells; k++){
+                if (*board[x-k][y + k].identifierPlace == '#')
+                {
+
+                    printf("YOU CAN'T GO THERE ! (#)");
+                    printf("\n");
+                    sw=0;
+                    i--;
+                    
+                    break;
+                }
+                else if (*board[x-k][y + k].identifierPlace == 'H')
+                {
+
+                    board[x-k][y + k] = animalTocontrolcell;
+                    board[x][y] = defaultCell;
+                    alliedanimalposition[i].y+= k;
+                    alliedanimalposition[i].x-= k;
+
+                    printf("move to RighttoUp");
+                    printf("\n");
+                    sw=0;
+                    *winSwitch = 1;
+                    printf("\n");
+                    break;
+                }
+                else if (isalpha(*board[x-k][y + k].identifierPlace) && *board[x-k][y + k].identifierPlace != 'F')
+                {
+                    printf("YOU CAN'T GO THERE ! (%s)", board[x-k][y + k].identifierPlace);
+                    printf("\n");
+                    sw=0;
+                    i--;
+                    break;
+
+                }
+            }
+            if(sw==1)
+            {
+                board[x-Mcells][y + Mcells] = animalTocontrolcell;
+                board[x][y] = defaultCell;
+                alliedanimalposition[i].y+= Mcells;
+                alliedanimalposition[i].x-= Mcells;
+
+                printf("move to RighttoUp");
+                printf("\n");
+            }
+        }
+            
+        else {
+            printf("YOU CAN'T GO THERE !");
+            printf("\n");
+            i--;
+        }
+        break;
+   case ARROW_RIGHTDOWN:
+        if (y + Mcells < worldsize && x + Mcells < worldsize)
+        {
+            for(int k=1; k<=Mcells; k++){
+                if (*board[x+k][y + k].identifierPlace == '#')
+                {
+
+                    printf("YOU CAN'T GO THERE ! (#)");
+                    printf("\n");
+                    sw=0;
+                    i--;
+                    
+                    break;
+                }
+                else if (*board[x+k][y + k].identifierPlace == 'H')
+                {
+
+                    board[x+k][y + k] = animalTocontrolcell;
+                    board[x][y] = defaultCell;
+                    alliedanimalposition[i].y+= k;
+                    alliedanimalposition[i].x+= k;
+
+                    printf("move to RighttoDown");
+                    printf("\n");
+                    sw=0;
+                    *winSwitch = 1;
+                    printf("\n");
+                    break;
+                }
+                else if (isalpha(*board[x+k][y + k].identifierPlace) && *board[x+k][y + k].identifierPlace != 'F')
+                {
+                    printf("YOU CAN'T GO THERE ! (%s)", board[x+k][y + k].identifierPlace);
+                    printf("\n");
+                    sw=0;
+                    i--;
+                    break;
+
+                }
+            }
+            if(sw==1)
+            {
+                board[x+Mcells][y + Mcells] = animalTocontrolcell;
+                board[x][y] = defaultCell;
+                alliedanimalposition[i].y+= Mcells;
+                alliedanimalposition[i].x+= Mcells;
+
+                printf("move to RighttoDown");
+                printf("\n");
+            }
+        }
+        else
+        {
+            printf("YOU CAN'T GO THERE !");
+            printf("\n");
+            i--;
+        }
+        break;
+    case ARROW_LEFTDOWN:
+        if (x + Mcells < worldsize && y - Mcells >= 0)
+        {
+            for(int k=1; k<=Mcells; k++){
+                if (*board[x + k][y-k].identifierPlace == '#')
+                {
+
+                    printf("YOU CAN'T GO THERE ! (#)");
+                    printf("\n");
+                    sw=0;
+                    i--;
+                    
+                    break;
+                }
+                else if (*board[x + k][y-k].identifierPlace == 'H')
+                {
+
+                    board[x + k][y-k] = animalTocontrolcell;
+                    board[x][y] = defaultCell;
+                    alliedanimalposition[i].y-= k;
+                    alliedanimalposition[i].x+= k;
+
+                    printf("move to LefttoDown");
+                    printf("\n");
+                    sw=0;
+                    *winSwitch = 1;
+                    printf("\n");
+                    break;
+                }
+                else if (isalpha(*board[x + k][y-k].identifierPlace) && *board[x + k][y-k].identifierPlace != 'F')
+                {
+                    printf("YOU CAN'T GO THERE ! (%s)", board[x + k][y-k].identifierPlace);
+                    printf("\n");
+                    sw=0;
+                    i--;
+                    
+                    break;
+                }
+            }
+            if(sw==1)
+            {
+                board[x + Mcells][y-Mcells] = animalTocontrolcell;
+                board[x][y] = defaultCell;
+                alliedanimalposition[i].x+=Mcells;
+                alliedanimalposition[i].y-=Mcells;
+
+                printf("move to LefttoDown");
+                printf("\n");
+            }
+        }
+        else
+        {
+            printf("YOU CAN'T GO THERE !");
+            printf("\n");
+            i--;
+        }
+        break;
+
 
     default:
 
         printf("default");
+        printf("\n");
+        i --;
         break;
     }
 
