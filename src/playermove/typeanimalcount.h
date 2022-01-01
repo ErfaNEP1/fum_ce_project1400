@@ -7,6 +7,7 @@ int searchTypeanimalposition(World world,char player[], int worldsize, struct Ce
 
                    alliedanimalposition[nPlayer].x = i;
                    alliedanimalposition[nPlayer].y = j;
+                   alliedanimalposition[nPlayer].gene = board[i][j].animalPlace.gene;
                    nPlayer ++;
 
                 }
@@ -14,6 +15,7 @@ int searchTypeanimalposition(World world,char player[], int worldsize, struct Ce
                     enemyanimalposition[nEnemy].x = i;
                     enemyanimalposition[nEnemy].y = j;
                     enemyanimalposition[nEnemy].pointindex = -1;
+                    enemyanimalposition[nEnemy].gene = board[i][j].animalPlace.gene;
                     nEnemy ++;
                 }
             }

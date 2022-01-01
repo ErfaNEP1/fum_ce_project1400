@@ -344,6 +344,7 @@ int main()
     clearScreen();
     printWorld(world.size, board, 0, world);
     textcolor(6);
+    }
     if (winSwitch == 1)
         printf("PLAYER %s WON THE GAME !", world.winner);
 
