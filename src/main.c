@@ -228,20 +228,18 @@ int main()
     textcolor(2);
     int winSwitch = 0;
 
-    while ((ch = getch()) != 27 && winSwitch == 0)
+    while ((ch = get_code()) != 27 && winSwitch == 0)
     {
-        if (ch == 224 || ch == 0)
-        {
             for (int i = 0; i < nPlayer; i++)
             {
-                int clickedKey = getch();
+                int clickedKey = ch;
                 if (clickedKey != 0)
                 {
                     i = animalTocontrol(&winSwitch, world.animalToControl, nPlayer, world.size, board, world.alliedanimalposition[i].x, world.alliedanimalposition[i].y, i, world.alliedanimalposition, clickedKey, world.alliedanimalposition[i].gene.cellsToMove);
                     printWorld(world.size, board, i, world);
                 }
                 if (i != nPlayer - 1)
-                    getch();
+                    ch = get_code();
             }
 
             if (winSwitch == 1)
@@ -343,7 +341,6 @@ int main()
                 printf("NEXT ROUND STARTED, MOVE !\n");
                 printWorld(world.size, board, 0, world);
             }
-    }
     clearScreen();
     printWorld(world.size, board, 0, world);
     textcolor(6);
