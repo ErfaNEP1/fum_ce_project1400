@@ -212,144 +212,143 @@ int main()
     printWorld(world.size,board,0,world);
     printf("\n");
     printf("%s",world.animalToControl);
-    // int nPlayer = searchTypeanimalposition(world, world.animalToControl, world.size, board, world.alliedanimalposition, world.enemyanimalposition);
-    // int nEnemy = world.animalCount - nPlayer;
+    int nPlayer = searchTypeanimalposition(world, world.animalToControl, world.size, board, world.alliedanimalposition, world.enemyanimalposition);
+    int nEnemy = world.animalCount - nPlayer;
 
-    // textcolor(6);
-    // printWorld(world.size, board, 0, world);
-    // textcolor(6);
-    // clearScreen();
+    textcolor(6);
+    printWorld(world.size, board, 0, world);
+    textcolor(6);
+    clearScreen();
 
-    // printf("\nSTART !!! ( Move With Arrow Keys. ) ( PRESS \"ESC\" TO EXIT )\n");
-    // printWorld(world.size, board, 0, world);
+    printf("\nSTART !!! ( Move With Arrow Keys. ) ( PRESS \"ESC\" TO EXIT )\n");
+    printWorld(world.size, board, 0, world);
 
-    // textcolor(7);
-    // int ch;
-    // textcolor(2);
-    // int winSwitch = 0;
+    textcolor(7);
+    int ch;
+    textcolor(2);
+    int winSwitch = 0;
 
-    // while ((ch = getch()) != 27 && winSwitch == 0)
-    // {
-    //     if (ch == 224 || ch == 0)
-    //     {
-    //         for (int i = 0; i < nPlayer; i++)
-    //         {
-    //             int clickedKey = getch();
-    //             if (clickedKey != 0)
-    //             {
-    //                 i = animalTocontrol(&winSwitch, world.animalToControl, nPlayer, world.size, board, world.alliedanimalposition[i].x, world.alliedanimalposition[i].y, i, world.alliedanimalposition, clickedKey, world.alliedanimalposition[i].gene.cellsToMove);
-    //                 printWorld(world.size, board, i, world);
-    //             }
-    //             if (i != nPlayer - 1)
-    //                 getch();
-    //         }
+    while ((ch = getch()) != 27 && winSwitch == 0)
+    {
+        if (ch == 224 || ch == 0)
+        {
+            for (int i = 0; i < nPlayer; i++)
+            {
+                int clickedKey = getch();
+                if (clickedKey != 0)
+                {
+                    i = animalTocontrol(&winSwitch, world.animalToControl, nPlayer, world.size, board, world.alliedanimalposition[i].x, world.alliedanimalposition[i].y, i, world.alliedanimalposition, clickedKey, world.alliedanimalposition[i].gene.cellsToMove);
+                    printWorld(world.size, board, i, world);
+                }
+                if (i != nPlayer - 1)
+                    getch();
+            }
 
-    //         if (winSwitch == 1)
-    //         {
-    //             snprintf(world.winner, 2, "%s", world.animalToControl);
-    //             break;
-    //         }
+            if (winSwitch == 1)
+            {
+                snprintf(world.winner, 2, "%s", world.animalToControl);
+                break;
+            }
 
-    //         printf("PLAYER TURN DONE, AI TURN.\n");
-    //         clearScreen();
+            printf("PLAYER TURN DONE, AI TURN.\n");
+            clearScreen();
 
-    //         // implement AI
-    //         for (int i = 0; i < nEnemy; i++)
-    //         {
-    //             printf("WAIT FOR ENEMY TO MOVE");
-    //             int mindist = FindtheClosestWaytoH(world.enemyanimalposition[i].x, world.enemyanimalposition[i].y, world.heavenCell, world.heavenCount);
-    //             struct QueueNode items[400];
-    //             int front = -1, rear = -1;
-    //             int *frontPtr = &front, *rearPtr = &rear;
-    //             struct Point start = {
-    //                 .x = world.enemyanimalposition[i].x,
-    //                 .y = world.enemyanimalposition[i].y};
-    //             struct Point end = {
-    //                 .x = world.heavenCell[mindist].x,
-    //                 .y = world.heavenCell[mindist].y};
-    //             int n;
-    //             if (world.enemyanimalposition[i].pointindex == -1)
-    //             {
-    //                 n = printPath(world.size, board, start, end, world.enemyanimalposition[i].pointTomove, items, frontPtr, rearPtr);
-    //                 if (n != -1)
-    //                 {
-    //                     reverse(world.enemyanimalposition[i].pointTomove, n);
-    //                     n--;
-    //                     world.enemyanimalposition[i].pointindex++;
+            // implement AI
+            for (int i = 0; i < nEnemy; i++)
+            {
+                printf("WAIT FOR ENEMY TO MOVE");
+                int mindist = FindtheClosestWaytoH(world.enemyanimalposition[i].x, world.enemyanimalposition[i].y, world.heavenCell, world.heavenCount);
+                struct QueueNode items[400];
+                int front = -1, rear = -1;
+                int *frontPtr = &front, *rearPtr = &rear;
+                struct Point start = {
+                    .x = world.enemyanimalposition[i].x,
+                    .y = world.enemyanimalposition[i].y};
+                struct Point end = {
+                    .x = world.heavenCell[mindist].x,
+                    .y = world.heavenCell[mindist].y};
+                int n;
+                if (world.enemyanimalposition[i].pointindex == -1)
+                {
+                    n = printPath(world.size, board, start, end, world.enemyanimalposition[i].pointTomove, items, frontPtr, rearPtr);
+                    if (n != -1)
+                    {
+                        reverse(world.enemyanimalposition[i].pointTomove, n);
+                        n--;
+                        world.enemyanimalposition[i].pointindex++;
 
-    //                     move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y, world.enemyanimalposition, i);
-    //                     if (winSwitch == 1)
-    //                     {
-    //                         snprintf(world.winner, 2, "%s", board[world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x][world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y].identifierPlace);
-    //                         break;
-    //                     }
-    //                 }
-    //                 else
-    //                 {
-    //                     //Random Move
-    //                     if ((*board[start.x + 1][start.y].identifierPlace == '.' || *board[start.x + 1][start.y].identifierPlace == 'F') && isValid(start.x + 1, start.y, world.size))
-    //                     {
-    //                         move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x + 1, start.y, world.enemyanimalposition, i);
-    //                     }
-    //                     else if ((*board[start.x - 1][start.y].identifierPlace == '.' || *board[start.x - 1][start.y].identifierPlace == 'F') && isValid(start.x - 1, start.y, world.size))
-    //                     {
-    //                         move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x - 1, start.y, world.enemyanimalposition, i);
-    //                     }
-    //                     else if ((*board[start.x][start.y + 1].identifierPlace == '.' || *board[start.x][start.y + 1].identifierPlace == 'F') && isValid(start.x, start.y + 1, world.size))
-    //                     {
-    //                         move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x, start.y + 1, world.enemyanimalposition, i);
-    //                     }
-    //                     else if ((*board[start.x][start.y - 1].identifierPlace == '.' || *board[start.x][start.y - 1].identifierPlace == 'F') && isValid(start.x, start.y - 1, world.size))
-    //                     {
-    //                         move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x, start.y - 1, world.enemyanimalposition, i);
-    //                     }
-    //                 }
-    //             }
-    //             else
-    //             {
-    //                 world.enemyanimalposition[i].pointindex++;
-    //                 if (check(worldSize, board, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y))
-    //                 {
-    //                     move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y, world.enemyanimalposition, i);
-    //                     if (winSwitch == 1)
-    //                     {
-    //                         snprintf(world.winner, 2, "%s", board[world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x][world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y].identifierPlace);
-    //                         break;
-    //                     }
-    //                 }
-    //                 else
-    //                 {
-    //                     world.enemyanimalposition[i].pointindex = -1;
-    //                     i--;
-    //                 }
-    //             }
-    //             printf("\n");
-    //             clearScreen();
-    //         }
-    //         if (winSwitch == 1)
-    //         {
-    //             break;
-    //         }
-    //         else
-    //         {
-    //             printWorld(world.size, board, 0, world);
-    //             printf("ROUND FINISHED, WAIT FOR 3 SECONDS\n");
-    //             for (int i = 0; i < 3; i++)
-    //             {
-    //                 sleep(1000);
-    //                 printf("%d ", i + 1);
-    //             }
-    //             clearScreen();
-    //             printf("NEXT ROUND STARTED, MOVE !\n");
-    //             printWorld(world.size, board, 0, world);
-    //         }
-    //     }
-    // }
-    // clearScreen();
-    // printWorld(world.size, board, 0, world);
-    // textcolor(6);
-    // if (winSwitch == 1)
-    //     printf("PLAYER %s WON THE GAME !", world.winner);
+                        move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y, world.enemyanimalposition, i);
+                        if (winSwitch == 1)
+                        {
+                            snprintf(world.winner, 2, "%s", board[world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x][world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y].identifierPlace);
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        //Random Move
+                        if ((*board[start.x + 1][start.y].identifierPlace == '.' || *board[start.x + 1][start.y].identifierPlace == 'F') && isValid(start.x + 1, start.y, world.size))
+                        {
+                            move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x + 1, start.y, world.enemyanimalposition, i);
+                        }
+                        else if ((*board[start.x - 1][start.y].identifierPlace == '.' || *board[start.x - 1][start.y].identifierPlace == 'F') && isValid(start.x - 1, start.y, world.size))
+                        {
+                            move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x - 1, start.y, world.enemyanimalposition, i);
+                        }
+                        else if ((*board[start.x][start.y + 1].identifierPlace == '.' || *board[start.x][start.y + 1].identifierPlace == 'F') && isValid(start.x, start.y + 1, world.size))
+                        {
+                            move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x, start.y + 1, world.enemyanimalposition, i);
+                        }
+                        else if ((*board[start.x][start.y - 1].identifierPlace == '.' || *board[start.x][start.y - 1].identifierPlace == 'F') && isValid(start.x, start.y - 1, world.size))
+                        {
+                            move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x, start.y - 1, world.enemyanimalposition, i);
+                        }
+                    }
+                }
+                else
+                {
+                    world.enemyanimalposition[i].pointindex++;
+                    if (check(worldSize, board, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y))
+                    {
+                        move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y, world.enemyanimalposition, i);
+                        if (winSwitch == 1)
+                        {
+                            snprintf(world.winner, 2, "%s", board[world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x][world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y].identifierPlace);
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        world.enemyanimalposition[i].pointindex = -1;
+                        i--;
+                    }
+                }
+                printf("\n");
+                clearScreen();
+            }
+            if (winSwitch == 1)
+            {
+                break;
+            }
+            else
+            {
+                printWorld(world.size, board, 0, world);
+                printf("ROUND FINISHED, WAIT FOR 3 SECONDS\n");
+                for (int i = 0; i < 3; i++)
+                {
+                    sleep(1000);
+                    printf("%d ", i + 1);
+                }
+                clearScreen();
+                printf("NEXT ROUND STARTED, MOVE !\n");
+                printWorld(world.size, board, 0, world);
+            }
+    }
+    clearScreen();
+    printWorld(world.size, board, 0, world);
+    textcolor(6);
+    if (winSwitch == 1)
+        printf("PLAYER %s WON THE GAME !", world.winner);
 
     return 0;
 }
