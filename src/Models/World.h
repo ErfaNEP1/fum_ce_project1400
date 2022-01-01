@@ -15,8 +15,9 @@ void initWorld(struct World world, int worldSize, struct Cell board[][worldSize]
 {
     Cell defaultCell = {
         .typePlace = "default",
-        .identifierPlace = "."};
-
+        .identifierPlace = "."
+    };
+    
     for (int i = 0; i < worldSize; i++)
     {
         for (int j = 0; j < worldSize; j++)
@@ -63,9 +64,22 @@ void printFoodsDetails(int worldSize, struct Cell board[][worldSize])
     {
         for (int j = 0; j < worldSize; j++)
         {
-            if (strcmp(board[i][j].typePlace, "food") == 0)
+            if (strcmp(board[i][j].typePlace, "animal") == 0)
             {
-                printf("food(%d,%d) : %d\n", i, j, board[i][j].foodPlace.energy);
+                printf("ANIMAL %s (%d,%d) \n", board[i][j].identifierPlace, board[i][j].animalPlace.energyPoint,board[i][j].animalPlace.gene.attackPower) ;
+            }
+        }
+    }
+}
+void giveCharactersGenome(Genome gene,char player[], int worldsize, struct Cell board[][worldsize], int energyPoint){
+    for (int i = 0; i < worldsize; i++)
+    {
+        for (int j = 0; j < worldsize; j++)
+        {
+            if (strcmp(board[i][j].identifierPlace, player) == 0)
+            {
+                board[i][j].animalPlace.energyPoint = energyPoint;
+                board[i][j].animalPlace.gene = gene;
             }
         }
     }
