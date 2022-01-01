@@ -237,7 +237,7 @@ int main()
     //             int clickedKey = getch();
     //             if (clickedKey != 0)
     //             {
-    //                 i = animalTocontrol(&winSwitch, world.animalToControl, nPlayer, world.size, board, world.alliedanimalposition[i].x, world.alliedanimalposition[i].y, i, world.alliedanimalposition, clickedKey);
+    //                 i = animalTocontrol(&winSwitch, world.animalToControl, nPlayer, world.size, board, world.alliedanimalposition[i].x, world.alliedanimalposition[i].y, i, world.alliedanimalposition, clickedKey, world.alliedanimalposition[i].gene.cellsToMove);
     //                 printWorld(world.size, board, i, world);
     //             }
     //             if (i != nPlayer - 1)
