@@ -84,6 +84,12 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
             }
             if(sw==1)
             {
+                for(int j=1; j<Mcells; j++){
+                    if(*board[x - j][y].identifierPlace == 'F'){
+                        board[x - j][y] = defaultCell ;
+                        alliedanimalposition[i].energyPoint += board[x - j][y].foodPlace.energy ;
+                    }
+                }
                 board[x - Mcells][y] = animalTocontrolcell;
                 board[x][y] = defaultCell;
                 alliedanimalposition[i].x-=Mcells;
@@ -139,6 +145,12 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
             }
             if(sw==1)
             {
+                for(int j=1; j<Mcells; j++){
+                    if(*board[x + j][y].identifierPlace == 'F'){
+                        board[x + j][y] = defaultCell ;
+                        alliedanimalposition[i].energyPoint += board[x + j][y].foodPlace.energy ;
+                    }
+                }
                 board[x + Mcells][y] = animalTocontrolcell;
                 board[x][y] = defaultCell;
                 alliedanimalposition[i].x+= Mcells;
@@ -195,6 +207,12 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
             }
             if(sw==1)
             {
+                for(int j=1; j<Mcells; j++){
+                    if(*board[x][y + j].identifierPlace == 'F'){
+                        board[x][y + j] = defaultCell ;
+                        alliedanimalposition[i].energyPoint += board[x][y + j].foodPlace.energy ;
+                    }
+                }
                 board[x][y + Mcells] = animalTocontrolcell;
                 board[x][y] = defaultCell;
                 alliedanimalposition[i].y+= Mcells;
@@ -251,6 +269,12 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
             }
             if(sw==1)
             {
+                for(int j=1; j<Mcells; j++){
+                    if(*board[x][y - j].identifierPlace == 'F'){
+                        board[x][y - j] = defaultCell ;
+                        alliedanimalposition[i].energyPoint += board[x][y - j].foodPlace.energy ;
+                    }
+                }
                 board[x][y - Mcells] = animalTocontrolcell;
                 board[x][y] = defaultCell;
                 alliedanimalposition[i].y-= Mcells;
@@ -307,7 +331,13 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
             }
             if(sw==1)
             {
-                board[x-Mcells][y - Mcells] = animalTocontrolcell;
+                for(int j=1; j<Mcells; j++){
+                    if(*board[x - j][y - j].identifierPlace == 'F'){
+                        board[x - j][y - j] = defaultCell ;
+                        alliedanimalposition[i].energyPoint += board[x - j][y - j].foodPlace.energy ;
+                    }
+                }
+                board[x - Mcells][y - Mcells] = animalTocontrolcell;
                 board[x][y] = defaultCell;
                 alliedanimalposition[i].y-= Mcells;
                 alliedanimalposition[i].x-= Mcells;
@@ -364,7 +394,13 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
             }
             if(sw==1)
             {
-                board[x-Mcells][y + Mcells] = animalTocontrolcell;
+                for(int j=1; j<Mcells; j++){
+                    if(*board[x - j][y + 1].identifierPlace == 'F'){
+                        board[x - j][y + 1] = defaultCell ;
+                        alliedanimalposition[i].energyPoint += board[x - j][y + 1].foodPlace.energy ;
+                    }
+                }
+                board[x - Mcells][y + Mcells] = animalTocontrolcell;
                 board[x][y] = defaultCell;
                 alliedanimalposition[i].y+= Mcells;
                 alliedanimalposition[i].x-= Mcells;
@@ -421,7 +457,13 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
             }
             if(sw==1)
             {
-                board[x+Mcells][y + Mcells] = animalTocontrolcell;
+                for(int j=1; j<Mcells; j++){
+                    if(*board[x + j][y + 1].identifierPlace == 'F'){
+                        board[x + j][y + 1] = defaultCell ;
+                        alliedanimalposition[i].energyPoint += board[x + j][y + 1].foodPlace.energy ;
+                    }
+                }
+                board[x + Mcells][y + Mcells] = animalTocontrolcell;
                 board[x][y] = defaultCell;
                 alliedanimalposition[i].y+= Mcells;
                 alliedanimalposition[i].x+= Mcells;
@@ -478,7 +520,13 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
             }
             if(sw==1)
             {
-                board[x + Mcells][y-Mcells] = animalTocontrolcell;
+                for(int j=1; j<Mcells; j++){
+                    if(*board[x + j][y - j].identifierPlace == 'F'){
+                        board[x + j][y - j] = defaultCell ;
+                        alliedanimalposition[i].energyPoint += board[x + j][y - j].foodPlace.energy ;
+                    }
+                }
+                board[x + Mcells][y - Mcells] = animalTocontrolcell;
                 board[x][y] = defaultCell;
                 alliedanimalposition[i].x+=Mcells;
                 alliedanimalposition[i].y-=Mcells;
