@@ -254,9 +254,9 @@ int main()
             // implement AI
             for (int i = 0; i < nEnemy; i++)
             {
-                printf("WAIT FOR ENEMY TO MOVE");
+                // printf("WAIT FOR ENEMY TO MOVE");
                 int mindist = FindtheClosestWaytoH(world.enemyanimalposition[i].x, world.enemyanimalposition[i].y, world.heavenCell, world.heavenCount);
-                struct QueueNode items[400];
+                struct QueueNode items[world.size * world.size];
                 int front = -1, rear = -1;
                 int *frontPtr = &front, *rearPtr = &rear;
                 struct Point start = {

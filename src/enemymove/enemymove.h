@@ -57,8 +57,8 @@ int isValid(int row, int col, int worldSize)
     return ((row >= 0) && (col >= 0) && (row < worldSize) && (col < worldSize)) ? 1 : 0;
 }
 
-int row[4] = {-1, 0, 0, 1};
-int col[4] = {0, -1, 1, 0};
+int row[8] = {-1, 0, 0, 1, 1, -1, -1, 1};
+int col[8] = {0, -1, 1, 0, 1, 1, -1, -1};
 
 int printPath(int worldsize, struct Cell board[][worldsize], struct Point start, struct Point end, struct Point pointTomove[], struct QueueNode items[], int *front, int *rear)
 {
@@ -92,9 +92,53 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
             int counter = 0;
             pointTomove[counter].x = xx;
             pointTomove[counter].y = yy;
+            
             counter++;
             while (xx != start.x || yy != start.y)
             {
+                if (xx < worldsize - 1 && yy < worldsize - 1 && d[xx + 1][yy + 1] == dist - 2 && dist - 2 > 0)
+                {
+                    pointTomove[counter].x = xx + 1;
+                    pointTomove[counter].y = yy + 1;
+                    xx++;
+                    yy++;
+                    dist -= 2;
+                    counter++;
+                    continue;
+                }
+
+                if (xx > 0 && yy < worldsize - 1 && d[xx - 1][yy + 1] == dist - 2 && dist - 2 > 0)
+                {
+                    pointTomove[counter].x = xx - 1;
+                    pointTomove[counter].y = yy + 1;
+                    xx--;
+                    yy++;
+                    dist -= 2;
+                    counter++;
+                    continue;
+                }
+
+                if (xx > 0 && yy > 0 && d[xx - 1][yy - 1] == dist - 2 && dist - 2 > 0)
+                {
+                    pointTomove[counter].x = xx - 1;
+                    pointTomove[counter].y = yy - 1;
+                    xx--;
+                    yy--;
+                    dist -= 2;
+                    counter++;
+                    continue;
+                }
+
+                if (xx < worldsize - 1 && yy > 0 && d[xx + 1][yy - 1] == dist - 2 && dist - 2 > 0)
+                {
+                    pointTomove[counter].x = xx + 1;
+                    pointTomove[counter].y = yy - 1;
+                    xx++;
+                    yy--;
+                    dist -= 2;
+                    counter++;
+                    continue;
+                }
 
                 if (xx > 0 && d[xx - 1][yy] == dist - 1)
                 {
@@ -103,15 +147,19 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
                     pointTomove[counter].y = yy;
                     xx--;
                     counter++;
+                    dist--;
+                    continue;
                 }
 
-                if (xx < ROW - 1 && d[xx + 1][yy] == dist - 1)
+                if (xx < worldsize - 1 && d[xx + 1][yy] == dist - 1)
                 {
 
                     pointTomove[counter].x = xx + 1;
                     pointTomove[counter].y = yy;
                     xx++;
                     counter++;
+                    dist--;
+                    continue;
                 }
 
                 if (yy > 0 && d[xx][yy - 1] == dist - 1)
@@ -121,17 +169,21 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
                     pointTomove[counter].y = yy - 1;
                     yy--;
                     counter++;
+                    dist--;
+                    continue;
                 }
 
-                if (yy < COL - 1 && d[xx][yy + 1] == dist - 1)
+                if (yy < worldsize - 1 && d[xx][yy + 1] == dist - 1)
                 {
 
                     pointTomove[counter].x = xx;
                     pointTomove[counter].y = yy + 1;
                     yy++;
                     counter++;
+                    dist--;
+                    continue;
                 }
-                dist--;
+                
             }
 
             sw = 1;
@@ -140,22 +192,31 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
         }
 
         pop(front, rear, items);
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 8; i++)
         {
             int x = pt.x + row[i];
             int y = pt.y + col[i];
 
-            if (isValid(x, y,worldsize) == 1 && visited[x][y] == 0)
+            if (isValid(x, y, worldsize) == 1 && visited[x][y] == 0)
             {
                 if (strcmp(board[x][y].identifierPlace, "F") == 0 || strcmp(board[x][y].identifierPlace, "H") == 0 || strcmp(board[x][y].identifierPlace, ".") == 0)
                 {
                     visited[x][y] = 1;
                     struct QueueNode newNode = {
                         {x,
-                         y},
-                        curr.distance + 1};
+                         y}};
+                    if (i > 3)
+                    {
+                        newNode.distance = curr.distance + 2;
+                        d[x][y] = curr.distance + 2;
+                    }
+                    else
+                    {
+                        newNode.distance = curr.distance + 1;
+                        d[x][y] = curr.distance + 1;
+                    }
                     push(newNode, front, rear, items);
-                    d[x][y] = curr.distance + 1;
+                    
                 }
             }
         }

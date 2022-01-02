@@ -66,4 +66,5 @@ void move(World world, int *winSwitch, int worldSize, struct Cell board[][worldS
     board[x][y] = defaultCell;
     enemyanimalposition[i].x = xx;
     enemyanimalposition[i].y = yy;
+    // printWorld(worldSize, board, 0, world);
 }
