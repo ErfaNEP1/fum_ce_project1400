@@ -183,9 +183,9 @@ int main()
                 if(i == 0){
                     gene.energyForMoving = gen;
                 }else if(i == 1){
-                    gene.energyForReproduction = gen;
-                }else if(i == 2){
                     gene.cellsToMove = gen;
+                }else if(i == 2){
+                    gene.energyForReproduction = gen;
                 }else if(i == 3){
                     gene.attackPower = gen;
                 }else if(i == 4){

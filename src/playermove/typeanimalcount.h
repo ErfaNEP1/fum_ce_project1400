@@ -4,7 +4,7 @@ int searchTypeanimalposition(World world,char player[], int worldsize, struct Ce
         for (int j = 0;j < worldsize;j ++) {
             if (strcmp(board[i][j].typePlace,"animal") == 0) {
                if (strcmp(board[i][j].identifierPlace,player) == 0) {
-
+                   alliedanimalposition[nPlayer].energyPoint = board[i][j].animalPlace.energyPoint;
                    alliedanimalposition[nPlayer].x = i;
                    alliedanimalposition[nPlayer].y = j;
                    alliedanimalposition[nPlayer].gene = board[i][j].animalPlace.gene;
@@ -12,6 +12,7 @@ int searchTypeanimalposition(World world,char player[], int worldsize, struct Ce
 
                 }
                 else {
+                    enemyanimalposition[nEnemy].energyPoint = board[i][j].animalPlace.energyPoint;
                     enemyanimalposition[nEnemy].x = i;
                     enemyanimalposition[nEnemy].y = j;
                     enemyanimalposition[nEnemy].pointindex = -1;
