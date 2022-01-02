@@ -68,3 +68,48 @@ void move(World world, int *winSwitch, int worldSize, struct Cell board[][worldS
     enemyanimalposition[i].y = yy;
     // printWorld(worldSize, board, 0, world);
 }
+
+int cellsToMove(struct Point pointTomove[], int pointindex, int Mcells, int n) {
+
+    if (Mcells > 1) {
+
+        if (pointindex+1 < n && pointTomove[pointindex].x == pointTomove[pointindex+1].x) {
+            pointindex ++;
+            if (pointindex+1 < n && Mcells > 2 && pointTomove[pointindex].x == pointTomove[pointindex+1].x) {
+                pointindex ++;
+            }
+        }
+        else if (pointindex+1 < n && pointTomove[pointindex].y == pointTomove[pointindex+1].y) {
+            pointindex ++;
+            if (pointindex+1 < n && Mcells > 2 && pointTomove[pointindex].y == pointTomove[pointindex+1].y) {
+                pointindex ++;
+            }
+        }
+        else if (pointindex+1 < n && pointTomove[pointindex].x -1 ==  pointTomove[pointindex+1].x && pointTomove[pointindex].y -1 == pointTomove[pointindex+1].y) {
+            pointindex ++;
+            if (pointindex+1 < n && Mcells > 2 && pointTomove[pointindex].x -1 == pointTomove[pointindex+1].x && pointTomove[pointindex].y -1 == pointTomove[pointindex+1].y) {
+                pointindex ++;
+            }
+        }
+        else if (pointindex+1 < n && pointTomove[pointindex].x -1 ==  pointTomove[pointindex+1].x && pointTomove[pointindex].y +1 == pointTomove[pointindex+1].y) {
+            pointindex ++;
+            if (pointindex+1 < n && Mcells > 2 && pointTomove[pointindex].x -1 == pointTomove[pointindex+1].x && pointTomove[pointindex].y +1 == pointTomove[pointindex+1].y) {
+                pointindex ++;
+            }
+        }
+        else if (pointindex+1 < n && pointTomove[pointindex].x +1 ==  pointTomove[pointindex+1].x && pointTomove[pointindex].y +1 == pointTomove[pointindex+1].y) {
+            pointindex ++;
+            if (pointindex+1 < n && Mcells > 2 && pointTomove[pointindex].x +1 == pointTomove[pointindex+1].x && pointTomove[pointindex].y +1 == pointTomove[pointindex+1].y) {
+                pointindex ++;
+            }
+        }
+        else if (pointindex+1 < n && pointTomove[pointindex].x +1 ==  pointTomove[pointindex+1].x && pointTomove[pointindex].y -1 == pointTomove[pointindex+1].y) {
+            pointindex ++;
+            if (pointindex+1 < n && Mcells > 2 && pointTomove[pointindex].x +1 == pointTomove[pointindex+1].x && pointTomove[pointindex].y -1 == pointTomove[pointindex+1].y) {
+                pointindex ++;
+            }
+        }
+    }
+
+    return pointindex;
+}
