@@ -32,10 +32,15 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
         .identifierPlace = "."};
 
     printf("you control player(%s%d)\n", player, i);
-    printf("Maximum number for moving:%d\n",cellsToMove);
-    printf("Enter number");
+    printf("Maximum number for moving :%d\n",cellsToMove);
+    printf("Enter number :");
     int Mcells;
     scanf("%d",&Mcells);
+    while(Mcells<=0 || Mcells>cellsToMove){
+        printf("It's wrong.\nEnter another number :");
+        scanf("%d",&Mcells);
+    }
+    
 
     switch (clickedKey)
     {
