@@ -68,3 +68,77 @@ void move(World world, int *winSwitch, int worldSize, struct Cell board[][worldS
     enemyanimalposition[i].y = yy;
     // printWorld(worldSize, board, 0, world);
 }
+
+int cellsToMove(struct Point pointTomove[], int pointindex, int Mcells, int n, int wordsize, struct Cell board[][wordsize]) {
+    int p = pointindex;
+    Cell defaultcell = {
+        .typePlace = "default",
+        .identifierPlace = "."};
+
+        if (p == pointindex) {
+            int i;
+            for (i = 1;i < Mcells, pointindex+i < n,pointTomove[pointindex].x == pointTomove[pointindex+i].x;i ++) {
+                 if (check(wordsize,board,pointTomove[pointindex+i].x,pointTomove[pointindex+i].y)) {
+                     if (*board[pointTomove[pointindex+i].x][pointTomove[pointindex+i].y].identifierPlace == 'F') {
+                         board[pointTomove[pointindex+i].x][pointTomove[pointindex+i].y] = defaultcell;
+                    }
+                continue;
+                }
+                 else break;
+            }
+            p+i-1;
+        }
+
+        if (p == pointindex) {
+            int i;
+            for (i = 1;i < Mcells, pointindex+i < n,pointTomove[pointindex].y == pointTomove[pointindex+i].y;i ++) {
+                 if (check(wordsize,board,pointTomove[pointindex+i].x,pointTomove[pointindex+i].y)) {
+                     if (*board[pointTomove[pointindex+i].x][pointTomove[pointindex+i].y].identifierPlace == 'F') {
+                         board[pointTomove[pointindex+i].x][pointTomove[pointindex+i].y] = defaultcell;
+                    }
+                continue;
+                }
+                 else break;
+            }
+            p+i-1;
+        }
+
+    //     if (pointindex+1 <= n && pointTomove[pointindex].x == pointTomove[pointindex+1].x) {
+    //         pointindex ++;
+    //         if (pointindex+1 <= n && Mcells > 2 && pointTomove[pointindex].x == pointTomove[pointindex+1].x) {
+    //             pointindex ++;
+    //         }
+    //     }
+    //     else if (pointindex+1 <= n && pointTomove[pointindex].y == pointTomove[pointindex+1].y) {
+    //         pointindex ++;
+    //         if (pointindex+1 <= n && Mcells > 2 && pointTomove[pointindex].y == pointTomove[pointindex+1].y) {
+    //             pointindex ++;
+    //         }
+    //     }
+    //     else if (pointindex+1 <= n && pointTomove[pointindex].x -1 ==  pointTomove[pointindex+1].x && pointTomove[pointindex].y -1 == pointTomove[pointindex+1].y) {
+    //         pointindex ++;
+    //         if (pointindex+1 <= n && Mcells > 2 && pointTomove[pointindex].x -1 == pointTomove[pointindex+1].x && pointTomove[pointindex].y -1 == pointTomove[pointindex+1].y) {
+    //             pointindex ++;
+    //         }
+    //     }
+    //     else if (pointindex+1 <= n && pointTomove[pointindex].x -1 ==  pointTomove[pointindex+1].x && pointTomove[pointindex].y +1 == pointTomove[pointindex+1].y) {
+    //         pointindex ++;
+    //         if (pointindex+1 <= n && Mcells > 2 && pointTomove[pointindex].x -1 == pointTomove[pointindex+1].x && pointTomove[pointindex].y +1 == pointTomove[pointindex+1].y) {
+    //             pointindex ++;
+    //         }
+    //     }
+    //     else if (pointindex+1 <= n && pointTomove[pointindex].x +1 ==  pointTomove[pointindex+1].x && pointTomove[pointindex].y +1 == pointTomove[pointindex+1].y) {
+    //         pointindex ++;
+    //         if (pointindex+1 <= n && Mcells > 2 && pointTomove[pointindex].x +1 == pointTomove[pointindex+1].x && pointTomove[pointindex].y +1 == pointTomove[pointindex+1].y) {
+    //             pointindex ++;
+    //         }
+    //     }
+    //     else if (pointindex+1 <= n && pointTomove[pointindex].x +1 ==  pointTomove[pointindex+1].x && pointTomove[pointindex].y -1 == pointTomove[pointindex+1].y) {
+    //         pointindex ++;
+    //         if (pointindex+1 <= n && Mcells > 2 && pointTomove[pointindex].x +1 == pointTomove[pointindex+1].x && pointTomove[pointindex].y -1 == pointTomove[pointindex+1].y) {
+    //             pointindex ++;
+    //         }
+    //     }
+
+    return p;
+}
