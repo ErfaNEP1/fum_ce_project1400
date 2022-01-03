@@ -17,7 +17,7 @@ void reverse(struct Point pointTomove[], int number)
 {
     int i, j;
 
-    for (i = 0, j = number - 2; j > i; i++, j--)
+    for (i = 0, j = number - 1; j > i; i++, j--)
     {
 
         int tempX = pointTomove[i].x;
@@ -77,7 +77,7 @@ int cellsToMove(struct Point pointTomove[], int pointindex, int Mcells, int n, i
 
         if (p == pointindex) {
             int i;
-            for (i = 1; i < Mcells, pointindex+i < n, pointTomove[pointindex].x == pointTomove[pointindex+i].x;i ++) {
+            for (i = 1; i <= Mcells && pointindex+i < n && pointTomove[pointindex].x == pointTomove[pointindex+i].x;i ++) {
                  if (check(wordsize,board,pointTomove[pointindex+i].x,pointTomove[pointindex+i].y)) {
                      if (*board[pointTomove[pointindex+i].x][pointTomove[pointindex+i].y].identifierPlace == 'F') {
                         enemyanimalpositionEnergy += board[pointTomove[pointindex+i].x][pointTomove[pointindex+i].y].foodPlace.energy;
@@ -87,12 +87,12 @@ int cellsToMove(struct Point pointTomove[], int pointindex, int Mcells, int n, i
                 }
                  else break;
             }
-            p+i-1;
+            p = p+i-1;
         }
 
         if (p == pointindex) {
             int i;
-            for (i = 1; i < Mcells, pointindex+i < n, pointTomove[pointindex].y == pointTomove[pointindex+i].y;i ++) {
+            for (i = 1; i <= Mcells && pointindex+i < n && pointTomove[pointindex].y == pointTomove[pointindex+i].y;i ++) {
                  if (check(wordsize,board,pointTomove[pointindex+i].x,pointTomove[pointindex+i].y)) {
                      if (*board[pointTomove[pointindex+i].x][pointTomove[pointindex+i].y].identifierPlace == 'F') {
                          enemyanimalpositionEnergy = board[pointTomove[pointindex+i].x][pointTomove[pointindex+i].y].foodPlace.energy;
@@ -102,12 +102,12 @@ int cellsToMove(struct Point pointTomove[], int pointindex, int Mcells, int n, i
                 }
                  else break;
             }
-            p+i-1;
+            p = p+i-1;
         }
 
         if(p == pointindex) {
             int i;
-            for(i=1; i < Mcells, pointindex+i < n, pointTomove[pointindex].x +1 == pointTomove[pointindex + i].x, pointTomove[pointindex].y +1 == pointTomove[pointindex + i].y; i++){
+            for(i=1; i < Mcells && pointindex+i < n && pointTomove[pointindex].x +i == pointTomove[pointindex + i].x && pointTomove[pointindex].y +i == pointTomove[pointindex + i].y; i++){
                 if(check(wordsize,board,pointTomove[pointindex+i].x,pointTomove[pointindex+i].y)){
                     if(*board[pointTomove[pointindex + i].x][pointTomove[pointindex +i].y].identifierPlace == 'F') {
                          enemyanimalpositionEnergy = board[pointTomove[pointindex+i].x][pointTomove[pointindex+i].y].foodPlace.energy;
@@ -117,12 +117,12 @@ int cellsToMove(struct Point pointTomove[], int pointindex, int Mcells, int n, i
                 }
                 else break;
             }
-            p+i-1;
+            p = p+i-1;
         }
 
         if(p == pointindex) {
             int i;
-            for(i=1; i < Mcells, pointindex+i < n, pointTomove[pointindex].x -1 == pointTomove[pointindex + i].x, pointTomove[pointindex].y +1 == pointTomove[pointindex + i].y; i++){
+            for(i=1; i < Mcells && pointindex+i < n && pointTomove[pointindex].x -i == pointTomove[pointindex + i].x && pointTomove[pointindex].y +i == pointTomove[pointindex + i].y; i++){
                 if(check(wordsize,board,pointTomove[pointindex+i].x,pointTomove[pointindex+i].y)){
                     if(*board[pointTomove[pointindex + i].x][pointTomove[pointindex +i].y].identifierPlace == 'F') {
                          enemyanimalpositionEnergy = board[pointTomove[pointindex+i].x][pointTomove[pointindex+i].y].foodPlace.energy;
@@ -132,12 +132,12 @@ int cellsToMove(struct Point pointTomove[], int pointindex, int Mcells, int n, i
                 }
                 else break;
             }
-            p+i-1;
+            p = p+i-1;
         }
 
         if(p == pointindex) {
             int i;
-            for(i=1; i < Mcells, pointindex+i < n, pointTomove[pointindex].x +1 == pointTomove[pointindex + i].x, pointTomove[pointindex].y -1 == pointTomove[pointindex + i].y; i++){
+            for(i=1; i < Mcells && pointindex+i < n && pointTomove[pointindex].x +i == pointTomove[pointindex + i].x && pointTomove[pointindex].y -i == pointTomove[pointindex + i].y; i++){
                 if(check(wordsize,board,pointTomove[pointindex+i].x,pointTomove[pointindex+i].y)){
                     if(*board[pointTomove[pointindex + i].x][pointTomove[pointindex +i].y].identifierPlace == 'F') {
                          enemyanimalpositionEnergy = board[pointTomove[pointindex+i].x][pointTomove[pointindex+i].y].foodPlace.energy;
@@ -147,12 +147,12 @@ int cellsToMove(struct Point pointTomove[], int pointindex, int Mcells, int n, i
                 }
                 else break;
             }
-            p+i-1;
+            p = p+i-1;
         }
 
         if(p == pointindex) {
             int i;
-            for(i=1; i < Mcells, pointindex+i < n, pointTomove[pointindex].x -1 == pointTomove[pointindex + i].x, pointTomove[pointindex].y -1 == pointTomove[pointindex + i].y; i++){
+            for(i=1; i < Mcells && pointindex+i < n && pointTomove[pointindex].x -i == pointTomove[pointindex + i].x && pointTomove[pointindex].y -i == pointTomove[pointindex + i].y; i++){
                 if(check(wordsize,board,pointTomove[pointindex+i].x,pointTomove[pointindex+i].y)){
                     if(*board[pointTomove[pointindex + i].x][pointTomove[pointindex +i].y].identifierPlace == 'F') {
                          enemyanimalpositionEnergy = board[pointTomove[pointindex+i].x][pointTomove[pointindex+i].y].foodPlace.energy;
@@ -162,7 +162,7 @@ int cellsToMove(struct Point pointTomove[], int pointindex, int Mcells, int n, i
                 }
                 else break;
             }
-            p+i-1;
+            p = p+i-1;
         }
 
     return p;

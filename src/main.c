@@ -272,8 +272,9 @@ int main()
                     if (n != -1)
                     {
                         reverse(world.enemyanimalposition[i].pointTomove, n);
-                        n--;
                         world.enemyanimalposition[i].pointindex++;
+                        for (int l = 0;l < n;l ++) 
+                            printf("%d %d \\ ",world.enemyanimalposition[i].pointTomove[l].x,world.enemyanimalposition[i].pointTomove[l].y);
 
                         world.enemyanimalposition[i].pointindex = cellsToMove(world.enemyanimalposition[i].pointTomove,world.enemyanimalposition[i].pointindex,world.enemyanimalposition[i].gene.cellsToMove,n,world.size,board, world.enemyanimalposition[i].energyPoint);
 
