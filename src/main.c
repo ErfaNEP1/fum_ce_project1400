@@ -273,9 +273,6 @@ int main()
                     {
                         reverse(world.enemyanimalposition[i].pointTomove, n);
                         world.enemyanimalposition[i].pointindex++;
-                        for (int l = 0;l < n;l ++) 
-                            printf("%d %d \\ ",world.enemyanimalposition[i].pointTomove[l].x,world.enemyanimalposition[i].pointTomove[l].y);
-
                         world.enemyanimalposition[i].pointindex = cellsToMove(world.enemyanimalposition[i].pointTomove,world.enemyanimalposition[i].pointindex,world.enemyanimalposition[i].gene.cellsToMove,n,world.size,board, world.enemyanimalposition[i].energyPoint);
 
                         move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y, world.enemyanimalposition, i);
@@ -311,6 +308,7 @@ int main()
                     world.enemyanimalposition[i].pointindex++;
                     if (check(worldSize, board, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y))
                     {
+                        world.enemyanimalposition[i].pointindex--;
                         world.enemyanimalposition[i].pointindex = cellsToMove(world.enemyanimalposition[i].pointTomove,world.enemyanimalposition[i].pointindex,world.enemyanimalposition[i].gene.cellsToMove,n,world.size,board, world.enemyanimalposition[i].energyPoint);
                         move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y, world.enemyanimalposition, i);
                         if (winSwitch == 1)
@@ -343,7 +341,7 @@ int main()
                 }
                 clearScreen();
                 printf("NEXT ROUND STARTED, MOVE !\n");
-                printWorld(world.size, board, 0, world);
+                // printWorld(world.size, board, 0, world);
             }
     clearScreen();
     printWorld(world.size, board, 0, world);

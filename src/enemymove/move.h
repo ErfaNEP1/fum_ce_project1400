@@ -48,14 +48,6 @@ void move(World world, int *winSwitch, int worldSize, struct Cell board[][worldS
     Cell defaultCell = {
         .typePlace = "default",
         .identifierPlace = "."};
-    // if (xx > x)
-    //     printf("enemy(%s(%d,%d)) move to Down", enemy, x, y);
-    // if (xx < x)
-    //     printf("enemy(%s(%d,%d)) move to Up", enemy, x, y);
-    // if (yy > y)
-    //     printf("enemy(%s(%d,%d)) move to Right", enemy, x, y);
-    // if (yy < y)
-    //     printf("enemy(%s(%d,%d)) move to Left", enemy, x, y);
 
     if (*board[xx][yy].identifierPlace == 'H')
     {
@@ -66,7 +58,6 @@ void move(World world, int *winSwitch, int worldSize, struct Cell board[][worldS
     board[x][y] = defaultCell;
     enemyanimalposition[i].x = xx;
     enemyanimalposition[i].y = yy;
-    // printWorld(worldSize, board, 0, world);
 }
 
 int cellsToMove(struct Point pointTomove[], int pointindex, int Mcells, int n, int wordsize, struct Cell board[][wordsize], int enemyanimalpositionEnergy) {
