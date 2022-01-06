@@ -88,14 +88,14 @@ int main()
 
     textcolor(6);
     printWorld(world.size, board, 0, world);
-    textcolor(6);
+    textcolor(13);
     clearScreen();
 
     printf("\nSTART !!! ( Move With Arrow Keys. ) ( PRESS \"ESC\" TO EXIT )\n");
     printWorld(world.size, board, 0, world);
 
     int ch;
-    textcolor(2);
+    textcolor(9);
     int winSwitch = 0;
     // ======================= End of Preprations For Start ======================= //
 
@@ -141,7 +141,7 @@ int main()
         }
         clearScreen();
         printWorld(world.size, board, 0, world);
-        textcolor(6);
+        textcolor(2);
     }
     // ======================= End of Game ======================= //
 

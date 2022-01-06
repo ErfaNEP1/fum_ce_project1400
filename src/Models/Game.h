@@ -250,14 +250,15 @@ void initPlayerMove(World *world, int ch, int nPlayer, int worldSize, int *winSw
 {
     for (int i = 0; i < nPlayer; i++)
     {
+        int k=i;
         Animal *animalPtr;
         animalPtr = &world->alliedanimalposition[i];
         int clickedKey = ch;
         if (clickedKey != 0)
         {
             i = animalTocontrol(&winSwitch, world->animalToControl, nPlayer, world->size, board, animalPtr->x, animalPtr->y, i, world->alliedanimalposition, clickedKey, animalPtr->gene.cellsToMove);
-            if(i == -1)
-                printWorld(world->size, board, 0, *world);
+            if(i == k-1)
+                printWorld(world->size, board, k, *world);
             else
                 printWorld(world->size, board, i+1, *world);
             
