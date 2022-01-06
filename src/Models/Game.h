@@ -256,7 +256,11 @@ void initPlayerMove(World *world, int ch, int nPlayer, int worldSize, int *winSw
         if (clickedKey != 0)
         {
             i = animalTocontrol(&winSwitch, world->animalToControl, nPlayer, world->size, board, animalPtr->x, animalPtr->y, i, world->alliedanimalposition, clickedKey, animalPtr->gene.cellsToMove);
-            printWorld(world->size, board, i, *world);
+            if(i == -1)
+                printWorld(world->size, board, 0, *world);
+            else
+                printWorld(world->size, board, i+1, *world);
+            
             if(*winSwitch == 1) break;
         }
         if (i != nPlayer - 1)
