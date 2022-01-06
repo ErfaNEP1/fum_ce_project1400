@@ -33,10 +33,10 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
         .identifierPlace = "."};
 
     //========preparation for PlayerMove============//
-    printf("you control player(%s%d)\n", player, i);
+    printf("you control player(%s %d)\n", player, i);
     printf("energy = %d\n",alliedanimalposition[i].energyPoint);
-    printf("Maximum number for moving :%d\n",cellsToMove);
-    printf("Enter number :");
+    printf("Maximum number for moving : %d\n",cellsToMove);
+    printf("Enter number : ");
     int Mcells;
     scanf("%d",&Mcells);
     while(Mcells<=0 || Mcells>cellsToMove){

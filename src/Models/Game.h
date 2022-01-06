@@ -257,6 +257,7 @@ void initPlayerMove(World *world, int ch, int nPlayer, int worldSize, int *winSw
         {
             i = animalTocontrol(&winSwitch, world->animalToControl, nPlayer, world->size, board, animalPtr->x, animalPtr->y, i, world->alliedanimalposition, clickedKey, animalPtr->gene.cellsToMove);
             printWorld(world->size, board, i, *world);
+            if(*winSwitch == 1) break;
         }
         if (i != nPlayer - 1)
             ch = get_code();

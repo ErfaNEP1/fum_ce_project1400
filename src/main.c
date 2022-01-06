@@ -146,8 +146,11 @@ int main()
     // ======================= End of Game ======================= //
 
     // ======================= Printing the Winner ======================= //
-    if (winSwitch == 1)
+    if (winSwitch == 1){
+        clearScreen();
+        printWorld(world.size, board, 0, world);
         printf("PLAYER %s WON THE GAME !", world.winner);
+    }
     // ======================= End of Printing the Winner ======================= //
     return 0;
 }
