@@ -206,7 +206,7 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
             int x = pt.x + row[i];
             int y = pt.y + col[i];
 
-            //to check that enemy can reach H or not
+            //to keep distance from start
             if (isValid(x, y, worldsize) == 1 && visited[x][y] == 0)
             {
                 if (strcmp(board[x][y].identifierPlace, "F") == 0 || strcmp(board[x][y].identifierPlace, "H") == 0 || strcmp(board[x][y].identifierPlace, ".") == 0)
@@ -232,6 +232,6 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
         }
     }
 
-    if (sw == 0)
+    if (sw == 0) //enemy can't reach H
         return -1;
 }
