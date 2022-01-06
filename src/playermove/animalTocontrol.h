@@ -32,6 +32,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
         .identifierPlace = "."};
 
     printf("you control player(%s%d)\n", player, i);
+    printf("energy = %d\n",alliedanimalposition[i].energyPoint);
     printf("Maximum number for moving :%d\n",cellsToMove);
     printf("Enter number :");
     int Mcells;
@@ -65,7 +66,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
                     board[x][y] = defaultCell;
                     alliedanimalposition[i].x-= k;
 
-                    printf("move to Up");
+                    // printf("move to Up");
                     printf("\n");
                     sw=0;
                     *winSwitch = 1;
@@ -84,17 +85,18 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
             }
             if(sw==1)
             {
-                for(int j=1; j<Mcells; j++){
+                for(int j=1; j<=Mcells; j++){
                     if(*board[x - j][y].identifierPlace == 'F'){
+                        alliedanimalposition[i].energyPoint += board[x + j][y + 1].foodPlace.energy ;
                         board[x - j][y] = defaultCell ;
-                        alliedanimalposition[i].energyPoint += board[x - j][y].foodPlace.energy ;
+
                     }
                 }
                 board[x - Mcells][y] = animalTocontrolcell;
                 board[x][y] = defaultCell;
                 alliedanimalposition[i].x-=Mcells;
 
-                printf("move to Up");
+                // printf("move to Up");
                 printf("\n");
             }
         }
@@ -126,7 +128,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
                     board[x][y] = defaultCell;
                     alliedanimalposition[i].x+= k;
 
-                    printf("move to Down");
+                    // printf("move to Down");
                     printf("\n");
                     sw=0;
                     *winSwitch = 1;
@@ -145,17 +147,18 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
             }
             if(sw==1)
             {
-                for(int j=1; j<Mcells; j++){
+                for(int j=1; j<=Mcells; j++){
                     if(*board[x + j][y].identifierPlace == 'F'){
+                        alliedanimalposition[i].energyPoint += board[x + j][y + 1].foodPlace.energy ;
                         board[x + j][y] = defaultCell ;
-                        alliedanimalposition[i].energyPoint += board[x + j][y].foodPlace.energy ;
+
                     }
                 }
                 board[x + Mcells][y] = animalTocontrolcell;
                 board[x][y] = defaultCell;
                 alliedanimalposition[i].x+= Mcells;
 
-                printf("move to Down");
+                // printf("move to Down");
                 printf("\n");
             }
         }
@@ -188,7 +191,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
                     board[x][y] = defaultCell;
                     alliedanimalposition[i].y+= k;
 
-                    printf("move to Right");
+                    // printf("move to Right");
                     printf("\n");
                     sw=0;
                     *winSwitch = 1;
@@ -207,17 +210,18 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
             }
             if(sw==1)
             {
-                for(int j=1; j<Mcells; j++){
+                for(int j=1; j<=Mcells; j++){
                     if(*board[x][y + j].identifierPlace == 'F'){
+                        alliedanimalposition[i].energyPoint += board[x + j][y + 1].foodPlace.energy ;
                         board[x][y + j] = defaultCell ;
-                        alliedanimalposition[i].energyPoint += board[x][y + j].foodPlace.energy ;
+
                     }
                 }
                 board[x][y + Mcells] = animalTocontrolcell;
                 board[x][y] = defaultCell;
                 alliedanimalposition[i].y+= Mcells;
 
-                printf("move to Right");
+                // printf("move to Right");
                 printf("\n");
             }
         }
@@ -250,7 +254,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
                     board[x][y] = defaultCell;
                     alliedanimalposition[i].y-= k;
 
-                    printf("move to Left");
+                    // printf("move to Left");
                     printf("\n");
                     sw=0;
                     *winSwitch = 1;
@@ -269,17 +273,18 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
             }
             if(sw==1)
             {
-                for(int j=1; j<Mcells; j++){
+                for(int j=1; j<=Mcells; j++){
                     if(*board[x][y - j].identifierPlace == 'F'){
+                        alliedanimalposition[i].energyPoint += board[x + j][y + 1].foodPlace.energy ;
                         board[x][y - j] = defaultCell ;
-                        alliedanimalposition[i].energyPoint += board[x][y - j].foodPlace.energy ;
+
                     }
                 }
                 board[x][y - Mcells] = animalTocontrolcell;
                 board[x][y] = defaultCell;
                 alliedanimalposition[i].y-= Mcells;
 
-                printf("move to Left");
+                // printf("move to Left");
                 printf("\n");
             }
         }
@@ -312,7 +317,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
                     alliedanimalposition[i].y-= k;
                     alliedanimalposition[i].x-= k;
 
-                    printf("move to LefttoUp");
+                    // printf("move to LefttoUp");
                     printf("\n");
                     sw=0;
                     *winSwitch = 1;
@@ -331,10 +336,11 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
             }
             if(sw==1)
             {
-                for(int j=1; j<Mcells; j++){
+                for(int j=1; j<=Mcells; j++){
                     if(*board[x - j][y - j].identifierPlace == 'F'){
+                        alliedanimalposition[i].energyPoint += board[x + j][y + 1].foodPlace.energy ;
                         board[x - j][y - j] = defaultCell ;
-                        alliedanimalposition[i].energyPoint += board[x - j][y - j].foodPlace.energy ;
+
                     }
                 }
                 board[x - Mcells][y - Mcells] = animalTocontrolcell;
@@ -342,7 +348,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
                 alliedanimalposition[i].y-= Mcells;
                 alliedanimalposition[i].x-= Mcells;
 
-                printf("move to LefttoUp");
+                // printf("move to LefttoUp");
                 printf("\n");
             }
         }
@@ -375,7 +381,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
                     alliedanimalposition[i].y+= k;
                     alliedanimalposition[i].x-= k;
 
-                    printf("move to RighttoUp");
+                    // printf("move to RighttoUp");
                     printf("\n");
                     sw=0;
                     *winSwitch = 1;
@@ -394,10 +400,11 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
             }
             if(sw==1)
             {
-                for(int j=1; j<Mcells; j++){
+                for(int j=1; j<=Mcells; j++){
                     if(*board[x - j][y + 1].identifierPlace == 'F'){
+                        alliedanimalposition[i].energyPoint += board[x + j][y + 1].foodPlace.energy ;
                         board[x - j][y + 1] = defaultCell ;
-                        alliedanimalposition[i].energyPoint += board[x - j][y + 1].foodPlace.energy ;
+
                     }
                 }
                 board[x - Mcells][y + Mcells] = animalTocontrolcell;
@@ -405,7 +412,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
                 alliedanimalposition[i].y+= Mcells;
                 alliedanimalposition[i].x-= Mcells;
 
-                printf("move to RighttoUp");
+                // printf("move to RighttoUp");
                 printf("\n");
             }
         }
@@ -438,7 +445,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
                     alliedanimalposition[i].y+= k;
                     alliedanimalposition[i].x+= k;
 
-                    printf("move to RighttoDown");
+                    // printf("move to RighttoDown");
                     printf("\n");
                     sw=0;
                     *winSwitch = 1;
@@ -457,10 +464,11 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
             }
             if(sw==1)
             {
-                for(int j=1; j<Mcells; j++){
+                for(int j=1; j<=Mcells; j++){
                     if(*board[x + j][y + 1].identifierPlace == 'F'){
-                        board[x + j][y + 1] = defaultCell ;
                         alliedanimalposition[i].energyPoint += board[x + j][y + 1].foodPlace.energy ;
+                        board[x + j][y + 1] = defaultCell ;
+
                     }
                 }
                 board[x + Mcells][y + Mcells] = animalTocontrolcell;
@@ -468,7 +476,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
                 alliedanimalposition[i].y+= Mcells;
                 alliedanimalposition[i].x+= Mcells;
 
-                printf("move to RighttoDown");
+                // printf("move to RighttoDown");
                 printf("\n");
             }
         }
@@ -501,7 +509,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
                     alliedanimalposition[i].y-= k;
                     alliedanimalposition[i].x+= k;
 
-                    printf("move to LefttoDown");
+                    // printf("move to LefttoDown");
                     printf("\n");
                     sw=0;
                     *winSwitch = 1;
@@ -520,10 +528,11 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
             }
             if(sw==1)
             {
-                for(int j=1; j<Mcells; j++){
+                for(int j=1; j<=Mcells; j++){
                     if(*board[x + j][y - j].identifierPlace == 'F'){
+                        alliedanimalposition[i].energyPoint += board[x + j][y + 1].foodPlace.energy ;
                         board[x + j][y - j] = defaultCell ;
-                        alliedanimalposition[i].energyPoint += board[x + j][y - j].foodPlace.energy ;
+
                     }
                 }
                 board[x + Mcells][y - Mcells] = animalTocontrolcell;
@@ -531,7 +540,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
                 alliedanimalposition[i].x+=Mcells;
                 alliedanimalposition[i].y-=Mcells;
 
-                printf("move to LefttoDown");
+                // printf("move to LefttoDown");
                 printf("\n");
             }
         }
