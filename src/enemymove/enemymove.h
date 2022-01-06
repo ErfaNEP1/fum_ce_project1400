@@ -22,6 +22,7 @@ int isEmpty(int front, int rear)
     return 0;
 }
 
+//add coordinates of past cells in queue
 void push(struct QueueNode element, int *front, int *rear, struct QueueNode items[])
 {
     if (isFull(*front, *rear) == 0)
@@ -33,6 +34,7 @@ void push(struct QueueNode element, int *front, int *rear, struct QueueNode item
     }
 }
 
+//remove coordinates from queue
 void pop(int *front, int *rear, struct QueueNode items[])
 {
     struct QueueNode element;
@@ -52,6 +54,7 @@ void pop(int *front, int *rear, struct QueueNode items[])
     }
 }
 
+//to check that we're in board or not
 int isValid(int row, int col, int worldSize)
 {
     return ((row >= 0) && (col >= 0) && (row < worldSize) && (col < worldSize)) ? 1 : 0;
@@ -60,15 +63,19 @@ int isValid(int row, int col, int worldSize)
 int row[8] = {-1, 0, 0, 1, 1, -1, -1, 1};
 int col[8] = {0, -1, 1, 0, 1, 1, -1, -1};
 
+//it keeps coordinates of cells that take us to H from the shortest way
 int printPath(int worldsize, struct Cell board[][worldsize], struct Point start, struct Point end, struct Point pointTomove[], struct QueueNode items[], int *front, int *rear)
 {
 
     int sw = 0;
+    //to mark cells that past
+    int visited[ROW][COL]; 
 
-    int visited[ROW][COL];
+    //it puts a number in all cells of an array 
     memset(visited, 0, sizeof visited);
 
-    int d[ROW][COL];
+    //to keep distance from start
+    int d[ROW][COL]; 
     memset(d, -1, sizeof d);
 
     struct QueueNode node = {
@@ -85,6 +92,8 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
 
         struct QueueNode curr = items[*front];
         struct Point pt = curr.p;
+
+        //to put cells that take us to H in an array(pointtomove)
         if (pt.x == end.x && pt.y == end.y)
         {
             int xx = pt.x, yy = pt.y;
@@ -197,6 +206,7 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
             int x = pt.x + row[i];
             int y = pt.y + col[i];
 
+            //to check that enemy can reach H or not
             if (isValid(x, y, worldsize) == 1 && visited[x][y] == 0)
             {
                 if (strcmp(board[x][y].identifierPlace, "F") == 0 || strcmp(board[x][y].identifierPlace, "H") == 0 || strcmp(board[x][y].identifierPlace, ".") == 0)
