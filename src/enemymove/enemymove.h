@@ -63,7 +63,7 @@ int isValid(int row, int col, int worldSize)
 int row[8] = {-1, 0, 0, 1, 1, -1, -1, 1};
 int col[8] = {0, -1, 1, 0, 1, 1, -1, -1};
 
-//it keeps coordinates of cells that take us to H from the shortest way
+//it keeps coordinates of cells that take us to H by the shortest way
 int printPath(int worldsize, struct Cell board[][worldsize], struct Point start, struct Point end, struct Point pointTomove[], struct QueueNode items[], int *front, int *rear)
 {
 
@@ -84,7 +84,8 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
 
     visited[start.x][start.y] = 1;
     d[start.x][start.y] = 0;
-
+    
+    //add start cell in queue
     push(node, front, rear, items);
 
     while (isEmpty(*front, *rear) == 0)
@@ -99,12 +100,14 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
             int xx = pt.x, yy = pt.y;
             int dist = curr.distance;
             int counter = 0;
+            //put start cell in pointtomve
             pointTomove[counter].x = xx;
             pointTomove[counter].y = yy;
             
             counter++;
             while (xx != start.x || yy != start.y)
             {
+                //put coordinates in pointTomove that can make enemy closer to H
                 if (xx < worldsize - 1 && yy < worldsize - 1 && d[xx + 1][yy + 1] == dist - 2 && dist - 2 > 0)
                 {
                     pointTomove[counter].x = xx + 1;
@@ -195,7 +198,7 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
                 
             }
 
-            sw = 1;
+            sw = 1; //enemy can reach H
             return counter;
             break;
         }
