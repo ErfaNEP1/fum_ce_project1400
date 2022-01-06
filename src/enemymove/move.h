@@ -40,7 +40,7 @@ int check(int worldSize, struct Cell board[][worldSize], int x, int y)
         return 1;
 }
 
-void move(World world, int *winSwitch, int worldSize, struct Cell board[][worldSize], char enemy[], int x, int y, int xx, int yy, struct Animal enemyanimalposition[], int i)
+void move(World world, int **winSwitch, int worldSize, struct Cell board[][worldSize], char enemy[], int x, int y, int xx, int yy, struct Animal enemyanimalposition[], int i)
 {
     Cell enemyCell = {
         .typePlace = "animal",
@@ -51,7 +51,7 @@ void move(World world, int *winSwitch, int worldSize, struct Cell board[][worldS
     //enemy won the game
     if (*board[xx][yy].identifierPlace == 'H')
     {
-        *winSwitch = 1;
+        **winSwitch = 1;
     }
     //enemy moved
     board[xx][yy] = enemyCell;

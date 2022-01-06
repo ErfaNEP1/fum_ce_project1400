@@ -22,7 +22,7 @@ int get_code()
     return getch();
 }
 
-int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct Cell board[][worldsize], int x, int y, int i, struct Animal alliedanimalposition[], int clickedKey, int cellsToMove)
+int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct Cell board[][worldsize], int x, int y, int i, struct Animal alliedanimalposition[], int clickedKey, int cellsToMove)
 {
     int sw=1;
     Cell animalTocontrolcell = {
@@ -72,7 +72,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
 
                     printf("\n");
                     sw=0;
-                    *winSwitch = 1;
+                    **winSwitch = 1;
                     printf("\n");
                     break;
                 }
@@ -140,7 +140,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
 
                     printf("\n");
                     sw=0;
-                    *winSwitch = 1;
+                    **winSwitch = 1;
                     printf("\n");
                     break;
                 }
@@ -208,7 +208,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
 
                     printf("\n");
                     sw=0;
-                    *winSwitch = 1;
+                    **winSwitch = 1;
                     printf("\n");
                     break;
                 }
@@ -275,7 +275,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
 
                     printf("\n");
                     sw=0;
-                    *winSwitch = 1;
+                    **winSwitch = 1;
                     printf("\n");
                     break;
                 }
@@ -345,7 +345,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
 
                     printf("\n");
                     sw=0;
-                    *winSwitch = 1;
+                    **winSwitch = 1;
                     printf("\n");
                     break;
                 }
@@ -416,7 +416,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
 
                     printf("\n");
                     sw=0;
-                    *winSwitch = 1;
+                    **winSwitch = 1;
                     printf("\n");
                     break;
                 }
@@ -487,7 +487,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
 
                     printf("\n");
                     sw=0;
-                    *winSwitch = 1;
+                    **winSwitch = 1;
                     printf("\n");
                     break;
                 }
@@ -558,7 +558,7 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
 
                     printf("\n");
                     sw=0;
-                    *winSwitch = 1;
+                    **winSwitch = 1;
                     printf("\n");
                     break;
                 }
@@ -605,8 +605,6 @@ int animalTocontrol(int *winSwitch,char player[], int n, int worldsize, struct C
 
     default:
         //pressed the wrong Key 
-        printf("default");
-        printf("\n");
         i --;
         break;
     }

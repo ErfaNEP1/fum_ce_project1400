@@ -9,3 +9,4 @@
 #include "enemymove/move.h"
 #include "playermove/typeanimalcount.h"
 #include "playermove/animalTocontrol.h"
+#include "Models/Game.h"

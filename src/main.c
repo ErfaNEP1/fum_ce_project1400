@@ -7,8 +7,6 @@
 #include <math.h>
 #include "GameFunctions.h"
 
-
-
 int main()
 {
     // ======================= Getting World Size ======================= //
@@ -45,164 +43,27 @@ int main()
         // Getting DeadEnds
         if (*tok == '#')
         {
-            Cell deadEndCell = {
-                .typePlace = "dead_end",
-                .identifierPlace = "#"};
-            tok = strtok(NULL, " \n");
-            sscanf(tok, "%d", &world.deadEndCount);
-            tok = strtok(NULL, " \n");
-
-            for (int i = 0; i < world.deadEndCount; i++)
-            {
-                int x, y;
-
-                sscanf(tok, "(%d,%d)", &x, &y);
-
-                deadEndCell.x = x;
-                deadEndCell.y = y;
-
-                board[x][y] = deadEndCell;
-                world.deadEnds[i] = deadEndCell;
-
-                tok = strchr(tok, ')');
-                if (tok == NULL)
-                    break;
-                ++tok;
-            }
+            inputDeadEnds(worldSize, tok, &world, board);
         }
         // Getting Heavens
         else if (*tok == 'H')
         {
-            Cell heavenCell = {
-                .typePlace = "heaven",
-                .identifierPlace = "H"};
-            tok = strtok(NULL, " \n");
-            sscanf(tok, "%d", &world.heavenCount);
-            tok = strtok(NULL, " \n");
-
-            for (int i = 0; i < world.heavenCount; i++)
-            {
-                int x, y;
-
-                sscanf(tok, "(%d,%d)", &x, &y);
-
-                heavenCell.x = x;
-                heavenCell.y = y;
-
-                board[x][y] = heavenCell;
-                world.heavenCell[i] = heavenCell;
-
-                tok = strchr(tok, ')');
-                if (tok == NULL)
-                    break;
-                ++tok;
-            }
+            inputHeavens(worldSize, tok, &world, board);
         }
         // Getting foods
         else if (*tok == 'F')
         {
-
-            tok = strtok(NULL, " ");
-            int energy;
-            sscanf(tok, "%d", &energy);
-            Food energyCell = {
-                .energy = energy};
-
-            Cell foodCell = {
-                .typePlace = "food",
-                .identifierPlace = "F",
-                .foodPlace = energyCell};
-
-            tok = strtok(NULL, " ");
-
-            int x, y;
-            sscanf(tok, "(%d,%d)", &x, &y);
-
-            foodCell.x = x;
-            foodCell.y = y;
-
-            board[x][y] = foodCell;
-            world.foodCell[world.foodCount] = foodCell;
-
-            world.foodCount++;
+            inputFood(worldSize, tok, &world, board);
         }
         // Getting animals' info
         else if (isalpha(*tok) && strlen(lineCopy) > 3 && strchr(lineCopy, '$') == NULL)
         {
-            Cell typeanimal = {
-                .typePlace = "animal",
-                .identifierPlace = *tok,
-                .animalPlace.pointindex = -1};
-            int nu_typeanimal;
-
-            tok = strtok(NULL, " \n");
-            sscanf(tok, "%d", &nu_typeanimal);
-            world.animalCount += nu_typeanimal;
-
-            tok = strtok(NULL, " \n");
-
-            for (int i = 0; i < nu_typeanimal; i++)
-            {
-                int x, y;
-
-                sscanf(tok, "(%d,%d)", &x, &y);
-
-                typeanimal.x = x;
-                typeanimal.y = y;
-
-                board[x][y] = typeanimal;
-
-                tok = strchr(tok, ')');
-                if (tok == NULL)
-                    break;
-                ++tok;
-            }
+            inputAnimals(worldSize, tok, &world, board);
         }
         // Animals' Genome
         else if (isalpha(*tok) && strlen(lineCopy) > 3 && strchr(lineCopy, '$') != NULL)
         {
-            int energy;
-            Genome gene = {
-                .character = *tok};
-
-            tok = strtok(NULL, " \n");
-            sscanf(tok, "%d", &energy);
-
-            tok = strtok(NULL, " \n");
-
-            for (int i = 0; i < 5; i++)
-            {
-                int gen;
-
-                sscanf(tok, "%d", &gen);
-
-                tok = strchr(tok, '$');
-
-                ++tok;
-
-                if (i == 0)
-                {
-                    gene.energyForMoving = gen;
-                }
-                else if (i == 1)
-                {
-                    gene.cellsToMove = gen;
-                }
-                else if (i == 2)
-                {
-                    gene.energyForReproduction = gen;
-                }
-                else if (i == 3)
-                {
-                    gene.attackPower = gen;
-                }
-                else if (i == 4)
-                {
-                    gene.defensePower = gen;
-                }
-            }
-            // Give animals their genome
-            giveCharactersGenome(gene, gene.character, world.size, board, energy);
+            inputGenome(worldSize, tok, &world, board);
         }
         // Get controlled animal
         else if (isalpha(*tok) && strlen(lineCopy) < 3)
@@ -220,6 +81,7 @@ int main()
     printWorld(world.size, board, 0, world);
     printf("\n");
     printf("%s", world.animalToControl);
+
     // Allied Animals Count + Storing each animal in World structure
     int nPlayer = searchTypeanimalposition(world, world.animalToControl, world.size, board, world.alliedanimalposition, world.enemyanimalposition);
     int nEnemy = world.animalCount - nPlayer;
@@ -232,7 +94,6 @@ int main()
     printf("\nSTART !!! ( Move With Arrow Keys. ) ( PRESS \"ESC\" TO EXIT )\n");
     printWorld(world.size, board, 0, world);
 
-    textcolor(7);
     int ch;
     textcolor(2);
     int winSwitch = 0;
@@ -244,113 +105,19 @@ int main()
     while ((ch = get_code()) != 27 && winSwitch == 0)
     {
         // Start Player Moves
-        for (int i = 0; i < nPlayer; i++)
-        {
-            int clickedKey = ch;
-            if (clickedKey != 0)
-            {
-                i = animalTocontrol(&winSwitch, world.animalToControl, nPlayer, world.size, board, world.alliedanimalposition[i].x, world.alliedanimalposition[i].y, i, world.alliedanimalposition, clickedKey, world.alliedanimalposition[i].gene.cellsToMove);
-                printWorld(world.size, board, i, world);
-            }
-            if (i != nPlayer - 1)
-                ch = get_code();
-        }
+        initPlayerMove(&world, ch, nPlayer, worldSize, &winSwitch, board);
         // Check if game's finished or not
         if (winSwitch == 1)
         {
             snprintf(world.winner, 2, "%s", world.animalToControl);
             break;
         }
-
         printf("PLAYER TURN DONE, AI TURN.\n");
         clearScreen();
         // Player Moves End
 
         // Start AI Moves
-        for (int i = 0; i < nEnemy; i++)
-        {
-            // Finding the closest Heaven
-            int mindist = FindtheClosestWaytoH(world.enemyanimalposition[i].x, world.enemyanimalposition[i].y, world.heavenCell, world.heavenCount);
-            // Initializing Queue Structure
-            struct QueueNode items[world.size * world.size];
-            int front = -1, rear = -1;
-            int *frontPtr = &front, *rearPtr = &rear;
-            struct Point start = {
-                .x = world.enemyanimalposition[i].x,
-                .y = world.enemyanimalposition[i].y};
-            struct Point end = {
-                .x = world.heavenCell[mindist].x,
-                .y = world.heavenCell[mindist].y};
-            int n;
-            // if enemy doesn't have a path to move it should create one
-            if (world.enemyanimalposition[i].pointindex == -1)
-            {
-                // create a path and store it's distance
-                n = printPath(world.size, board, start, end, world.enemyanimalposition[i].pointTomove, items, frontPtr, rearPtr);
-                // Check if there is a path from start to end and it's possible to move
-                if (n != -1)
-                {
-                    reverse(world.enemyanimalposition[i].pointTomove, n);
-                    world.enemyanimalposition[i].pointindex++;
-                    // found how many moves the enemy can make in a single round
-                    world.enemyanimalposition[i].pointindex = cellsToMove(world.enemyanimalposition[i].pointTomove, world.enemyanimalposition[i].pointindex, world.enemyanimalposition[i].gene.cellsToMove, n, world.size, board, world.enemyanimalposition[i].energyPoint);
-                    // move the enemy
-                    move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y, world.enemyanimalposition, i);
-                    // check if game is finished
-                    if (winSwitch == 1)
-                    {
-                        snprintf(world.winner, 2, "%s", board[world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x][world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y].identifierPlace);
-                        break;
-                    }
-                }
-                // if there is not a path from start to end and its impossible to move, then we can do a random move for a round
-                else
-                {
-                    //Random Move
-                    if ((*board[start.x + 1][start.y].identifierPlace == '.' || *board[start.x + 1][start.y].identifierPlace == 'F') && isValid(start.x + 1, start.y, world.size))
-                    {
-                        move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x + 1, start.y, world.enemyanimalposition, i);
-                    }
-                    else if ((*board[start.x - 1][start.y].identifierPlace == '.' || *board[start.x - 1][start.y].identifierPlace == 'F') && isValid(start.x - 1, start.y, world.size))
-                    {
-                        move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x - 1, start.y, world.enemyanimalposition, i);
-                    }
-                    else if ((*board[start.x][start.y + 1].identifierPlace == '.' || *board[start.x][start.y + 1].identifierPlace == 'F') && isValid(start.x, start.y + 1, world.size))
-                    {
-                        move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x, start.y + 1, world.enemyanimalposition, i);
-                    }
-                    else if ((*board[start.x][start.y - 1].identifierPlace == '.' || *board[start.x][start.y - 1].identifierPlace == 'F') && isValid(start.x, start.y - 1, world.size))
-                    {
-                        move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x, start.y - 1, world.enemyanimalposition, i);
-                    }
-                }
-            }
-            // if enemy already has a path to move, then it should continue it's path
-            else
-            {
-                world.enemyanimalposition[i].pointindex++;
-                // if its path is not blocked by anything
-                if (check(worldSize, board, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y))
-                {
-                    world.enemyanimalposition[i].pointindex = cellsToMove(world.enemyanimalposition[i].pointTomove, world.enemyanimalposition[i].pointindex, world.enemyanimalposition[i].gene.cellsToMove, n, world.size, board, world.enemyanimalposition[i].energyPoint);
-                    move(world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x, world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y, world.enemyanimalposition, i);
-                    if (winSwitch == 1)
-                    {
-                        snprintf(world.winner, 2, "%s", board[world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].x][world.enemyanimalposition[i].pointTomove[world.enemyanimalposition[i].pointindex].y].identifierPlace);
-                        break;
-                    }
-                }
-                else
-                // if it's blocked, then it should find another path
-                {
-                    world.enemyanimalposition[i].pointindex = -1;
-                    // here we make the for loop to iterate this enemy once again
-                    i--;
-                }
-            }
-            printf("\n");
-            clearScreen();
-        }
+        initAImovie(&world, nEnemy, worldSize, &winSwitch, board);
         // End of AI Moves
 
         // Check if game's finished
