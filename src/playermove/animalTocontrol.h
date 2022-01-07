@@ -30,9 +30,11 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
         .identifierPlace = *player};
     Cell defaultCell = {
         .typePlace = "default",
+        .foodPlace.energy = 0,
         .identifierPlace = "."};
 
     //========preparation for PlayerMove============//
+    textcolor(1);
     printf("you control player(%s %d)\n", player, i);
     printf("energy = %d\n",alliedanimalposition[i].energyPoint);
     printf("Maximum number for moving : %d\n",cellsToMove);
@@ -55,7 +57,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
             for(int k=1; k<=Mcells; k++){
                 if (*board[x - k][y].identifierPlace == '#')
                 {
-
+                    textcolor(12);
                     printf("YOU CAN'T GO THERE ! (#)");
                     printf("\n");
                     sw=0;
@@ -79,6 +81,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 else if (isalpha(*board[x - k][y].identifierPlace) && *board[x - k][y].identifierPlace != 'F')
                 {
                     //in this place exist an animal
+                    textcolor(12);
                     printf("YOU CAN'T GO THERE ! (%s)", board[x - k][y].identifierPlace);
                     printf("\n");
                     sw=0;
@@ -93,7 +96,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 //add Food enegy to player
                 for(int j=1; j<=Mcells; j++){
                     if(*board[x - j][y].identifierPlace == 'F'){
-                        alliedanimalposition[i].energyPoint += board[x + j][y + 1].foodPlace.energy ;
+                        alliedanimalposition[i].energyPoint += board[x - j][y].foodPlace.energy ;
                         board[x - j][y] = defaultCell ;
 
                     }
@@ -109,6 +112,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
         else
         {
             // player can't Go Up (go out of board)
+            textcolor(12);
             printf("YOU CAN'T GO THERE !");
             printf("\n");
             i--;
@@ -123,7 +127,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
             for(int k=1; k<=Mcells; k++){
                 if (*board[x + k][y].identifierPlace == '#')
                 {
-
+                    textcolor(12);
                     printf("YOU CAN'T GO THERE ! (#)");
                     printf("\n");
                     sw=0;
@@ -147,6 +151,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 else if (isalpha(*board[x + k][y].identifierPlace) && *board[x + k][y].identifierPlace != 'F')
                 {
                     //in this place exist an animal
+                    textcolor(12);
                     printf("YOU CAN'T GO THERE ! (%s)", board[x + k][y].identifierPlace);
                     printf("\n");
                     sw=0;
@@ -161,7 +166,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 //add Food enegy to player
                 for(int j=1; j<=Mcells; j++){
                     if(*board[x + j][y].identifierPlace == 'F'){
-                        alliedanimalposition[i].energyPoint += board[x + j][y + 1].foodPlace.energy ;
+                        alliedanimalposition[i].energyPoint += board[x + j][y].foodPlace.energy ;
                         board[x + j][y] = defaultCell ;
 
                     }
@@ -177,6 +182,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
         else
         {
             // player can't Go Down (go out of board)
+            textcolor(12);
             printf("YOU CAN'T GO THERE !");
             printf("\n");
             i--;
@@ -190,7 +196,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
             for(int k=1; k<=Mcells; k++){
                 if (*board[x][y + k].identifierPlace == '#')
                 {
-
+                    textcolor(12);
                     printf("YOU CAN'T GO THERE ! (#)");
                     printf("\n");
                     sw=0;
@@ -215,6 +221,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 else if (isalpha(*board[x][y + k].identifierPlace) && *board[x][y + k].identifierPlace != 'F')
                 {
                     //in this place exist an animal
+                    textcolor(12);
                     printf("YOU CAN'T GO THERE ! (%s)", board[x][y + k].identifierPlace);
                     printf("\n");
                     sw=0;
@@ -229,7 +236,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 //add Food energy to player
                 for(int j=1; j<=Mcells; j++){
                     if(*board[x][y + j].identifierPlace == 'F'){
-                        alliedanimalposition[i].energyPoint += board[x + j][y + 1].foodPlace.energy ;
+                        alliedanimalposition[i].energyPoint += board[x][y + j].foodPlace.energy ;
                         board[x][y + j] = defaultCell ;
 
                     }
@@ -245,6 +252,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
         else
         {
             // player can't Go Right (go out of board)
+            textcolor(12);
             printf("YOU CAN'T GO THERE !");
             printf("\n");
             i--;
@@ -258,7 +266,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
             for(int k=1; k<=Mcells; k++){
                 if (*board[x][y - k].identifierPlace == '#')
                 {
-
+                    textcolor(12);
                     printf("YOU CAN'T GO THERE ! (#)");
                     printf("\n");
                     sw=0;
@@ -282,6 +290,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 else if (isalpha(*board[x][y - k].identifierPlace) && *board[x][y - k].identifierPlace != 'F')
                 {
                     //in this place exist an animal
+                    textcolor(12);
                     printf("YOU CAN'T GO THERE ! (%s)", board[x][y - k].identifierPlace);
                     printf("\n");
                     sw=0;
@@ -296,7 +305,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 //add Food energy to player
                 for(int j=1; j<=Mcells; j++){
                     if(*board[x][y - j].identifierPlace == 'F'){
-                        alliedanimalposition[i].energyPoint += board[x + j][y + 1].foodPlace.energy ;
+                        alliedanimalposition[i].energyPoint += board[x][y - j].foodPlace.energy ;
                         board[x][y - j] = defaultCell ;
 
                     }
@@ -312,6 +321,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
         else
         {
             // player can't Go Left (go out of board)
+            textcolor(12);
             printf("YOU CAN'T GO THERE !");
             printf("\n");
             i--;
@@ -326,7 +336,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
             for(int k=1; k<=Mcells; k++){
                 if (*board[x-k][y - k].identifierPlace == '#')
                 {
-
+                    textcolor(12);
                     printf("YOU CAN'T GO THERE ! (#)");
                     printf("\n");
                     sw=0;
@@ -352,6 +362,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 else if (isalpha(*board[x-k][y - k].identifierPlace) && *board[x-k][y - k].identifierPlace != 'F')
                 {
                     //in this place exist an animal
+                    textcolor(12);
                     printf("YOU CAN'T GO THERE ! (%s)", board[x-k][y - k].identifierPlace);
                     printf("\n");
                     sw=0;
@@ -366,7 +377,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 //add Food energy to player
                 for(int j=1; j<=Mcells; j++){
                     if(*board[x - j][y - j].identifierPlace == 'F'){
-                        alliedanimalposition[i].energyPoint += board[x + j][y + 1].foodPlace.energy ;
+                        alliedanimalposition[i].energyPoint += board[x + j][y + j].foodPlace.energy ;
                         board[x - j][y - j] = defaultCell ;
 
                     }
@@ -383,6 +394,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
         else
         {
             // player can't Go LeftTUp (go out of board)
+            textcolor(12);
             printf("YOU CAN'T GO THERE !");
             printf("\n");
             i--;
@@ -397,7 +409,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
             for(int k=1; k<=Mcells; k++){
                 if (*board[x-k][y + k].identifierPlace == '#')
                 {
-
+                    textcolor(12);
                     printf("YOU CAN'T GO THERE ! (#)");
                     printf("\n");
                     sw=0;
@@ -423,6 +435,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 else if (isalpha(*board[x-k][y + k].identifierPlace) && *board[x-k][y + k].identifierPlace != 'F')
                 {
                     //in this place exist an animal
+                    textcolor(12);
                     printf("YOU CAN'T GO THERE ! (%s)", board[x-k][y + k].identifierPlace);
                     printf("\n");
                     sw=0;
@@ -436,9 +449,9 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
             {
                 //add Food energy to player
                 for(int j=1; j<=Mcells; j++){
-                    if(*board[x - j][y + 1].identifierPlace == 'F'){
-                        alliedanimalposition[i].energyPoint += board[x + j][y + 1].foodPlace.energy ;
-                        board[x - j][y + 1] = defaultCell ;
+                    if(*board[x - j][y + j].identifierPlace == 'F'){
+                        alliedanimalposition[i].energyPoint += board[x - j][y + j].foodPlace.energy ;
+                        board[x - j][y + j] = defaultCell ;
 
                     }
                 }
@@ -454,6 +467,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
             
         else {
             // player can't Go RightTUp (go out of board)
+            textcolor(12);
             printf("YOU CAN'T GO THERE !");
             printf("\n");
             i--;
@@ -468,7 +482,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
             for(int k=1; k<=Mcells; k++){
                 if (*board[x+k][y + k].identifierPlace == '#')
                 {
-
+                    textcolor(12);
                     printf("YOU CAN'T GO THERE ! (#)");
                     printf("\n");
                     sw=0;
@@ -494,6 +508,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 else if (isalpha(*board[x+k][y + k].identifierPlace) && *board[x+k][y + k].identifierPlace != 'F')
                 {
                     //in this place exist an animal
+                    textcolor(12);
                     printf("YOU CAN'T GO THERE ! (%s)", board[x+k][y + k].identifierPlace);
                     printf("\n");
                     sw=0;
@@ -507,9 +522,9 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
             {
                 //add Food energy to player
                 for(int j=1; j<=Mcells; j++){
-                    if(*board[x + j][y + 1].identifierPlace == 'F'){
-                        alliedanimalposition[i].energyPoint += board[x + j][y + 1].foodPlace.energy ;
-                        board[x + j][y + 1] = defaultCell ;
+                    if(*board[x + j][y + j].identifierPlace == 'F'){
+                        alliedanimalposition[i].energyPoint += board[x + j][y + j].foodPlace.energy ;
+                        board[x + j][y + j] = defaultCell ;
 
                     }
                 }
@@ -525,6 +540,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
         else
         {
             // player can't Go RightTDown (go out of board)
+            textcolor(12);
             printf("YOU CAN'T GO THERE !");
             printf("\n");
             i--;
@@ -539,7 +555,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
             for(int k=1; k<=Mcells; k++){
                 if (*board[x + k][y-k].identifierPlace == '#')
                 {
-
+                    textcolor(12);
                     printf("YOU CAN'T GO THERE ! (#)");
                     printf("\n");
                     sw=0;
@@ -565,6 +581,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 else if (isalpha(*board[x + k][y-k].identifierPlace) && *board[x + k][y-k].identifierPlace != 'F')
                 {
                     //in this place exist an animal
+                    textcolor(12);
                     printf("YOU CAN'T GO THERE ! (%s)", board[x + k][y-k].identifierPlace);
                     printf("\n");
                     sw=0;
@@ -579,7 +596,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 //add Food energy to player
                 for(int j=1; j<=Mcells; j++){
                     if(*board[x + j][y - j].identifierPlace == 'F'){
-                        alliedanimalposition[i].energyPoint += board[x + j][y + 1].foodPlace.energy ;
+                        alliedanimalposition[i].energyPoint += board[x + j][y - j].foodPlace.energy ;
                         board[x + j][y - j] = defaultCell ;
 
                     }
@@ -596,6 +613,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
         else
         {
             // player can't Go LeftTDown (go out of board)
+            textcolor(12);
             printf("YOU CAN'T GO THERE !");
             printf("\n");
             i--;

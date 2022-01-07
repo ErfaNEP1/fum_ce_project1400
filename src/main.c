@@ -95,7 +95,6 @@ int main()
     printWorld(world.size, board, 0, world);
 
     int ch;
-    textcolor(9);
     int winSwitch = 0;
     // ======================= End of Preprations For Start ======================= //
 
@@ -112,6 +111,7 @@ int main()
             snprintf(world.winner, 2, "%s", world.animalToControl);
             break;
         }
+        textcolor(5);
         printf("PLAYER TURN DONE, AI TURN.\n");
         clearScreen();
         // Player Moves End
@@ -129,6 +129,7 @@ int main()
         {
             // preprations for the next round
             printWorld(world.size, board, 0, world);
+            textcolor(5);
             printf("ROUND FINISHED, WAIT FOR 3 SECONDS\n");
             for (int i = 0; i < 3; i++)
             {
@@ -139,9 +140,8 @@ int main()
             printf("NEXT ROUND STARTED, MOVE !\n");
             printWorld(world.size, board, 0, world);
         }
-        clearScreen();
-        printWorld(world.size, board, 0, world);
-        textcolor(2);
+        // clearScreen();
+        // printWorld(world.size, board, 0, world);
     }
     // ======================= End of Game ======================= //
 
@@ -149,6 +149,7 @@ int main()
     if (winSwitch == 1){
         clearScreen();
         printWorld(world.size, board, 0, world);
+        textcolor(2);
         printf("PLAYER %s WON THE GAME !", world.winner);
     }
     // ======================= End of Printing the Winner ======================= //

@@ -47,6 +47,7 @@ void move(World world, int **winSwitch, int worldSize, struct Cell board[][world
         .identifierPlace = *enemy};
     Cell defaultCell = {
         .typePlace = "default",
+        .foodPlace.energy = 0,
         .identifierPlace = "."};
     //enemy won the game
     if (*board[xx][yy].identifierPlace == 'H')
@@ -64,6 +65,7 @@ int cellsToMove(struct Point pointTomove[], int pointindex, int Mcells, int n, i
     int p = pointindex;
     Cell defaultcell = {
         .typePlace = "default",
+        .foodPlace.energy = 0,
         .identifierPlace = "."};
 
         if (p == pointindex) {
