@@ -74,22 +74,22 @@ int main()
     // ======================= End Of Input Map Details ======================= //
 
     // ======================= Preprations For Start ======================= //
-    printFoodsDetails(world.size, board);
-    printf("\n");
-    printWorldDetails(world);
-    printf("\n");
-    printWorld(world.size, board, 0, world);
-    printf("\n");
-    printf("%s", world.animalToControl);
+    // printFoodsDetails(world.size, board);
+    // printf("\n");
+    // printWorldDetails(world);
+    // printf("\n");
+    // printWorld(world.size, board, 0, world);
+    // printf("\n");
+    // printf("%s", world.animalToControl);
 
     // Allied Animals Count + Storing each animal in World structure
     int nPlayer = searchTypeanimalposition(world, world.animalToControl, world.size, board, world.alliedanimalposition, world.enemyanimalposition);
     int nEnemy = world.animalCount - nPlayer;
 
-    textcolor(6);
-    printWorld(world.size, board, 0, world);
-    textcolor(13);
-    clearScreen();
+    // textcolor(6);
+    // printWorld(world.size, board, 0, world);
+    // textcolor(13);
+    // clearScreen();
 
     printf("\nSTART !!! ( Move With Arrow Keys. ) ( PRESS \"ESC\" TO EXIT )\n");
     printWorld(world.size, board, 0, world);
