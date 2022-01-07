@@ -13,7 +13,7 @@ int main()
     int worldSize;
     World world;
     FILE *input;
-    input = fopen("input.txt", "r");
+    input = fopen("map_phase1.txt", "r");
     fscanf(input, "%d", &worldSize);
     fclose(input);
     world.size = worldSize;
@@ -31,7 +31,7 @@ int main()
     world.foodCount = 0;
     world.animalCount = 0;
     FILE *input2;
-    input2 = fopen("input.txt", "r");
+    input2 = fopen("map_phase1.txt", "r");
     // Read input file line by line
     while (fgets(line, 256, input2))
     {
