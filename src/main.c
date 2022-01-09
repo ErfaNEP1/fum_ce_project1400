@@ -101,13 +101,15 @@ int main()
     // ======================= Start Game ======================= //
 
     // ch == 27 => ESC
+    int num,numofplayer = -1;
     while ((ch = get_code()) != 27 && winSwitch == 0)
     {
         // Start Player Moves
-        initPlayerMove(&world, ch, nPlayer, worldSize, &winSwitch, board);
+        num = initPlayerMove(&world, ch, nPlayer, worldSize, &winSwitch, board);
         // Check if game's finished or not
         if (winSwitch == 1)
         {
+            numofplayer = num;
             snprintf(world.winner, 2, "%s", world.animalToControl);
             break;
         }
@@ -148,7 +150,7 @@ int main()
     // ======================= Printing the Winner ======================= //
     if (winSwitch == 1){
         clearScreen();
-        printWorld(world.size, board, 0, world);
+        printWorld(world.size, board, numofplayer, world);
         textcolor(2);
         printf("PLAYER %s WON THE GAME !", world.winner);
     }

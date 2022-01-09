@@ -246,7 +246,7 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
     }
 }
 
-void initPlayerMove(World *world, int ch, int nPlayer, int worldSize, int *winSwitch, Cell board[][worldSize])
+int initPlayerMove(World *world, int ch, int nPlayer, int worldSize, int *winSwitch, Cell board[][worldSize])
 {
     for (int i = 0; i < nPlayer; i++)
     {
@@ -257,12 +257,13 @@ void initPlayerMove(World *world, int ch, int nPlayer, int worldSize, int *winSw
         if (clickedKey != 0)
         {
             i = animalTocontrol(&winSwitch, world->animalToControl, nPlayer, world->size, board, animalPtr->x, animalPtr->y, i, world->alliedanimalposition, clickedKey, animalPtr->gene.cellsToMove);
+            if(*winSwitch == 1) return i;
             if(i == k-1)
                 printWorld(world->size, board, k, *world);
             else
                 printWorld(world->size, board, i+1, *world);
             
-            if(*winSwitch == 1) break;
+            
         }
         if (i != nPlayer - 1)
             ch = get_code();
