@@ -212,7 +212,7 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
             //to keep distance from start
             if (isValid(x, y, worldsize) == 1 && visited[x][y] == 0)
             {
-                if (strcmp(board[x][y].identifierPlace, "F") == 0 || strcmp(board[x][y].identifierPlace, "H") == 0 || strcmp(board[x][y].identifierPlace, ".") == 0)
+                if (strcmp(board[x][y].typePlace, "animal") != 0 && *board[x][y].identifierPlace != '#')
                 {
                     visited[x][y] = 1;
                     struct QueueNode newNode = {

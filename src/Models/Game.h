@@ -200,19 +200,19 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
             else
             {
                 //Random Move
-                if ((*board[start.x + 1][start.y].identifierPlace == '.' || *board[start.x + 1][start.y].identifierPlace == 'F') && isValid(start.x + 1, start.y, world->size))
+                if (strcmp(board[start.x + 1][start.y].typePlace,"animal") != 0 && *board[start.x + 1][start.y].identifierPlace != '#' && isValid(start.x + 1, start.y, world->size))
                 {
                     move(*world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x + 1, start.y, world->enemyanimalposition, i);
                 }
-                else if ((*board[start.x - 1][start.y].identifierPlace == '.' || *board[start.x - 1][start.y].identifierPlace == 'F') && isValid(start.x - 1, start.y, world->size))
+                else if (strcmp(board[start.x - 1][start.y].typePlace,"animal") != 0 && *board[start.x - 1][start.y].identifierPlace != '#' && isValid(start.x - 1, start.y, world->size))
                 {
                     move(*world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x - 1, start.y, world->enemyanimalposition, i);
                 }
-                else if ((*board[start.x][start.y + 1].identifierPlace == '.' || *board[start.x][start.y + 1].identifierPlace == 'F') && isValid(start.x, start.y + 1, world->size))
+                else if (strcmp(board[start.x][start.y + 1].typePlace,"animal") != 0 && *board[start.x][start.y + 1].identifierPlace != '#' && isValid(start.x, start.y + 1, world->size))
                 {
                     move(*world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x, start.y + 1, world->enemyanimalposition, i);
                 }
-                else if ((*board[start.x][start.y - 1].identifierPlace == '.' || *board[start.x][start.y - 1].identifierPlace == 'F') && isValid(start.x, start.y - 1, world->size))
+                else if (strcmp(board[start.x][start.y - 1].typePlace,"animal") != 0 && *board[start.x][start.y - 1].identifierPlace != '#' && isValid(start.x, start.y - 1, world->size))
                 {
                     move(*world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x, start.y - 1, world->enemyanimalposition, i);
                 }
@@ -256,7 +256,7 @@ int initPlayerMove(World *world, int ch, int nPlayer, int worldSize, int *winSwi
         int clickedKey = ch;
         if (clickedKey != 0)
         {
-            i = animalTocontrol(&winSwitch, world->animalToControl, nPlayer, world->size, board, animalPtr->x, animalPtr->y, i, world->alliedanimalposition, clickedKey, animalPtr->gene.cellsToMove);
+            i = animalTocontrol(&winSwitch, world->animalToControl, nPlayer, world->size, board, i, world->alliedanimalposition, clickedKey);
             if(*winSwitch == 1) return i;
             if(i == k-1)
                 printWorld(world->size, board, k, *world);
