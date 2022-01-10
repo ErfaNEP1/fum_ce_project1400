@@ -248,7 +248,8 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
 
 int initPlayerMove(World *world, int ch, int nPlayer, int worldSize, int *winSwitch, Cell board[][worldSize])
 {
-    for (int i = 0; i < nPlayer; i++)
+    world->alliedCount = nPlayer;
+    for (int i = 0; i < world->alliedCount; i++)
     {
         int k=i;
         Animal *animalPtr;
@@ -256,7 +257,7 @@ int initPlayerMove(World *world, int ch, int nPlayer, int worldSize, int *winSwi
         int clickedKey = ch;
         if (clickedKey != 0)
         {
-            i = animalTocontrol(&winSwitch, world->animalToControl, nPlayer, world->size, board, i, world->alliedanimalposition, clickedKey);
+            i = animalTocontrol(&winSwitch, world->animalToControl, nPlayer, world->size, board, i, world->alliedanimalposition, clickedKey, world->foodCell, &world->foodCount, &world->alliedCount);
             if(*winSwitch == 1) return i;
             if(i == k-1)
                 printWorld(world->size, board, k, *world);

@@ -22,7 +22,15 @@ int get_code()
     return getch();
 }
 
-int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct Cell board[][worldsize], int i, struct Animal alliedanimalposition[], int clickedKey)
+void delete_allied(int positionofallied, struct Animal alliedposition[],int *alliedcount){
+    for(int k=positionofallied; k<*alliedcount; k++){
+        alliedposition[k]=alliedposition[k+1];
+    }
+    *alliedcount--;
+
+}
+
+int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct Cell board[][worldsize], int i, struct Animal alliedanimalposition[], int clickedKey, struct Cell Foodcell[], int *foodcount, int *alliedcount)
 {
     Genome *AGptr;
     AGptr = &alliedanimalposition[i].gene;
@@ -30,6 +38,9 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
     x = alliedanimalposition[i].x;
     y = alliedanimalposition[i].y;
     int sw=1;
+    Cell foodCell = {
+        .typePlace = "food",
+        .identifierPlace = "F"};
     Cell animalTocontrolcell = {
         .typePlace = "animal",
         .identifierPlace = *player};
@@ -40,7 +51,7 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
 
     //========preparation for PlayerMove============//
     textcolor(1);
-    printf("you control player(%s %d)\n", player, i);
+    printf("you control player %s (%d,%d)\n", player, alliedanimalposition[i].x+1, alliedanimalposition[i].y+1);
     printf("energy = %d\n",alliedanimalposition[i].energyPoint);
     printf("Maximum number for moving : %d\n",AGptr->cellsToMove);
     printf("Enter number : ");
@@ -104,12 +115,23 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 // player don't have enough energy(moving)
                 else 
                 {
-                    textcolor(12);
-                    printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING",Mcells);
-                    printf("\n");
-                    sw = 0;
-                    i --;
-                    break;
+                    if(AGptr->energyForMoving > alliedanimalposition[i].energyPoint){
+                        board[x][y] = foodCell;
+                        board[x][y].foodPlace.energy = alliedanimalposition[i].energyPoint;
+                        Foodcell[*foodcount].x = x;
+                        Foodcell[*foodcount].y = y;
+                        *foodcount++;
+                        delete_allied(i, alliedanimalposition, alliedcount);
+                        break;
+                    }
+                    else{
+                        textcolor(12);
+                        printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING",Mcells);
+                        printf("\n");
+                        sw = 0;
+                        i --;
+                        break;
+                    }
                 }   
             }
             // player can move Mcells to Up
@@ -129,6 +151,14 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 alliedanimalposition[i].x-=Mcells;
                 //decreased energy
                 alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
+                if(AGptr->energyForMoving > alliedanimalposition[i].energyPoint){
+                    board[x - Mcells][y] = foodCell;
+                    board[x - Mcells][y].foodPlace.energy = alliedanimalposition[i].energyPoint;                        Foodcell[*foodcount].x = x;
+                    Foodcell[*foodcount].y = y;
+                    *foodcount++;
+                    delete_allied(i, alliedanimalposition, alliedcount);
+                    break;
+                }
 
                 printf("\n");
             }
@@ -190,12 +220,24 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 // player don't have enough energy(moving)
                 else 
                 {
-                    textcolor(12);
-                    printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING",Mcells);
-                    printf("\n");
-                    sw = 0;
-                    i --;
-                    break;
+                    if(AGptr->energyForMoving > alliedanimalposition[i].energyPoint){
+                        board[x][y] = foodCell;
+                        board[x][y].foodPlace.energy = alliedanimalposition[i].energyPoint;
+                        Foodcell[*foodcount].x = x;
+                        Foodcell[*foodcount].y = y;
+                        *foodcount++;
+                        delete_allied(i, alliedanimalposition, alliedcount);
+                        break;
+                    }
+                    else{
+                        textcolor(12);
+                        printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING",Mcells);
+                        printf("\n");
+                        sw = 0;
+                        i --;
+                        break;
+                    }
+                    
                 }  
             }
             // player can move Mcells to Down
@@ -215,6 +257,15 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 alliedanimalposition[i].x+= Mcells;
                 //decreased energy
                 alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
+                if(AGptr->energyForMoving > alliedanimalposition[i].energyPoint){
+                    board[x + Mcells][y] = foodCell;
+                    board[x + Mcells][y].foodPlace.energy = alliedanimalposition[i].energyPoint;
+                    Foodcell[*foodcount].x = x;
+                    Foodcell[*foodcount].y = y;
+                    *foodcount++;
+                    delete_allied(i, alliedanimalposition, alliedcount);
+                    break;
+                }
 
                 printf("\n");
             }
@@ -276,12 +327,24 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 // player don't have enough energy(moving)
                 else 
                 {
-                    textcolor(12);
-                    printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING",Mcells);
-                    printf("\n");
-                    sw = 0;
-                    i --;
-                    break;
+                    if(AGptr->energyForMoving > alliedanimalposition[i].energyPoint){
+                        board[x][y] = foodCell;
+                        board[x][y].foodPlace.energy = alliedanimalposition[i].energyPoint;
+                        Foodcell[*foodcount].x = x;
+                        Foodcell[*foodcount].y = y;
+                        *foodcount++;
+                        delete_allied(i, alliedanimalposition, alliedcount);
+                        break;
+                    }
+                    else{
+                        textcolor(12);
+                        printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING",Mcells);
+                        printf("\n");
+                        sw = 0;
+                        i --;
+                        break;
+                    }
+                    
                 }
             }
             //player can move Mcells to Right
@@ -301,6 +364,14 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 alliedanimalposition[i].y+= Mcells;
                 //decreased energy
                 alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
+                if(AGptr->energyForMoving > alliedanimalposition[i].energyPoint){
+                    board[x][y + Mcells] = foodCell;
+                    board[x][y + Mcells].foodPlace.energy = alliedanimalposition[i].energyPoint;                        Foodcell[*foodcount].x = x;
+                    Foodcell[*foodcount].y = y;
+                    *foodcount++;
+                    delete_allied(i, alliedanimalposition, alliedcount);
+                    break;
+                }
 
                 printf("\n");
             }
@@ -361,12 +432,24 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 // player don't have enough energy(moving)
                 else 
                 {
-                    textcolor(12);
-                    printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING",Mcells);
-                    printf("\n");
-                    sw = 0;
-                    i --;
-                    break;
+                    if(AGptr->energyForMoving > alliedanimalposition[i].energyPoint){
+                        board[x][y] = foodCell;
+                        board[x][y].foodPlace.energy = alliedanimalposition[i].energyPoint;
+                        Foodcell[*foodcount].x = x;
+                        Foodcell[*foodcount].y = y;
+                        *foodcount++;
+                        delete_allied(i, alliedanimalposition, alliedcount);
+                        break;
+                    }
+                    else{
+                        textcolor(12);
+                        printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING",Mcells);
+                        printf("\n");
+                        sw = 0;
+                        i --;
+                        break;
+                    }
+                    
                 }
             }
             //player can move Mcells to Left
@@ -386,6 +469,15 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 alliedanimalposition[i].y-= Mcells;
                 //decreased energy
                 alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
+                if(AGptr->energyForMoving > alliedanimalposition[i].energyPoint){
+                    board[x][y - Mcells] = foodCell;
+                    board[x][y - Mcells].foodPlace.energy = alliedanimalposition[i].energyPoint;
+                    Foodcell[*foodcount].x = x;
+                    Foodcell[*foodcount].y = y;
+                    *foodcount++;
+                    delete_allied(i, alliedanimalposition, alliedcount);
+                    break;
+                }
 
                 printf("\n");
             }
@@ -449,12 +541,24 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 // player don't have enough energy(moving)
                 else 
                 {
-                    textcolor(12);
-                    printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING",Mcells);
-                    printf("\n");
-                    sw = 0;
-                    i --;
-                    break;
+                    if(AGptr->energyForMoving > alliedanimalposition[i].energyPoint){
+                        board[x][y] = foodCell;
+                        board[x][y].foodPlace.energy = alliedanimalposition[i].energyPoint;
+                        Foodcell[*foodcount].x = x;
+                        Foodcell[*foodcount].y = y;
+                        *foodcount++;
+                        delete_allied(i, alliedanimalposition, alliedcount);
+                        break;
+                    }
+                    else{
+                        textcolor(12);
+                        printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING",Mcells);
+                        printf("\n");
+                        sw = 0;
+                        i --;
+                        break;
+                    }
+                    
                 }
             }
             //player can move Mcells to LeftTUp
@@ -475,6 +579,15 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 alliedanimalposition[i].x-= Mcells;
                 //decreased energy
                 alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
+                if(AGptr->energyForMoving > alliedanimalposition[i].energyPoint){
+                    board[x - Mcells][y - Mcells] = foodCell;
+                    board[x - Mcells][y - Mcells].foodPlace.energy = alliedanimalposition[i].energyPoint;
+                    Foodcell[*foodcount].x = x;
+                    Foodcell[*foodcount].y = y;
+                    *foodcount++;
+                    delete_allied(i, alliedanimalposition, alliedcount);
+                    break;
+                }
 
                 printf("\n");
             }
@@ -538,12 +651,24 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 // player don't have enough energy(moving)
                 else 
                 {
-                    textcolor(12);
-                    printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING",Mcells);
-                    printf("\n");
-                    sw = 0;
-                    i --;
-                    break;
+                    if(AGptr->energyForMoving > alliedanimalposition[i].energyPoint){
+                        board[x][y] = foodCell;
+                        board[x][y].foodPlace.energy = alliedanimalposition[i].energyPoint;
+                        Foodcell[*foodcount].x = x;
+                        Foodcell[*foodcount].y = y;
+                        *foodcount++;
+                        delete_allied(i, alliedanimalposition, alliedcount);
+                        break;
+                    }
+                    else{
+                        textcolor(12);
+                        printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING",Mcells);
+                        printf("\n");
+                        sw = 0;
+                        i --;
+                        break;
+                    }
+                    
                 }
             }
             //player can move Mcells to RightTUp
@@ -564,6 +689,15 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 alliedanimalposition[i].x-= Mcells;
                 //decreased energy
                 alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
+                if(AGptr->energyForMoving > alliedanimalposition[i].energyPoint){
+                    board[x - Mcells][y + Mcells] = foodCell;
+                    board[x - Mcells][y + Mcells].foodPlace.energy = alliedanimalposition[i].energyPoint;
+                    Foodcell[*foodcount].x = x;
+                    Foodcell[*foodcount].y = y;
+                    *foodcount++;
+                    delete_allied(i, alliedanimalposition, alliedcount);
+                    break;
+                }
 
                 printf("\n");
             }
@@ -627,12 +761,24 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 // player don't have enough energy(moving)
                 else 
                 {
-                    textcolor(12);
-                    printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING",Mcells);
-                    printf("\n");
-                    sw = 0;
-                    i --;
-                    break;
+                    if(AGptr->energyForMoving > alliedanimalposition[i].energyPoint){
+                        board[x][y] = foodCell;
+                        board[x][y].foodPlace.energy = alliedanimalposition[i].energyPoint;
+                        Foodcell[*foodcount].x = x;
+                        Foodcell[*foodcount].y = y;
+                        *foodcount++;
+                        delete_allied(i, alliedanimalposition, alliedcount);
+                        break;
+                    }
+                    else{
+                        textcolor(12);
+                        printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING",Mcells);
+                        printf("\n");
+                        sw = 0;
+                        i --;
+                        break;
+                    }
+                    
                 }
             }
             //player can move Mcells to RightTDown
@@ -653,6 +799,15 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 alliedanimalposition[i].x+= Mcells;
                 //decreased energy
                 alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
+                if(AGptr->energyForMoving > alliedanimalposition[i].energyPoint){
+                    board[x + Mcells][y + Mcells] = foodCell;
+                    board[x + Mcells][y + Mcells].foodPlace.energy = alliedanimalposition[i].energyPoint;
+                    Foodcell[*foodcount].x = x;
+                    Foodcell[*foodcount].y = y;
+                    *foodcount++;
+                    delete_allied(i, alliedanimalposition, alliedcount);
+                    break;
+                }
 
                 printf("\n");
             }
@@ -716,12 +871,24 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 // player don't have enough energy(moving)
                 else 
                 {
-                    textcolor(12);
-                    printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING",Mcells);
-                    printf("\n");
-                    sw = 0;
-                    i --;
-                    break;
+                    if(AGptr->energyForMoving > alliedanimalposition[i].energyPoint){
+                        board[x][y] = foodCell;
+                        board[x][y].foodPlace.energy = alliedanimalposition[i].energyPoint;
+                        Foodcell[*foodcount].x = x;
+                        Foodcell[*foodcount].y = y;
+                        *foodcount++;
+                        delete_allied(i, alliedanimalposition, alliedcount);
+                        break;
+                    }
+                    else{
+                        textcolor(12);
+                        printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING",Mcells);
+                        printf("\n");
+                        sw = 0;
+                        i --;
+                        break;
+                    }
+                    
                 }
             }
             //player can move Mcells to LeftTDown
@@ -742,6 +909,15 @@ int animalTocontrol(int **winSwitch,char player[], int n, int worldsize, struct 
                 alliedanimalposition[i].y-=Mcells;
                 //decreased energy
                 alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
+                if(AGptr->energyForMoving > alliedanimalposition[i].energyPoint){
+                    board[x + Mcells][y - Mcells] = foodCell;
+                    board[x + Mcells][y - Mcells].foodPlace.energy = alliedanimalposition[i].energyPoint;
+                    Foodcell[*foodcount].x = x;
+                    Foodcell[*foodcount].y = y;
+                    *foodcount++;
+                    delete_allied(i, alliedanimalposition, alliedcount);
+                    break;
+                }
 
                 printf("\n");
             }
