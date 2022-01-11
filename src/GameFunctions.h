@@ -9,6 +9,7 @@
 #include "AnimalMove/FunctionForMoving/enemyPath.h"
 #include "AnimalMove/FunctionForMoving/SearchBoard.h"
 #include "AnimalMove/FunctionForMoving/reverseEnemyPath.h"
+#include "AnimalMove/FunctionForMoving/minenergy.h"
 #include "AnimalMove/FunctionForMoving/delete_animal.h"
 #include "AnimalMove/FunctionForMoving/Check.h"
 #include "AnimalMove/PlayerMove.h"

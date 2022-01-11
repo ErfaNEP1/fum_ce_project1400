@@ -1,14 +1,14 @@
 enum
 {
-  KEY_ESC     = 27,
-  ARROW_UP    = 72,
-  ARROW_DOWN  = 80,
-  ARROW_LEFT  = 75,
-  ARROW_RIGHT = 77,
-  ARROW_LEFTUP  = 71,
-  ARROW_LEFTDOWN  = 79,
-  ARROW_RIGHTUP  = 73,
-  ARROW_RIGHTDOWN  = 81
+    KEY_ESC = 27,
+    ARROW_UP = 72,
+    ARROW_DOWN = 80,
+    ARROW_LEFT = 75,
+    ARROW_RIGHT = 77,
+    ARROW_LEFTUP = 71,
+    ARROW_LEFTDOWN = 79,
+    ARROW_RIGHTUP = 73,
+    ARROW_RIGHTDOWN = 81
 };
 
 // get Arrow code
@@ -22,14 +22,14 @@ int get_code()
     return getch();
 }
 
-int animalTocontrol(int **winSwitch,char player[], int worldsize, struct Cell board[][worldsize], int i, struct Animal alliedanimalposition[], int clickedKey, struct Cell Foodcell[], int *foodcount, int *alliedcount)
+int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell board[][worldsize], int i, struct Animal alliedanimalposition[], int clickedKey, struct Cell Foodcell[], int *foodcount, int *alliedcount)
 {
     Genome *AGptr;
     AGptr = &alliedanimalposition[i].gene;
     int x, y;
     x = alliedanimalposition[i].x;
     y = alliedanimalposition[i].y;
-    int sw=1;
+    int sw = 1;
     Cell foodCell = {
         .typePlace = "food",
         .identifierPlace = "F"};
@@ -43,18 +43,42 @@ int animalTocontrol(int **winSwitch,char player[], int worldsize, struct Cell bo
 
     //========preparation for PlayerMove============//
     textcolor(1);
-    printf("you control player %s (%d,%d)\n", player, alliedanimalposition[i].x+1, alliedanimalposition[i].y+1);
-    printf("energy = %d\n",alliedanimalposition[i].energyPoint);
-    printf("Maximum number for moving : %d\n",AGptr->cellsToMove);
+    printf("you control player %s (%d,%d)\n", player, alliedanimalposition[i].x + 1, alliedanimalposition[i].y + 1);
+    printf("energy = %d\n", alliedanimalposition[i].energyPoint);
+    if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+    {
+        //animal died
+
+        if (alliedanimalposition[i].energyPoint > 0)
+        {
+
+            board[x][y] = foodCell;
+            board[x][y].foodPlace.energy = alliedanimalposition[i].energyPoint;
+            Foodcell[*foodcount].x = x;
+            Foodcell[*foodcount].y = y;
+            *foodcount++;
+        }
+        else
+        {
+            board[x][y] = defaultCell;
+        }
+        textcolor(14);
+        printf("Animal %s(%d,%d) died", player, alliedanimalposition[i].x, alliedanimalposition[i].y);
+        delete_allied(i, alliedanimalposition, &alliedcount);
+        return i;
+    }
+
+    printf("Maximum number for moving : %d\n", AGptr->cellsToMove);
     printf("Enter number : ");
     int Mcells, TemporaryEnergy = alliedanimalposition[i].energyPoint;
-    scanf("%d",&Mcells);
-    while(Mcells<=0 || Mcells>AGptr->cellsToMove){
+    scanf("%d", &Mcells);
+    while (Mcells <= 0 || Mcells > AGptr->cellsToMove)
+    {
         textcolor(12);
         printf("It's wrong.\n");
         textcolor(1);
         printf("Enter another number :");
-        scanf("%d",&Mcells);
+        scanf("%d", &Mcells);
     }
     //========End of preparation for PlayerMove============//
 
@@ -65,100 +89,103 @@ int animalTocontrol(int **winSwitch,char player[], int worldsize, struct Cell bo
         if (x - Mcells >= 0)
         {
             // checked the places of board for Mcells move
-            for(int k=1; k<=Mcells; k++){
+            for (int k = 1; k <= Mcells; k++)
+            {
 
-                    if (*board[x - k][y].identifierPlace == '#')
-                    {
-                        textcolor(12);
-                        printf("YOU CAN'T GO THERE ! (#)");
-                        printf("\n");
-                        sw=0;
-                        i--;
-                    
-                        break;
-                    }
-                    else if (*board[x - k][y].identifierPlace == 'H')
-                    {
-                        //player won the game
-                        board[x - k][y] = animalTocontrolcell;
-                        board[x][y] = defaultCell;
-                        alliedanimalposition[i].x-= k;
+                if (*board[x - k][y].identifierPlace == '#')
+                {
+                    textcolor(12);
+                    printf("YOU CAN'T GO THERE ! (#)");
+                    printf("\n");
+                    sw = 0;
+                    i--;
 
-                        printf("\n");
-                        sw=0;
-                        **winSwitch = 1;
-                        printf("\n");
-                        break;
-                    }
-                    else if (*board[x - k][y].identifierPlace == 'F') 
-                    {
-                        TemporaryEnergy += board[x - k][y].foodPlace.energy;
-                    }
-                    else if (isalpha(*board[x - k][y].identifierPlace))
-                    {
-                        //in this place exist an animal
-                        textcolor(12);
-                        printf("YOU CAN'T GO THERE ! (%s)", board[x - k][y].identifierPlace);
-                        printf("\n");
-                        sw=0;
-                        i--;
-                    
-                        break;
-                    }  
+                    break;
+                }
+                else if (*board[x - k][y].identifierPlace == 'H')
+                {
+                    //player won the game
+                    board[x - k][y] = animalTocontrolcell;
+                    board[x][y] = defaultCell;
+                    alliedanimalposition[i].x -= k;
+
+                    printf("\n");
+                    sw = 0;
+                    **winSwitch = 1;
+                    printf("\n");
+                    break;
+                }
+                else if (*board[x - k][y].identifierPlace == 'F')
+                {
+                    TemporaryEnergy += board[x - k][y].foodPlace.energy;
+                }
+                else if (isalpha(*board[x - k][y].identifierPlace))
+                {
+                    //in this place exist an animal
+                    textcolor(12);
+                    printf("YOU CAN'T GO THERE ! (%s)", board[x - k][y].identifierPlace);
+                    printf("\n");
+                    sw = 0;
+                    i--;
+
+                    break;
+                }
             }
             // player can move Mcells to Up
-            if(sw==1)
+            if (sw == 1)
             {
                 //check energy of player
-                if (Mcells * AGptr->energyForMoving <= TemporaryEnergy) 
+                if (Mcells * AGptr->energyForMoving <= TemporaryEnergy)
                 {
-                //add Food enegy to player
-                for(int j=1; j<=Mcells; j++){
-                    if(*board[x - j][y].identifierPlace == 'F'){
-                        alliedanimalposition[i].energyPoint += board[x - j][y].foodPlace.energy ;
-                        board[x - j][y] = defaultCell ;
-
-                    }
-                }
-                // player moved
-                board[x - Mcells][y] = animalTocontrolcell;
-                board[x][y] = defaultCell;
-                alliedanimalposition[i].x-=Mcells;
-                //decreased energy
-                alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
-                if(AGptr->energyForMoving > alliedanimalposition[i].energyPoint) 
-                {
-                    //animal died
-
-                    if (alliedanimalposition[i].energyPoint > 0){
-
-                    board[x - Mcells][y] = foodCell;
-                    board[x - Mcells][y].foodPlace.energy = alliedanimalposition[i].energyPoint;                        
-                    Foodcell[*foodcount].x = x-Mcells;
-                    Foodcell[*foodcount].y = y;
-                    *foodcount++;
-                    }
-                    else 
+                    //add Food enegy to player
+                    for (int j = 1; j <= Mcells; j++)
                     {
-                        board[x - Mcells][y] = defaultCell;
+                        if (*board[x - j][y].identifierPlace == 'F')
+                        {
+                            alliedanimalposition[i].energyPoint += board[x - j][y].foodPlace.energy;
+                            board[x - j][y] = defaultCell;
+                        }
                     }
-                    textcolor(14);
-                    printf("Animal %s(%d,%d) died",player,alliedanimalposition[i].x,alliedanimalposition[i].y);
-                    delete_allied(i, alliedanimalposition, &alliedcount);
-                    i --;
-                }
+                    // player moved
+                    board[x - Mcells][y] = animalTocontrolcell;
+                    board[x][y] = defaultCell;
+                    alliedanimalposition[i].x -= Mcells;
+                    //decreased energy
+                    alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
+                    if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+                    {
+                        //animal died
 
-                printf("\n");
+                        if (alliedanimalposition[i].energyPoint > 0)
+                        {
+
+                            board[x - Mcells][y] = foodCell;
+                            board[x - Mcells][y].foodPlace.energy = alliedanimalposition[i].energyPoint;
+                            Foodcell[*foodcount].x = x - Mcells;
+                            Foodcell[*foodcount].y = y;
+                            *foodcount++;
+                        }
+                        else
+                        {
+                            board[x - Mcells][y] = defaultCell;
+                        }
+                        textcolor(14);
+                        printf("Animal %s(%d,%d) died", player, alliedanimalposition[i].x, alliedanimalposition[i].y);
+                        delete_allied(i, alliedanimalposition, &alliedcount);
+                        i--;
+                    }
+
+                    printf("\n");
                 }
                 // player don't have enough energy(moving)
-                else 
+                else
                 {
-                        textcolor(12);
-                        printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING",Mcells);
-                        printf("\n");
-                        i --;
-                        break;
-                } 
+                    textcolor(12);
+                    printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING", Mcells);
+                    printf("\n");
+                    i--;
+                    break;
+                }
             }
         }
         else
@@ -176,100 +203,103 @@ int animalTocontrol(int **winSwitch,char player[], int worldsize, struct Cell bo
         if (x + Mcells < worldsize)
         {
             // checked the places of board for Mcells move
-            for(int k=1; k<=Mcells; k++){
+            for (int k = 1; k <= Mcells; k++)
+            {
 
-                    if (*board[x + k][y].identifierPlace == '#')
-                    {
-                        textcolor(12);
-                        printf("YOU CAN'T GO THERE ! (#)");
-                        printf("\n");
-                        sw=0;
-                        i--;
-                        break;
-                    }
-                    else if (*board[x + k][y].identifierPlace == 'H')
-                    {
-                    
-                        //player won the game
-                        board[x + k][y] = animalTocontrolcell;
-                        board[x][y] = defaultCell;
-                        alliedanimalposition[i].x+= k;
+                if (*board[x + k][y].identifierPlace == '#')
+                {
+                    textcolor(12);
+                    printf("YOU CAN'T GO THERE ! (#)");
+                    printf("\n");
+                    sw = 0;
+                    i--;
+                    break;
+                }
+                else if (*board[x + k][y].identifierPlace == 'H')
+                {
 
-                        printf("\n");
-                        sw=0;
-                        **winSwitch = 1;
-                        printf("\n");
-                        break;
-                    }
-                    else if (*board[x + k][y].identifierPlace == 'F') 
-                    {
-                        TemporaryEnergy += board[x + k][y].foodPlace.energy;
-                    }
-                    else if (isalpha(*board[x + k][y].identifierPlace))
-                    {
-                        //in this place exist an animal
-                        textcolor(12);
-                        printf("YOU CAN'T GO THERE ! (%s)", board[x + k][y].identifierPlace);
-                        printf("\n");
-                        sw=0;
-                        i--;
+                    //player won the game
+                    board[x + k][y] = animalTocontrolcell;
+                    board[x][y] = defaultCell;
+                    alliedanimalposition[i].x += k;
 
-                        break;
-                    } 
+                    printf("\n");
+                    sw = 0;
+                    **winSwitch = 1;
+                    printf("\n");
+                    break;
+                }
+                else if (*board[x + k][y].identifierPlace == 'F')
+                {
+                    TemporaryEnergy += board[x + k][y].foodPlace.energy;
+                }
+                else if (isalpha(*board[x + k][y].identifierPlace))
+                {
+                    //in this place exist an animal
+                    textcolor(12);
+                    printf("YOU CAN'T GO THERE ! (%s)", board[x + k][y].identifierPlace);
+                    printf("\n");
+                    sw = 0;
+                    i--;
+
+                    break;
+                }
             }
             // player can move Mcells to Down
-            if(sw==1)
+            if (sw == 1)
             {
                 //check energy of player
-                if (Mcells * AGptr->energyForMoving <= TemporaryEnergy) 
+                if (Mcells * AGptr->energyForMoving <= TemporaryEnergy)
                 {
-                //add Food enegy to player
-                for(int j=1; j<=Mcells; j++){
-                    if(*board[x + j][y].identifierPlace == 'F'){
-                        alliedanimalposition[i].energyPoint += board[x + j][y].foodPlace.energy ;
-                        board[x + j][y] = defaultCell ;
-
-                    }
-                }
-                //player moved
-                board[x + Mcells][y] = animalTocontrolcell;
-                board[x][y] = defaultCell;
-                alliedanimalposition[i].x+= Mcells;
-                //decreased energy
-                alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
-                if(AGptr->energyForMoving > alliedanimalposition[i].energyPoint) 
-                {
-                    //animal died
-
-                    if (alliedanimalposition[i].energyPoint > 0){
-
-                    board[x + Mcells][y] = foodCell;
-                    board[x + Mcells][y].foodPlace.energy = alliedanimalposition[i].energyPoint;                        
-                    Foodcell[*foodcount].x = x+Mcells;
-                    Foodcell[*foodcount].y = y;
-                    *foodcount++;
-                    }
-                    else 
+                    //add Food enegy to player
+                    for (int j = 1; j <= Mcells; j++)
                     {
-                        board[x + Mcells][y] = defaultCell;
+                        if (*board[x + j][y].identifierPlace == 'F')
+                        {
+                            alliedanimalposition[i].energyPoint += board[x + j][y].foodPlace.energy;
+                            board[x + j][y] = defaultCell;
+                        }
+                    }
+                    //player moved
+                    board[x + Mcells][y] = animalTocontrolcell;
+                    board[x][y] = defaultCell;
+                    alliedanimalposition[i].x += Mcells;
+                    //decreased energy
+                    alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
+                    if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+                    {
+                        //animal died
+
+                        if (alliedanimalposition[i].energyPoint > 0)
+                        {
+
+                            board[x + Mcells][y] = foodCell;
+                            board[x + Mcells][y].foodPlace.energy = alliedanimalposition[i].energyPoint;
+                            Foodcell[*foodcount].x = x + Mcells;
+                            Foodcell[*foodcount].y = y;
+                            *foodcount++;
+                        }
+                        else
+                        {
+                            board[x + Mcells][y] = defaultCell;
+                        }
+
+                        textcolor(14);
+                        printf("Animal %s(%d,%d) died", player, alliedanimalposition[i].x, alliedanimalposition[i].y);
+                        delete_allied(i, alliedanimalposition, &alliedcount);
+                        i--;
                     }
 
-                    textcolor(14);
-                    printf("Animal %s(%d,%d) died",player,alliedanimalposition[i].x,alliedanimalposition[i].y);
-                    delete_allied(i, alliedanimalposition, &alliedcount);
-                    i --;
-                }
-
-                printf("\n");
+                    printf("\n");
                 }
                 // player don't have enough energy(moving)
-                else 
+                else
                 {
-                        textcolor(12);
-                        printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING",Mcells);
-                        printf("\n");
-                        i --;
-                        break;
+                    textcolor(12);
+                    printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING", Mcells);
+                    printf("\n");
+                    i--;
+                    break;
                 }
             }
         }
@@ -287,102 +317,104 @@ int animalTocontrol(int **winSwitch,char player[], int worldsize, struct Cell bo
         if (y + Mcells < worldsize)
         {
             // checked the places of board for Mcells move
-            for(int k=1; k<=Mcells; k++){
-                
-                    if (*board[x][y + k].identifierPlace == '#')
-                    {
-                        textcolor(12);
-                        printf("YOU CAN'T GO THERE ! (#)");
-                        printf("\n");
-                        sw=0;
-                        i--;
-                    
-                        break;
-                    }
-                    else if (*board[x][y + k].identifierPlace == 'H')
-                    {
+            for (int k = 1; k <= Mcells; k++)
+            {
 
-                        //player von the game
-                        board[x][y + k] = animalTocontrolcell;
-                        board[x][y] = defaultCell;
-                        alliedanimalposition[i].y+= k;
+                if (*board[x][y + k].identifierPlace == '#')
+                {
+                    textcolor(12);
+                    printf("YOU CAN'T GO THERE ! (#)");
+                    printf("\n");
+                    sw = 0;
+                    i--;
 
-                        printf("\n");
-                        sw=0;
-                        **winSwitch = 1;
-                        printf("\n");
-                        break;
-                    }
-                    else if (*board[x][y + k].identifierPlace == 'F') 
-                    {
-                        TemporaryEnergy += board[x][y + k].foodPlace.energy;
-                    }
-                    else if (isalpha(*board[x][y + k].identifierPlace))
-                    {
-                        //in this place exist an animal
-                        textcolor(12);
-                        printf("YOU CAN'T GO THERE ! (%s)", board[x][y + k].identifierPlace);
-                        printf("\n");
-                        sw=0;
-                        i--;
-                        break;
+                    break;
+                }
+                else if (*board[x][y + k].identifierPlace == 'H')
+                {
 
-                    }
+                    //player von the game
+                    board[x][y + k] = animalTocontrolcell;
+                    board[x][y] = defaultCell;
+                    alliedanimalposition[i].y += k;
+
+                    printf("\n");
+                    sw = 0;
+                    **winSwitch = 1;
+                    printf("\n");
+                    break;
+                }
+                else if (*board[x][y + k].identifierPlace == 'F')
+                {
+                    TemporaryEnergy += board[x][y + k].foodPlace.energy;
+                }
+                else if (isalpha(*board[x][y + k].identifierPlace))
+                {
+                    //in this place exist an animal
+                    textcolor(12);
+                    printf("YOU CAN'T GO THERE ! (%s)", board[x][y + k].identifierPlace);
+                    printf("\n");
+                    sw = 0;
+                    i--;
+                    break;
+                }
             }
             //player can move Mcells to Right
-            if(sw==1)
+            if (sw == 1)
             {
                 //check energy of player
-                if (Mcells * AGptr->energyForMoving <= TemporaryEnergy) 
+                if (Mcells * AGptr->energyForMoving <= TemporaryEnergy)
                 {
-                //add Food energy to player
-                for(int j=1; j<=Mcells; j++){
-                    if(*board[x][y + j].identifierPlace == 'F'){
-                        alliedanimalposition[i].energyPoint += board[x][y + j].foodPlace.energy ;
-                        board[x][y + j] = defaultCell ;
-
-                    }
-                }
-                //player moved
-                board[x][y + Mcells] = animalTocontrolcell;
-                board[x][y] = defaultCell;
-                alliedanimalposition[i].y+= Mcells;
-                //decreased energy
-                alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
-                if(AGptr->energyForMoving > alliedanimalposition[i].energyPoint) 
-                {
-                    
-                    //animal died
-
-                    if (alliedanimalposition[i].energyPoint > 0){
-
-                    board[x][y + Mcells] = foodCell;
-                    board[x][y + Mcells].foodPlace.energy = alliedanimalposition[i].energyPoint;                        
-                    Foodcell[*foodcount].x = x;
-                    Foodcell[*foodcount].y = y+Mcells;
-                    *foodcount++;
-                    }
-                    else 
+                    //add Food energy to player
+                    for (int j = 1; j <= Mcells; j++)
                     {
-                        board[x][y + Mcells] = defaultCell;
+                        if (*board[x][y + j].identifierPlace == 'F')
+                        {
+                            alliedanimalposition[i].energyPoint += board[x][y + j].foodPlace.energy;
+                            board[x][y + j] = defaultCell;
+                        }
+                    }
+                    //player moved
+                    board[x][y + Mcells] = animalTocontrolcell;
+                    board[x][y] = defaultCell;
+                    alliedanimalposition[i].y += Mcells;
+                    //decreased energy
+                    alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
+                    if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+                    {
+
+                        //animal died
+
+                        if (alliedanimalposition[i].energyPoint > 0)
+                        {
+
+                            board[x][y + Mcells] = foodCell;
+                            board[x][y + Mcells].foodPlace.energy = alliedanimalposition[i].energyPoint;
+                            Foodcell[*foodcount].x = x;
+                            Foodcell[*foodcount].y = y + Mcells;
+                            *foodcount++;
+                        }
+                        else
+                        {
+                            board[x][y + Mcells] = defaultCell;
+                        }
+
+                        textcolor(14);
+                        printf("Animal %s(%d,%d) died", player, alliedanimalposition[i].x, alliedanimalposition[i].y);
+                        delete_allied(i, alliedanimalposition, &alliedcount);
+                        i--;
                     }
 
-                    textcolor(14);
-                    printf("Animal %s(%d,%d) died",player,alliedanimalposition[i].x,alliedanimalposition[i].y);
-                    delete_allied(i, alliedanimalposition, &alliedcount);
-                    i --;
-                }
-
-                printf("\n");
+                    printf("\n");
                 }
                 // player don't have enough energy(moving)
-                else 
+                else
                 {
-                        textcolor(12);
-                        printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING",Mcells);
-                        printf("\n");
-                        i --;
-                        break;
+                    textcolor(12);
+                    printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING", Mcells);
+                    printf("\n");
+                    i--;
+                    break;
                 }
             }
         }
@@ -400,100 +432,103 @@ int animalTocontrol(int **winSwitch,char player[], int worldsize, struct Cell bo
         if (y - Mcells >= 0)
         {
             // checked the places of board for Mcells move
-            for(int k=1; k<=Mcells; k++){
+            for (int k = 1; k <= Mcells; k++)
+            {
 
-                    if (*board[x][y - k].identifierPlace == '#')
-                    {
-                        textcolor(12);
-                        printf("YOU CAN'T GO THERE ! (#)");
-                        printf("\n");
-                        sw=0;
-                        i--;
+                if (*board[x][y - k].identifierPlace == '#')
+                {
+                    textcolor(12);
+                    printf("YOU CAN'T GO THERE ! (#)");
+                    printf("\n");
+                    sw = 0;
+                    i--;
 
-                        break;
-                    }
-                    else if (*board[x][y - k].identifierPlace == 'H')
-                    {
-                        //player von the game
-                        board[x][y - k] = animalTocontrolcell;
-                        board[x][y] = defaultCell;
-                        alliedanimalposition[i].y-= k;
+                    break;
+                }
+                else if (*board[x][y - k].identifierPlace == 'H')
+                {
+                    //player von the game
+                    board[x][y - k] = animalTocontrolcell;
+                    board[x][y] = defaultCell;
+                    alliedanimalposition[i].y -= k;
 
-                        printf("\n");
-                        sw=0;
-                        **winSwitch = 1;
-                        printf("\n");
-                        break;
-                    }
-                    else if (*board[x][y - k].identifierPlace == 'F') 
-                    {
-                        TemporaryEnergy += board[x][y - k].foodPlace.energy;
-                    }
-                    else if (isalpha(*board[x][y - k].identifierPlace))
-                    {
-                        //in this place exist an animal
-                        textcolor(12);
-                        printf("YOU CAN'T GO THERE ! (%s)", board[x][y - k].identifierPlace);
-                        printf("\n");
-                        sw=0;
-                        i--;
+                    printf("\n");
+                    sw = 0;
+                    **winSwitch = 1;
+                    printf("\n");
+                    break;
+                }
+                else if (*board[x][y - k].identifierPlace == 'F')
+                {
+                    TemporaryEnergy += board[x][y - k].foodPlace.energy;
+                }
+                else if (isalpha(*board[x][y - k].identifierPlace))
+                {
+                    //in this place exist an animal
+                    textcolor(12);
+                    printf("YOU CAN'T GO THERE ! (%s)", board[x][y - k].identifierPlace);
+                    printf("\n");
+                    sw = 0;
+                    i--;
 
-                        break;
-                    }
+                    break;
+                }
             }
             //player can move Mcells to Left
-            if(sw==1)
+            if (sw == 1)
             {
                 //check energy of player
-                if (Mcells * AGptr->energyForMoving <= TemporaryEnergy) 
+                if (Mcells * AGptr->energyForMoving <= TemporaryEnergy)
                 {
-                //add Food energy to player
-                for(int j=1; j<=Mcells; j++){
-                    if(*board[x][y - j].identifierPlace == 'F'){
-                        alliedanimalposition[i].energyPoint += board[x][y - j].foodPlace.energy ;
-                        board[x][y - j] = defaultCell ;
-
-                    }
-                }
-                //player moved
-                board[x][y - Mcells] = animalTocontrolcell;
-                board[x][y] = defaultCell;
-                alliedanimalposition[i].y-= Mcells;
-                //decreased energy
-                alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
-                if(AGptr->energyForMoving > alliedanimalposition[i].energyPoint) 
-                {
-                    //animal died
-
-                    if (alliedanimalposition[i].energyPoint > 0){
-
-                    board[x][y - Mcells] = foodCell;
-                    board[x][y - Mcells].foodPlace.energy = alliedanimalposition[i].energyPoint;                        
-                    Foodcell[*foodcount].x = x;
-                    Foodcell[*foodcount].y = y-Mcells;
-                    *foodcount++;
-                    }
-                    else 
+                    //add Food energy to player
+                    for (int j = 1; j <= Mcells; j++)
                     {
-                        board[x][y - Mcells] = defaultCell;
+                        if (*board[x][y - j].identifierPlace == 'F')
+                        {
+                            alliedanimalposition[i].energyPoint += board[x][y - j].foodPlace.energy;
+                            board[x][y - j] = defaultCell;
+                        }
+                    }
+                    //player moved
+                    board[x][y - Mcells] = animalTocontrolcell;
+                    board[x][y] = defaultCell;
+                    alliedanimalposition[i].y -= Mcells;
+                    //decreased energy
+                    alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
+                    if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+                    {
+                        //animal died
+
+                        if (alliedanimalposition[i].energyPoint > 0)
+                        {
+
+                            board[x][y - Mcells] = foodCell;
+                            board[x][y - Mcells].foodPlace.energy = alliedanimalposition[i].energyPoint;
+                            Foodcell[*foodcount].x = x;
+                            Foodcell[*foodcount].y = y - Mcells;
+                            *foodcount++;
+                        }
+                        else
+                        {
+                            board[x][y - Mcells] = defaultCell;
+                        }
+
+                        textcolor(14);
+                        printf("Animal %s(%d,%d) died", player, alliedanimalposition[i].x, alliedanimalposition[i].y);
+                        delete_allied(i, alliedanimalposition, &alliedcount);
+                        i--;
                     }
 
-                    textcolor(14);
-                    printf("Animal %s(%d,%d) died",player,alliedanimalposition[i].x,alliedanimalposition[i].y);
-                    delete_allied(i, alliedanimalposition, &alliedcount);
-                    i --;
-                }
-
-                printf("\n");
+                    printf("\n");
                 }
                 // player don't have enough energy(moving)
-                else 
+                else
                 {
-                        textcolor(12);
-                        printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING",Mcells);
-                        printf("\n");
-                        i --;
-                        break;
+                    textcolor(12);
+                    printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING", Mcells);
+                    printf("\n");
+                    i--;
+                    break;
                 }
             }
         }
@@ -512,103 +547,106 @@ int animalTocontrol(int **winSwitch,char player[], int worldsize, struct Cell bo
         if (y - Mcells >= 0 && x - Mcells >= 0)
         {
             // checked the places of board for Mcells move
-            for(int k=1; k<=Mcells; k++){
-                
-                    if (*board[x - k][y - k].identifierPlace == '#')
-                    {
-                        textcolor(12);
-                        printf("YOU CAN'T GO THERE ! (#)");
-                        printf("\n");
-                        sw=0;
-                        i--;
+            for (int k = 1; k <= Mcells; k++)
+            {
 
-                        break;
-                    }
-                    else if (*board[x - k][y - k].identifierPlace == 'H')
-                    {
+                if (*board[x - k][y - k].identifierPlace == '#')
+                {
+                    textcolor(12);
+                    printf("YOU CAN'T GO THERE ! (#)");
+                    printf("\n");
+                    sw = 0;
+                    i--;
 
-                        //player won the game
-                        board[x - k][y - k] = animalTocontrolcell;
-                        board[x][y] = defaultCell;
-                        alliedanimalposition[i].y-= k;
-                        alliedanimalposition[i].x-= k;
+                    break;
+                }
+                else if (*board[x - k][y - k].identifierPlace == 'H')
+                {
 
-                        printf("\n");
-                        sw=0;
-                        **winSwitch = 1;
-                        printf("\n");
-                        break;
-                    }
-                    else if (*board[x - k][y - k].identifierPlace == 'F') 
-                    {
-                        TemporaryEnergy += board[x - k][y - k].foodPlace.energy;
-                    }
-                    else if (isalpha(*board[x - k][y - k].identifierPlace))
-                    {
-                        //in this place exist an animal
-                        textcolor(12);
-                        printf("YOU CAN'T GO THERE ! (%s)", board[x - k][y - k].identifierPlace);
-                        printf("\n");
-                        sw=0;
-                        i--;
+                    //player won the game
+                    board[x - k][y - k] = animalTocontrolcell;
+                    board[x][y] = defaultCell;
+                    alliedanimalposition[i].y -= k;
+                    alliedanimalposition[i].x -= k;
 
-                        break;
-                    }
+                    printf("\n");
+                    sw = 0;
+                    **winSwitch = 1;
+                    printf("\n");
+                    break;
+                }
+                else if (*board[x - k][y - k].identifierPlace == 'F')
+                {
+                    TemporaryEnergy += board[x - k][y - k].foodPlace.energy;
+                }
+                else if (isalpha(*board[x - k][y - k].identifierPlace))
+                {
+                    //in this place exist an animal
+                    textcolor(12);
+                    printf("YOU CAN'T GO THERE ! (%s)", board[x - k][y - k].identifierPlace);
+                    printf("\n");
+                    sw = 0;
+                    i--;
+
+                    break;
+                }
             }
             //player can move Mcells to LeftTUp
-            if(sw==1)
+            if (sw == 1)
             {
                 //check energy of player
-                if (Mcells * AGptr->energyForMoving <= TemporaryEnergy) 
+                if (Mcells * AGptr->energyForMoving <= TemporaryEnergy)
                 {
-                //add Food energy to player
-                for(int j=1; j<=Mcells; j++){
-                    if(*board[x - j][y - j].identifierPlace == 'F'){
-                        alliedanimalposition[i].energyPoint += board[x - j][y - j].foodPlace.energy ;
-                        board[x - j][y - j] = defaultCell ;
-
-                    }
-                }
-                //player moved
-                board[x - Mcells][y - Mcells] = animalTocontrolcell;
-                board[x][y] = defaultCell;
-                alliedanimalposition[i].y-= Mcells;
-                alliedanimalposition[i].x-= Mcells;
-                //decreased energy
-                alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
-                if(AGptr->energyForMoving > alliedanimalposition[i].energyPoint) 
-                {
-                    //animal died
-
-                    if (alliedanimalposition[i].energyPoint > 0){
-
-                    board[x - Mcells][y - Mcells] = foodCell;
-                    board[x - Mcells][y - Mcells].foodPlace.energy = alliedanimalposition[i].energyPoint;                        
-                    Foodcell[*foodcount].x = x-Mcells;
-                    Foodcell[*foodcount].y = y-Mcells;
-                    *foodcount++;
-                    }
-                    else 
+                    //add Food energy to player
+                    for (int j = 1; j <= Mcells; j++)
                     {
-                        board[x - Mcells][y- Mcells] = defaultCell;
+                        if (*board[x - j][y - j].identifierPlace == 'F')
+                        {
+                            alliedanimalposition[i].energyPoint += board[x - j][y - j].foodPlace.energy;
+                            board[x - j][y - j] = defaultCell;
+                        }
+                    }
+                    //player moved
+                    board[x - Mcells][y - Mcells] = animalTocontrolcell;
+                    board[x][y] = defaultCell;
+                    alliedanimalposition[i].y -= Mcells;
+                    alliedanimalposition[i].x -= Mcells;
+                    //decreased energy
+                    alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
+                    if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+                    {
+                        //animal died
+
+                        if (alliedanimalposition[i].energyPoint > 0)
+                        {
+
+                            board[x - Mcells][y - Mcells] = foodCell;
+                            board[x - Mcells][y - Mcells].foodPlace.energy = alliedanimalposition[i].energyPoint;
+                            Foodcell[*foodcount].x = x - Mcells;
+                            Foodcell[*foodcount].y = y - Mcells;
+                            *foodcount++;
+                        }
+                        else
+                        {
+                            board[x - Mcells][y - Mcells] = defaultCell;
+                        }
+
+                        textcolor(14);
+                        printf("Animal %s(%d,%d) died", player, alliedanimalposition[i].x, alliedanimalposition[i].y);
+                        delete_allied(i, alliedanimalposition, &alliedcount);
+                        i--;
                     }
 
-                    textcolor(14);
-                    printf("Animal %s(%d,%d) died",player,alliedanimalposition[i].x,alliedanimalposition[i].y);
-                    delete_allied(i, alliedanimalposition, &alliedcount);
-                    i --;
-                }
-
-                printf("\n");
+                    printf("\n");
                 }
                 // player don't have enough energy(moving)
-                else 
+                else
                 {
-                        textcolor(12);
-                        printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING",Mcells);
-                        printf("\n");
-                        i --;
-                        break;
+                    textcolor(12);
+                    printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING", Mcells);
+                    printf("\n");
+                    i--;
+                    break;
                 }
             }
         }
@@ -622,112 +660,115 @@ int animalTocontrol(int **winSwitch,char player[], int worldsize, struct Cell bo
         }
         break;
 
-    //player want to move RightTUp
-   case ARROW_RIGHTUP:
+        //player want to move RightTUp
+    case ARROW_RIGHTUP:
         if (y + Mcells < worldsize && x - Mcells >= 0)
         {
             // checked the places of board for Mcells move
-            for(int k=1; k<=Mcells; k++){
-                
-                    if (*board[x - k][y + k].identifierPlace == '#')
-                    {
-                        textcolor(12);
-                        printf("YOU CAN'T GO THERE ! (#)");
-                        printf("\n");
-                        sw=0;
-                        i--;
-                    
-                        break;
-                    }
-                    else if (*board[x - k][y + k].identifierPlace == 'H')
-                    {
+            for (int k = 1; k <= Mcells; k++)
+            {
 
-                        //player won the game
-                        board[x - k][y + k] = animalTocontrolcell;
-                        board[x][y] = defaultCell;
-                        alliedanimalposition[i].y+= k;
-                        alliedanimalposition[i].x-= k;
+                if (*board[x - k][y + k].identifierPlace == '#')
+                {
+                    textcolor(12);
+                    printf("YOU CAN'T GO THERE ! (#)");
+                    printf("\n");
+                    sw = 0;
+                    i--;
 
-                        printf("\n");
-                        sw=0;
-                        **winSwitch = 1;
-                        printf("\n");
-                        break;
-                    }
-                    else if (*board[x - k][y + k].identifierPlace == 'F') 
-                    {
-                        TemporaryEnergy += board[x - k][y + k].foodPlace.energy;
-                    }
-                    else if (isalpha(*board[x - k][y + k].identifierPlace))
-                    {
-                        //in this place exist an animal
-                        textcolor(12);
-                        printf("YOU CAN'T GO THERE ! (%s)", board[x - k][y + k].identifierPlace);
-                        printf("\n");
-                        sw=0;
-                        i--;
-                        break;
+                    break;
+                }
+                else if (*board[x - k][y + k].identifierPlace == 'H')
+                {
 
-                    }
+                    //player won the game
+                    board[x - k][y + k] = animalTocontrolcell;
+                    board[x][y] = defaultCell;
+                    alliedanimalposition[i].y += k;
+                    alliedanimalposition[i].x -= k;
+
+                    printf("\n");
+                    sw = 0;
+                    **winSwitch = 1;
+                    printf("\n");
+                    break;
+                }
+                else if (*board[x - k][y + k].identifierPlace == 'F')
+                {
+                    TemporaryEnergy += board[x - k][y + k].foodPlace.energy;
+                }
+                else if (isalpha(*board[x - k][y + k].identifierPlace))
+                {
+                    //in this place exist an animal
+                    textcolor(12);
+                    printf("YOU CAN'T GO THERE ! (%s)", board[x - k][y + k].identifierPlace);
+                    printf("\n");
+                    sw = 0;
+                    i--;
+                    break;
+                }
             }
             //player can move Mcells to RightTUp
-            if(sw==1)
+            if (sw == 1)
             {
                 //check energy of player
-                if (Mcells * AGptr->energyForMoving <= TemporaryEnergy) 
+                if (Mcells * AGptr->energyForMoving <= TemporaryEnergy)
                 {
-                //add Food energy to player
-                for(int j=1; j<=Mcells; j++){
-                    if(*board[x - j][y + j].identifierPlace == 'F'){
-                        alliedanimalposition[i].energyPoint += board[x - j][y + j].foodPlace.energy ;
-                        board[x - j][y + j] = defaultCell ;
-
-                    }
-                }
-                //player moved
-                board[x - Mcells][y + Mcells] = animalTocontrolcell;
-                board[x][y] = defaultCell;
-                alliedanimalposition[i].y+= Mcells;
-                alliedanimalposition[i].x-= Mcells;
-                //decreased energy
-                if(AGptr->energyForMoving > alliedanimalposition[i].energyPoint) 
-                {
-                    //animal died
-
-                    if (alliedanimalposition[i].energyPoint > 0){
-
-                    board[x - Mcells][y + Mcells] = foodCell;
-                    board[x - Mcells][y + Mcells].foodPlace.energy = alliedanimalposition[i].energyPoint;                        
-                    Foodcell[*foodcount].x = x-Mcells;
-                    Foodcell[*foodcount].y = y+Mcells;
-                    *foodcount++;
-                    }
-                    else 
+                    //add Food energy to player
+                    for (int j = 1; j <= Mcells; j++)
                     {
-                        board[x - Mcells][y + Mcells] = defaultCell;
+                        if (*board[x - j][y + j].identifierPlace == 'F')
+                        {
+                            alliedanimalposition[i].energyPoint += board[x - j][y + j].foodPlace.energy;
+                            board[x - j][y + j] = defaultCell;
+                        }
+                    }
+                    //player moved
+                    board[x - Mcells][y + Mcells] = animalTocontrolcell;
+                    board[x][y] = defaultCell;
+                    alliedanimalposition[i].y += Mcells;
+                    alliedanimalposition[i].x -= Mcells;
+                    //decreased energy
+                    if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+                    {
+                        //animal died
+
+                        if (alliedanimalposition[i].energyPoint > 0)
+                        {
+
+                            board[x - Mcells][y + Mcells] = foodCell;
+                            board[x - Mcells][y + Mcells].foodPlace.energy = alliedanimalposition[i].energyPoint;
+                            Foodcell[*foodcount].x = x - Mcells;
+                            Foodcell[*foodcount].y = y + Mcells;
+                            *foodcount++;
+                        }
+                        else
+                        {
+                            board[x - Mcells][y + Mcells] = defaultCell;
+                        }
+
+                        textcolor(14);
+                        printf("Animal %s(%d,%d) died", player, alliedanimalposition[i].x, alliedanimalposition[i].y);
+                        delete_allied(i, alliedanimalposition, &alliedcount);
+                        i--;
                     }
 
-                    textcolor(14);
-                    printf("Animal %s(%d,%d) died",player,alliedanimalposition[i].x,alliedanimalposition[i].y);
-                    delete_allied(i, alliedanimalposition, &alliedcount);
-                    i --;
-                }
-
-                printf("\n");
+                    printf("\n");
                 }
                 // player don't have enough energy(moving)
-                else 
+                else
                 {
-                        textcolor(12);
-                        printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING",Mcells);
-                        printf("\n");
-                        i --;
-                        break;
+                    textcolor(12);
+                    printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING", Mcells);
+                    printf("\n");
+                    i--;
+                    break;
                 }
             }
         }
-            
-        else {
+
+        else
+        {
             // player can't Go RightTUp (go out of board)
             textcolor(12);
             printf("YOU CAN'T GO THERE !");
@@ -736,107 +777,109 @@ int animalTocontrol(int **winSwitch,char player[], int worldsize, struct Cell bo
         }
         break;
 
-    //player want to move RightTDown
-   case ARROW_RIGHTDOWN:
+        //player want to move RightTDown
+    case ARROW_RIGHTDOWN:
         if (y + Mcells < worldsize && x + Mcells < worldsize)
         {
             // checked the places of board for Mcells move
-            for(int k=1; k<=Mcells; k++){
-                
-                    if (*board[x + k][y + k].identifierPlace == '#')
-                    {
-                        textcolor(12);
-                        printf("YOU CAN'T GO THERE ! (#)");
-                        printf("\n");
-                        sw=0;
-                        i--;
-                    
-                        break;
-                    }
-                    else if (*board[x + k][y + k].identifierPlace == 'H')
-                    {
+            for (int k = 1; k <= Mcells; k++)
+            {
 
-                        //player won the game
-                        board[x + k][y + k] = animalTocontrolcell;
-                        board[x][y] = defaultCell;
-                        alliedanimalposition[i].y+= k;
-                        alliedanimalposition[i].x+= k;
+                if (*board[x + k][y + k].identifierPlace == '#')
+                {
+                    textcolor(12);
+                    printf("YOU CAN'T GO THERE ! (#)");
+                    printf("\n");
+                    sw = 0;
+                    i--;
 
-                        printf("\n");
-                        sw=0;
-                        **winSwitch = 1;
-                        printf("\n");
-                        break;
-                    }
-                    else if (*board[x + k][y + k].identifierPlace == 'F') 
-                    {
-                        TemporaryEnergy += board[x + k][y + k].foodPlace.energy;
-                    }
-                    else if (isalpha(*board[x + k][y + k].identifierPlace))
-                    {
-                        //in this place exist an animal
-                        textcolor(12);
-                        printf("YOU CAN'T GO THERE ! (%s)", board[x + k][y + k].identifierPlace);
-                        printf("\n");
-                        sw=0;
-                        i--;
-                        break;
+                    break;
+                }
+                else if (*board[x + k][y + k].identifierPlace == 'H')
+                {
 
-                    }
+                    //player won the game
+                    board[x + k][y + k] = animalTocontrolcell;
+                    board[x][y] = defaultCell;
+                    alliedanimalposition[i].y += k;
+                    alliedanimalposition[i].x += k;
+
+                    printf("\n");
+                    sw = 0;
+                    **winSwitch = 1;
+                    printf("\n");
+                    break;
+                }
+                else if (*board[x + k][y + k].identifierPlace == 'F')
+                {
+                    TemporaryEnergy += board[x + k][y + k].foodPlace.energy;
+                }
+                else if (isalpha(*board[x + k][y + k].identifierPlace))
+                {
+                    //in this place exist an animal
+                    textcolor(12);
+                    printf("YOU CAN'T GO THERE ! (%s)", board[x + k][y + k].identifierPlace);
+                    printf("\n");
+                    sw = 0;
+                    i--;
+                    break;
+                }
             }
             //player can move Mcells to RightTDown
-            if(sw==1)
+            if (sw == 1)
             {
                 //check energy of player
-                if (Mcells * AGptr->energyForMoving <= TemporaryEnergy) 
+                if (Mcells * AGptr->energyForMoving <= TemporaryEnergy)
                 {
-                //add Food energy to player
-                for(int j=1; j<=Mcells; j++){
-                    if(*board[x + j][y + j].identifierPlace == 'F'){
-                        alliedanimalposition[i].energyPoint += board[x + j][y + j].foodPlace.energy ;
-                        board[x + j][y + j] = defaultCell ;
-
-                    }
-                }
-                //player moved
-                board[x + Mcells][y + Mcells] = animalTocontrolcell;
-                board[x][y] = defaultCell;
-                alliedanimalposition[i].y+= Mcells;
-                alliedanimalposition[i].x+= Mcells;
-                //decreased energy
-                if(AGptr->energyForMoving > alliedanimalposition[i].energyPoint) 
-                {
-                    //animal died
-
-                    if (alliedanimalposition[i].energyPoint > 0){
-
-                    board[x + Mcells][y + Mcells] = foodCell;
-                    board[x + Mcells][y + Mcells].foodPlace.energy = alliedanimalposition[i].energyPoint;                        
-                    Foodcell[*foodcount].x = x+Mcells;
-                    Foodcell[*foodcount].y = y+Mcells;
-                    *foodcount++;
-                    }
-                    else 
+                    //add Food energy to player
+                    for (int j = 1; j <= Mcells; j++)
                     {
-                        board[x + Mcells][y + Mcells] = defaultCell;
+                        if (*board[x + j][y + j].identifierPlace == 'F')
+                        {
+                            alliedanimalposition[i].energyPoint += board[x + j][y + j].foodPlace.energy;
+                            board[x + j][y + j] = defaultCell;
+                        }
+                    }
+                    //player moved
+                    board[x + Mcells][y + Mcells] = animalTocontrolcell;
+                    board[x][y] = defaultCell;
+                    alliedanimalposition[i].y += Mcells;
+                    alliedanimalposition[i].x += Mcells;
+                    //decreased energy
+                    if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+                    {
+                        //animal died
+
+                        if (alliedanimalposition[i].energyPoint > 0)
+                        {
+
+                            board[x + Mcells][y + Mcells] = foodCell;
+                            board[x + Mcells][y + Mcells].foodPlace.energy = alliedanimalposition[i].energyPoint;
+                            Foodcell[*foodcount].x = x + Mcells;
+                            Foodcell[*foodcount].y = y + Mcells;
+                            *foodcount++;
+                        }
+                        else
+                        {
+                            board[x + Mcells][y + Mcells] = defaultCell;
+                        }
+
+                        textcolor(14);
+                        printf("Animal %s(%d,%d) died", player, alliedanimalposition[i].x, alliedanimalposition[i].y);
+                        delete_allied(i, alliedanimalposition, &alliedcount);
+                        i--;
                     }
 
-                    textcolor(14);
-                    printf("Animal %s(%d,%d) died",player,alliedanimalposition[i].x,alliedanimalposition[i].y);
-                    delete_allied(i, alliedanimalposition, &alliedcount);
-                    i --;
-                }
-
-                printf("\n");
+                    printf("\n");
                 }
                 // player don't have enough energy(moving)
-                else 
+                else
                 {
-                        textcolor(12);
-                        printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING",Mcells);
-                        printf("\n");
-                        i --;
-                        break;
+                    textcolor(12);
+                    printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING", Mcells);
+                    printf("\n");
+                    i--;
+                    break;
                 }
             }
         }
@@ -855,103 +898,106 @@ int animalTocontrol(int **winSwitch,char player[], int worldsize, struct Cell bo
         if (x + Mcells < worldsize && y - Mcells >= 0)
         {
             // checked the places of board for Mcells move
-            for(int k=1; k<=Mcells; k++){
-                
-                    if (*board[x + k][y - k].identifierPlace == '#')
-                    {
-                        textcolor(12);
-                        printf("YOU CAN'T GO THERE ! (#)");
-                        printf("\n");
-                        sw=0;
-                        i--;
-                    
-                        break;
-                    }
-                    else if (*board[x + k][y - k].identifierPlace == 'H')
-                    {
+            for (int k = 1; k <= Mcells; k++)
+            {
 
-                        //player won the game
-                        board[x + k][y-k] = animalTocontrolcell;
-                        board[x][y] = defaultCell;
-                        alliedanimalposition[i].y-= k;
-                        alliedanimalposition[i].x+= k;
+                if (*board[x + k][y - k].identifierPlace == '#')
+                {
+                    textcolor(12);
+                    printf("YOU CAN'T GO THERE ! (#)");
+                    printf("\n");
+                    sw = 0;
+                    i--;
 
-                        printf("\n");
-                        sw=0;
-                        **winSwitch = 1;
-                        printf("\n");
-                        break;
-                    }
-                    else if (*board[x + k][y - k].identifierPlace == 'F') 
-                    {
-                        TemporaryEnergy += board[x + k][y - k].foodPlace.energy;
-                    }
-                    else if (isalpha(*board[x + k][y - k].identifierPlace))
-                    {
-                        //in this place exist an animal
-                        textcolor(12);
-                        printf("YOU CAN'T GO THERE ! (%s)", board[x + k][y - k].identifierPlace);
-                        printf("\n");
-                        sw=0;
-                        i--;
-                    
-                        break;
-                    }
+                    break;
+                }
+                else if (*board[x + k][y - k].identifierPlace == 'H')
+                {
+
+                    //player won the game
+                    board[x + k][y - k] = animalTocontrolcell;
+                    board[x][y] = defaultCell;
+                    alliedanimalposition[i].y -= k;
+                    alliedanimalposition[i].x += k;
+
+                    printf("\n");
+                    sw = 0;
+                    **winSwitch = 1;
+                    printf("\n");
+                    break;
+                }
+                else if (*board[x + k][y - k].identifierPlace == 'F')
+                {
+                    TemporaryEnergy += board[x + k][y - k].foodPlace.energy;
+                }
+                else if (isalpha(*board[x + k][y - k].identifierPlace))
+                {
+                    //in this place exist an animal
+                    textcolor(12);
+                    printf("YOU CAN'T GO THERE ! (%s)", board[x + k][y - k].identifierPlace);
+                    printf("\n");
+                    sw = 0;
+                    i--;
+
+                    break;
+                }
             }
             //player can move Mcells to LeftTDown
-            if(sw==1)
+            if (sw == 1)
             {
                 //check energy of player
-                if (Mcells * AGptr->energyForMoving <= TemporaryEnergy) 
+                if (Mcells * AGptr->energyForMoving <= TemporaryEnergy)
                 {
-                //add Food energy to player
-                for(int j=1; j<=Mcells; j++){
-                    if(*board[x + j][y - j].identifierPlace == 'F'){
-                        alliedanimalposition[i].energyPoint += board[x + j][y - j].foodPlace.energy ;
-                        board[x + j][y - j] = defaultCell ;
-
-                    }
-                }
-                //player moved
-                board[x + Mcells][y - Mcells] = animalTocontrolcell;
-                board[x][y] = defaultCell;
-                alliedanimalposition[i].x+=Mcells;
-                alliedanimalposition[i].y-=Mcells;
-                //decreased energy
-                alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
-                if(AGptr->energyForMoving > alliedanimalposition[i].energyPoint) 
-                {
-                    //animal died
-
-                    if (alliedanimalposition[i].energyPoint > 0){
-
-                    board[x + Mcells][y - Mcells] = foodCell;
-                    board[x + Mcells][y - Mcells].foodPlace.energy = alliedanimalposition[i].energyPoint;                        
-                    Foodcell[*foodcount].x = x+Mcells;
-                    Foodcell[*foodcount].y = y-Mcells;
-                    *foodcount++;
-                    }
-                    else 
+                    //add Food energy to player
+                    for (int j = 1; j <= Mcells; j++)
                     {
-                        board[x + Mcells][y - Mcells] = defaultCell;
+                        if (*board[x + j][y - j].identifierPlace == 'F')
+                        {
+                            alliedanimalposition[i].energyPoint += board[x + j][y - j].foodPlace.energy;
+                            board[x + j][y - j] = defaultCell;
+                        }
+                    }
+                    //player moved
+                    board[x + Mcells][y - Mcells] = animalTocontrolcell;
+                    board[x][y] = defaultCell;
+                    alliedanimalposition[i].x += Mcells;
+                    alliedanimalposition[i].y -= Mcells;
+                    //decreased energy
+                    alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
+                    if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+                    {
+                        //animal died
+
+                        if (alliedanimalposition[i].energyPoint > 0)
+                        {
+
+                            board[x + Mcells][y - Mcells] = foodCell;
+                            board[x + Mcells][y - Mcells].foodPlace.energy = alliedanimalposition[i].energyPoint;
+                            Foodcell[*foodcount].x = x + Mcells;
+                            Foodcell[*foodcount].y = y - Mcells;
+                            *foodcount++;
+                        }
+                        else
+                        {
+                            board[x + Mcells][y - Mcells] = defaultCell;
+                        }
+
+                        textcolor(14);
+                        printf("Animal %s(%d,%d) died", player, alliedanimalposition[i].x, alliedanimalposition[i].y);
+                        delete_allied(i, alliedanimalposition, &alliedcount);
+                        i--;
                     }
 
-                    textcolor(14);
-                    printf("Animal %s(%d,%d) died",player,alliedanimalposition[i].x,alliedanimalposition[i].y);
-                    delete_allied(i, alliedanimalposition, &alliedcount);
-                    i --;
-                }
-
-                printf("\n");
+                    printf("\n");
                 }
                 // player don't have enough energy(moving)
-                else 
+                else
                 {
-                        textcolor(12);
-                        printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING",Mcells);
-                        printf("\n");
-                        i --;
-                        break;
+                    textcolor(12);
+                    printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING", Mcells);
+                    printf("\n");
+                    i--;
+                    break;
                 }
             }
         }
@@ -965,10 +1011,9 @@ int animalTocontrol(int **winSwitch,char player[], int worldsize, struct Cell bo
         }
         break;
 
-
     default:
-        //pressed the wrong Key 
-        i --;
+        //pressed the wrong Key
+        i--;
         break;
     }
 
