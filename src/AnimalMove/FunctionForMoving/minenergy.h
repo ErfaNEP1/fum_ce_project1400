@@ -3,13 +3,13 @@ int minenergy(struct Genome gene){
     if(gene.energyForMoving < MinEnergy){
         MinEnergy = gene.energyForMoving;
     }
-    else if(gene.energyForReproduction < MinEnergy){
+    if(gene.energyForReproduction < MinEnergy){
         MinEnergy = gene.energyForReproduction;
     }
-    else if(gene.attackPower < MinEnergy){
+    if(gene.attackPower < MinEnergy){
         MinEnergy = gene.attackPower;
     }
-    else if(gene.defensePower < MinEnergy){
+    if(gene.defensePower < MinEnergy){
         MinEnergy = gene.defensePower;
     }
     return MinEnergy;
