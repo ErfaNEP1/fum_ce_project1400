@@ -83,7 +83,7 @@ int main()
     // printf("%s", world.animalToControl);
 
     // Allied Animals Count + Storing each animal in World structure
-    int nPlayer = searchTypeanimalposition(world, world.animalToControl, world.size, board, world.alliedanimalposition, world.enemyanimalposition);
+    int nPlayer = searchBoard(&world, world.animalToControl, world.size, board, world.alliedanimalposition, world.enemyanimalposition);
     int nEnemy = world.animalCount - nPlayer;
 
     // textcolor(6);

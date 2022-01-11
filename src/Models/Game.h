@@ -163,7 +163,7 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
         Animal *animalPtr;
         animalPtr = &world->enemyanimalposition[i];
         // Finding the closest Heaven
-        int mindist = FindtheClosestWaytoH(animalPtr->x, animalPtr->y, world->heavenCell, world->heavenCount);
+        int mindist = ClosestObject(animalPtr->x, animalPtr->y, world->heavenCell, world->heavenCount);
         // Initializing Queue Structure
         struct QueueNode items[world->size * world->size];
         int front = -1, rear = -1;
@@ -248,16 +248,16 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
 
 int initPlayerMove(World *world, int ch, int nPlayer, int worldSize, int *winSwitch, Cell board[][worldSize])
 {
-    world->alliedCount = nPlayer;
     for (int i = 0; i < world->alliedCount; i++)
     {
+        printf("%d\n",world->alliedCount);
         int k=i;
         Animal *animalPtr;
         animalPtr = &world->alliedanimalposition[i];
         int clickedKey = ch;
         if (clickedKey != 0)
         {
-            i = animalTocontrol(&winSwitch, world->animalToControl, nPlayer, world->size, board, i, world->alliedanimalposition, clickedKey, world->foodCell, &world->foodCount, &world->alliedCount);
+            i = animalTocontrol(&winSwitch, world->animalToControl, world->size, board, i, world->alliedanimalposition, clickedKey, world->foodCell, &world->foodCount, &world->alliedCount);
             if(*winSwitch == 1) return i;
             if(i == k-1)
                 printWorld(world->size, board, k, *world);
@@ -266,7 +266,7 @@ int initPlayerMove(World *world, int ch, int nPlayer, int worldSize, int *winSwi
             
             
         }
-        if (i != nPlayer - 1)
+        if (i != world->alliedCount - 1)
             ch = get_code();
     }
 }
