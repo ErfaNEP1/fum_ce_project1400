@@ -45,10 +45,13 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
     textcolor(1);
     printf("you control player %s (%d,%d)\n", player, alliedanimalposition[i].x + 1, alliedanimalposition[i].y + 1);
     printf("energy = %d\n", alliedanimalposition[i].energyPoint);
+
+    //to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die 
     if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
     {
         //animal died
 
+        //if energy of allied animal=0 it should save as default not food
         if (alliedanimalposition[i].energyPoint > 0)
         {
 
@@ -152,10 +155,13 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     alliedanimalposition[i].x -= Mcells;
                     //decreased energy
                     alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
+
+                    //to check that allied animal can do anything(reproduction or moving or...) or shoud be die
                     if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
                     {
                         //animal died
 
+                        //if energy of allied animal=0 it should save as default not food
                         if (alliedanimalposition[i].energyPoint > 0)
                         {
 
@@ -266,10 +272,13 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     alliedanimalposition[i].x += Mcells;
                     //decreased energy
                     alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
+
+                    //to check that allied animal can do anything(reproduction or moving or...) or shoud be die
                     if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
                     {
                         //animal died
 
+                        //if energy of allied animal=0 it should save as default not food
                         if (alliedanimalposition[i].energyPoint > 0)
                         {
 
@@ -380,11 +389,14 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     alliedanimalposition[i].y += Mcells;
                     //decreased energy
                     alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
+
+                    //to check that allied animal can do anything(reproduction or moving or...) or shoud be die
                     if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
                     {
 
                         //animal died
 
+                        //if energy of allied animal=0 it should save as default not food
                         if (alliedanimalposition[i].energyPoint > 0)
                         {
 
@@ -495,10 +507,13 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     alliedanimalposition[i].y -= Mcells;
                     //decreased energy
                     alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
+
+                    //to check that allied animal can do anything(reproduction or moving or...) or shoud be die
                     if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
                     {
                         //animal died
 
+                        //if energy of allied animal=0 it should save as default not food
                         if (alliedanimalposition[i].energyPoint > 0)
                         {
 
@@ -613,10 +628,13 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     alliedanimalposition[i].x -= Mcells;
                     //decreased energy
                     alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
+
+                    //to check that allied animal can do anything(reproduction or moving or...) or shoud be die
                     if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
                     {
                         //animal died
 
+                        //if energy of allied animal=0 it should save as default not food
                         if (alliedanimalposition[i].energyPoint > 0)
                         {
 
@@ -729,10 +747,14 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     alliedanimalposition[i].y += Mcells;
                     alliedanimalposition[i].x -= Mcells;
                     //decreased energy
+                    alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
+
+                    //to check that allied animal can do anything(reproduction or moving or...) or shoud be die
                     if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
                     {
                         //animal died
 
+                        //if energy of allied animal=0 it should save as default not food
                         if (alliedanimalposition[i].energyPoint > 0)
                         {
 
@@ -846,10 +868,14 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     alliedanimalposition[i].y += Mcells;
                     alliedanimalposition[i].x += Mcells;
                     //decreased energy
+                    alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
+
+                    //to check that allied animal can do anything(reproduction or moving or...) or shoud be die
                     if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
                     {
                         //animal died
 
+                        //if energy of allied animal=0 it should save as default not food
                         if (alliedanimalposition[i].energyPoint > 0)
                         {
 
@@ -964,10 +990,13 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     alliedanimalposition[i].y -= Mcells;
                     //decreased energy
                     alliedanimalposition[i].energyPoint -= (Mcells * AGptr->energyForMoving);
+
+                    //to check that allied animal can do anything(reproduction or moving or...) or shoud be die
                     if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
                     {
                         //animal died
 
+                        //if energy of allied animal=0 it should save as default not food
                         if (alliedanimalposition[i].energyPoint > 0)
                         {
 

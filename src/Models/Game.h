@@ -221,7 +221,6 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
         // if enemy already has a path to move, then it should continue it's path
         else
         {
-            animalPtr->pointindex++;
             // if its path is not blocked by anything
             if (check(worldSize, board, animalPtr->pointTomove[animalPtr->pointindex].x, animalPtr->pointTomove[animalPtr->pointindex].y))
             {
