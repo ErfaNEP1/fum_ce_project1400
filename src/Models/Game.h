@@ -249,7 +249,6 @@ int initPlayerMove(World *world, int ch, int nPlayer, int worldSize, int *winSwi
 {
     for (int i = 0; i < world->alliedCount; i++)
     {
-        printf("%d\n",world->alliedCount);
         int k=i;
         Animal *animalPtr;
         animalPtr = &world->alliedanimalposition[i];

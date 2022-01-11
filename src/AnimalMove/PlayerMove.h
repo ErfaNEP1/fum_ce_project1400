@@ -68,7 +68,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
         textcolor(14);
         printf("Animal %s(%d,%d) died", player, alliedanimalposition[i].x, alliedanimalposition[i].y);
         delete_allied(i, alliedanimalposition, &alliedcount);
-        return i;
+        return i-1;
     }
 
     printf("Maximum number for moving : %d\n", AGptr->cellsToMove);
