@@ -186,7 +186,7 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
                 reverse(animalPtr->pointTomove, n);
                 animalPtr->pointindex++;
                 // found how many moves the enemy can make in a single round
-                int finalindex = cellsToMove(animalPtr->pointTomove, animalPtr->pointindex, animalPtr->gene.cellsToMove, n, world->size, board, animalPtr->energyPoint);
+                int finalindex = cellsToMove(animalPtr->gene.energyForMoving, animalPtr->pointTomove, animalPtr->pointindex, animalPtr->gene.cellsToMove, n, world->size, board, animalPtr->energyPoint);
                 int Mcells = finalindex - (animalPtr->pointindex);
                 animalPtr->pointindex = finalindex;
                 // move the enemy
@@ -226,7 +226,7 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
             // if its path is not blocked by anything
             if (check(worldSize, board, animalPtr->pointTomove[animalPtr->pointindex].x, animalPtr->pointTomove[animalPtr->pointindex].y))
             {
-                int finalindex = cellsToMove(animalPtr->pointTomove, animalPtr->pointindex, animalPtr->gene.cellsToMove, n, world->size, board, animalPtr->energyPoint);
+                int finalindex = cellsToMove(animalPtr->gene.energyForMoving, animalPtr->pointTomove, animalPtr->pointindex, animalPtr->gene.cellsToMove, n, world->size, board, animalPtr->energyPoint);
                 int Mcells = finalindex - (animalPtr->pointindex);
                 animalPtr->pointindex = finalindex;
                 move(&winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, animalPtr->pointTomove[animalPtr->pointindex].x, animalPtr->pointTomove[animalPtr->pointindex].y, world->enemyanimalposition, i, Mcells);
