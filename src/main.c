@@ -141,6 +141,11 @@ int main()
             clearScreen();
             printf("NEXT ROUND STARTED, MOVE !\n");
             printWorld(world.size, board, 0, world);
+            if (world.alliedCount == 0 && world.enemyCount == 0) {
+                textcolor(14);
+                printf("THE GAME WAS TIED\n");
+                break;
+            }
         }
         // clearScreen();
         // printWorld(world.size, board, 0, world);

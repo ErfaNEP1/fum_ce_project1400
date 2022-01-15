@@ -115,24 +115,3 @@ int cellsToMove(struct Point pointTomove[], int pointindex, int Mcells, int n, i
 
     return p;
 }
-
-void move(World world, int **winSwitch, int worldSize, struct Cell board[][worldSize], char animal[], int x, int y, int xx, int yy, struct Animal animalposition[], int i)
-{
-    Cell animalCell = {
-        .typePlace = "animal",
-        .identifierPlace = *animal};
-    Cell defaultCell = {
-        .typePlace = "default",
-        .foodPlace.energy = 0,
-        .identifierPlace = "."};
-    //enemy won the game
-    if (*board[xx][yy].identifierPlace == 'H')
-    {
-        **winSwitch = 1;
-    }
-    //enemy moved
-    board[xx][yy] = animalCell;
-    board[x][y] = defaultCell;
-    animalposition[i].x = xx;
-    animalposition[i].y = yy;
-}

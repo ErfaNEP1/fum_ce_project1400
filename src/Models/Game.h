@@ -158,7 +158,7 @@ void inputGenome(int worldSize, char *tok, World *world, Cell board[][worldSize]
 
 void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell board[][worldSize])
 {
-    for (int i = 0; i < nEnemy; i++)
+    for (int i = 0; i < world->enemyCount; i++)
     {
         Animal *animalPtr;
         animalPtr = &world->enemyanimalposition[i];
@@ -186,9 +186,11 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
                 reverse(animalPtr->pointTomove, n);
                 animalPtr->pointindex++;
                 // found how many moves the enemy can make in a single round
-                animalPtr->pointindex = cellsToMove(animalPtr->pointTomove, animalPtr->pointindex, animalPtr->gene.cellsToMove, n, world->size, board, animalPtr->energyPoint);
+                int finalindex = cellsToMove(animalPtr->pointTomove, animalPtr->pointindex, animalPtr->gene.cellsToMove, n, world->size, board, animalPtr->energyPoint);
+                int Mcells = finalindex - (animalPtr->pointindex);
+                animalPtr->pointindex = finalindex;
                 // move the enemy
-                move(*world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, animalPtr->pointTomove[animalPtr->pointindex].x, animalPtr->pointTomove[animalPtr->pointindex].y, world->enemyanimalposition, i);
+                move(&winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, animalPtr->pointTomove[animalPtr->pointindex].x, animalPtr->pointTomove[animalPtr->pointindex].y, world->enemyanimalposition, i, Mcells);
                 // check if game is finished
                 if (*winSwitch == 1)
                 {
@@ -202,19 +204,19 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
                 //Random Move
                 if (strcmp(board[start.x + 1][start.y].typePlace,"animal") != 0 && *board[start.x + 1][start.y].identifierPlace != '#' && isValid(start.x + 1, start.y, world->size))
                 {
-                    move(*world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x + 1, start.y, world->enemyanimalposition, i);
+                    move(&winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x + 1, start.y, world->enemyanimalposition, i, 1);
                 }
                 else if (strcmp(board[start.x - 1][start.y].typePlace,"animal") != 0 && *board[start.x - 1][start.y].identifierPlace != '#' && isValid(start.x - 1, start.y, world->size))
                 {
-                    move(*world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x - 1, start.y, world->enemyanimalposition, i);
+                    move(&winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x - 1, start.y, world->enemyanimalposition, i, 1);
                 }
                 else if (strcmp(board[start.x][start.y + 1].typePlace,"animal") != 0 && *board[start.x][start.y + 1].identifierPlace != '#' && isValid(start.x, start.y + 1, world->size))
                 {
-                    move(*world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x, start.y + 1, world->enemyanimalposition, i);
+                    move(&winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x, start.y + 1, world->enemyanimalposition, i, 1);
                 }
                 else if (strcmp(board[start.x][start.y - 1].typePlace,"animal") != 0 && *board[start.x][start.y - 1].identifierPlace != '#' && isValid(start.x, start.y - 1, world->size))
                 {
-                    move(*world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x, start.y - 1, world->enemyanimalposition, i);
+                    move(&winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x, start.y - 1, world->enemyanimalposition, i, 1);
                 }
             }
         }
@@ -224,8 +226,10 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
             // if its path is not blocked by anything
             if (check(worldSize, board, animalPtr->pointTomove[animalPtr->pointindex].x, animalPtr->pointTomove[animalPtr->pointindex].y))
             {
-                animalPtr->pointindex = cellsToMove(animalPtr->pointTomove, animalPtr->pointindex, animalPtr->gene.cellsToMove, n, world->size, board, animalPtr->energyPoint);
-                move(*world, &winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, animalPtr->pointTomove[animalPtr->pointindex].x, animalPtr->pointTomove[animalPtr->pointindex].y, world->enemyanimalposition, i);
+                int finalindex = cellsToMove(animalPtr->pointTomove, animalPtr->pointindex, animalPtr->gene.cellsToMove, n, world->size, board, animalPtr->energyPoint);
+                int Mcells = finalindex - (animalPtr->pointindex);
+                animalPtr->pointindex = finalindex;
+                move(&winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, animalPtr->pointTomove[animalPtr->pointindex].x, animalPtr->pointTomove[animalPtr->pointindex].y, world->enemyanimalposition, i, Mcells);
                 if (*winSwitch == 1)
                 {
                     snprintf(world->winner, 2, "%s", board[animalPtr->pointTomove[animalPtr->pointindex].x][animalPtr->pointTomove[animalPtr->pointindex].y].identifierPlace);
@@ -239,6 +243,16 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
                 // here we make the for loop to iterate this enemy once again
                 i--;
             }
+        }
+        // to check energy of enemy animal at first round to know can it do anything(reproduction or moving or...) or it should be die
+        if (minenergy(animalPtr->gene) > animalPtr->energyPoint ) {
+            // animal died
+
+            int *foodcount = &world->foodCount;
+            int *enemycount = &world->enemyCount;
+            animalDeath(worldSize,board,animalPtr->x,animalPtr->y,animalPtr->energyPoint,world->foodCell,&foodcount);
+            delete_animal(i, world->enemyanimalposition, &enemycount);
+            i --;
         }
         printf("\n");
         clearScreen();
