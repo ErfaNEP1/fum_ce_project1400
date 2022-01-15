@@ -86,7 +86,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
 
                     break;
                 }
-                else if (*board[x - k][y].identifierPlace == 'H')
+                else if (*board[x - k][y].identifierPlace == 'H' && TemporaryEnergy -(Mcells * AGptr->cellsToMove) >= 0)
                 {
                     // player won the game
                     board[x - k][y] = animalTocontrolcell;
@@ -103,7 +103,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                 {
                     TemporaryEnergy += board[x - k][y].foodPlace.energy;
                 }
-                else if (isalpha(*board[x - k][y].identifierPlace))
+                else if (strcmp(board[x - k][y].typePlace,"animal") == 0)
                 {
                     // in this place exist an animal
                     textcolor(12);
@@ -184,7 +184,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     i--;
                     break;
                 }
-                else if (*board[x + k][y].identifierPlace == 'H')
+                else if (*board[x + k][y].identifierPlace == 'H' && TemporaryEnergy -(k * AGptr->energyForMoving) >= 0)
                 {
 
                     // player won the game
@@ -202,7 +202,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                 {
                     TemporaryEnergy += board[x + k][y].foodPlace.energy;
                 }
-                else if (isalpha(*board[x + k][y].identifierPlace))
+                else if (strcmp(board[x + k][y].typePlace,"animal") == 0)
                 {
                     // in this place exist an animal
                     textcolor(12);
@@ -283,7 +283,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
 
                     break;
                 }
-                else if (*board[x][y + k].identifierPlace == 'H')
+                else if (*board[x][y + k].identifierPlace == 'H' && TemporaryEnergy -(k * AGptr->energyForMoving) >= 0)
                 {
 
                     // player von the game
@@ -301,7 +301,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                 {
                     TemporaryEnergy += board[x][y + k].foodPlace.energy;
                 }
-                else if (isalpha(*board[x][y + k].identifierPlace))
+                else if (strcmp(board[x][y + k].typePlace,"animal") == 0)
                 {
                     // in this place exist an animal
                     textcolor(12);
@@ -382,7 +382,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
 
                     break;
                 }
-                else if (*board[x][y - k].identifierPlace == 'H')
+                else if (*board[x][y - k].identifierPlace == 'H' && TemporaryEnergy -(k * AGptr->energyForMoving) >= 0)
                 {
                     // player von the game
                     board[x][y - k] = animalTocontrolcell;
@@ -399,7 +399,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                 {
                     TemporaryEnergy += board[x][y - k].foodPlace.energy;
                 }
-                else if (isalpha(*board[x][y - k].identifierPlace))
+                else if (strcmp(board[x][y - k].typePlace,"animal") == 0)
                 {
                     // in this place exist an animal
                     textcolor(12);
@@ -481,7 +481,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
 
                     break;
                 }
-                else if (*board[x - k][y - k].identifierPlace == 'H')
+                else if (*board[x - k][y - k].identifierPlace == 'H' && TemporaryEnergy -(k * AGptr->energyForMoving) >= 0)
                 {
 
                     // player won the game
@@ -500,7 +500,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                 {
                     TemporaryEnergy += board[x - k][y - k].foodPlace.energy;
                 }
-                else if (isalpha(*board[x - k][y - k].identifierPlace))
+                else if (strcmp(board[x - k][y - k].typePlace,"animal") == 0)
                 {
                     // in this place exist an animal
                     textcolor(12);
@@ -582,7 +582,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
 
                     break;
                 }
-                else if (*board[x - k][y + k].identifierPlace == 'H')
+                else if (*board[x - k][y + k].identifierPlace == 'H' && TemporaryEnergy -(k * AGptr->energyForMoving) >= 0)
                 {
 
                     // player won the game
@@ -601,7 +601,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                 {
                     TemporaryEnergy += board[x - k][y + k].foodPlace.energy;
                 }
-                else if (isalpha(*board[x - k][y + k].identifierPlace))
+                else if (strcmp(board[x - k][y + k].typePlace,"animal") == 0)
                 {
                     // in this place exist an animal
                     textcolor(12);
@@ -683,7 +683,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
 
                     break;
                 }
-                else if (*board[x + k][y + k].identifierPlace == 'H')
+                else if (*board[x + k][y + k].identifierPlace == 'H' && TemporaryEnergy -(k * AGptr->energyForMoving) >= 0)
                 {
 
                     // player won the game
@@ -702,7 +702,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                 {
                     TemporaryEnergy += board[x + k][y + k].foodPlace.energy;
                 }
-                else if (isalpha(*board[x + k][y + k].identifierPlace))
+                else if (strcmp(board[x + k][y + k].typePlace,"animal") == 0)
                 {
                     // in this place exist an animal
                     textcolor(12);
@@ -783,7 +783,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
 
                     break;
                 }
-                else if (*board[x + k][y - k].identifierPlace == 'H')
+                else if (*board[x + k][y - k].identifierPlace == 'H' && TemporaryEnergy -(k * AGptr->energyForMoving) >= 0)
                 {
 
                     // player won the game
@@ -802,7 +802,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                 {
                     TemporaryEnergy += board[x + k][y - k].foodPlace.energy;
                 }
-                else if (isalpha(*board[x + k][y - k].identifierPlace))
+                else if (strcmp(board[x + k][y - k].typePlace,"animal") == 0)
                 {
                     // in this place exist an animal
                     textcolor(12);
