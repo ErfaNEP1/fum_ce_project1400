@@ -17,3 +17,4 @@
 #include "AnimalMove/PlayerMove.h"
 #include "AnimalMove/EnemyMove.h"
 #include "Models/Game.h"
+#include "Actions/MoveToHeaven.h"
