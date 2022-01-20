@@ -18,3 +18,4 @@
 #include "AnimalMove/EnemyMove.h"
 #include "Models/Game.h"
 #include "Actions/MoveToHeaven.h"
+#include "Actions/MoveToFood.h"
