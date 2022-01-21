@@ -84,7 +84,7 @@ void inputAnimals(int worldSize, char *tok, World *world, Cell board[][worldSize
     Cell typeanimal = {
         .typePlace = "animal",
         .identifierPlace = *tok,
-        .animalPlace.pointindex = -1};
+        .animalPlace.pointindex = 0};
     int nu_typeanimal;
 
     tok = strtok(NULL, " \n");

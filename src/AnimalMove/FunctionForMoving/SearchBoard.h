@@ -19,7 +19,7 @@ int searchBoard(World *world,char player[], int worldsize, struct Cell board[][w
                     enemyanimalposition[nEnemy].energyPoint = board[i][j].animalPlace.energyPoint;
                     enemyanimalposition[nEnemy].x = i;
                     enemyanimalposition[nEnemy].y = j;
-                    enemyanimalposition[nEnemy].pointindex = -1;
+                    enemyanimalposition[nEnemy].pointindex = 0;
                     enemyanimalposition[nEnemy].gene = board[i][j].animalPlace.gene;
                     nEnemy ++;
                 }
