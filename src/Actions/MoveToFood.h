@@ -81,7 +81,7 @@ void movetofood(World *world, int worldSize, int *winSwitch, Cell board[][worldS
         {
             animalPtr->pointindex = -1;
             // here we make the for loop to iterate this enemy once again
-            *i--;
+            --*i;
         }
     }
 }

@@ -62,7 +62,7 @@ void movetoheaven(World *world, int worldSize, int *winSwitch, Cell board[][worl
     else
     {
         // if its path is not blocked by anything
-        if (check(worldSize, board, animalPtr->pointTomove[animalPtr->pointindex].x, animalPtr->pointTomove[animalPtr->pointindex].y))
+        if (check(worldSize, board, animalPtr->pointTomove[animalPtr->pointindex+1].x, animalPtr->pointTomove[animalPtr->pointindex+1].y))
         {
             int finalindex = cellsToMove(animalPtr->gene.energyForMoving, animalPtr->pointTomove, animalPtr->pointindex, animalPtr->gene.cellsToMove, n, world->size, board, animalPtr->energyPoint);
             int Mcells = finalindex - (animalPtr->pointindex);
@@ -79,7 +79,7 @@ void movetoheaven(World *world, int worldSize, int *winSwitch, Cell board[][worl
         {
             animalPtr->pointindex = -1;
             // here we make the for loop to iterate this enemy once again
-            *i--;
+            --*i;
         }
     }
 }
