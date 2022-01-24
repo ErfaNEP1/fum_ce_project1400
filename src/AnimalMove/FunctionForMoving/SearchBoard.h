@@ -4,7 +4,7 @@ int searchBoard(World *world,char player[], int worldsize, struct Cell board[][w
         for (int j = 0;j < worldsize;j ++) {
             if (strcmp(board[i][j].typePlace,"animal") == 0) {
 
-                //save players' info
+               //save players' info
                if (strcmp(board[i][j].identifierPlace,player) == 0) {
                    alliedanimalposition[nPlayer].energyPoint = board[i][j].animalPlace.energyPoint;
                    alliedanimalposition[nPlayer].x = i;
@@ -13,10 +13,10 @@ int searchBoard(World *world,char player[], int worldsize, struct Cell board[][w
                    nPlayer ++;
 
                 }
-
                 //save enemies' info
                 else {
                     enemyanimalposition[nEnemy].energyPoint = board[i][j].animalPlace.energyPoint;
+                    enemyanimalposition[nEnemy].maximumEnergy = board[i][j].animalPlace.maximumEnergy;
                     enemyanimalposition[nEnemy].x = i;
                     enemyanimalposition[nEnemy].y = j;
                     enemyanimalposition[nEnemy].pointindex = 0;

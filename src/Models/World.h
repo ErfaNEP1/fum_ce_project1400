@@ -79,6 +79,7 @@ void giveCharactersGenome(Genome gene,char player[], int worldsize, struct Cell 
             if (strcmp(board[i][j].identifierPlace, player) == 0)
             {
                 board[i][j].animalPlace.energyPoint = energyPoint;
+                board[i][j].animalPlace.maximumEnergy = energyPoint;
                 board[i][j].animalPlace.gene = gene;
             }
         }

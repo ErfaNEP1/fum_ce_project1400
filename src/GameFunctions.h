@@ -16,6 +16,11 @@
 #include "AnimalMove/FunctionForMoving/AnimalDeath.h"
 #include "AnimalMove/PlayerMove.h"
 #include "AnimalMove/EnemyMove.h"
-#include "Models/Game.h"
 #include "Actions/MoveToHeaven.h"
 #include "Actions/MoveToFood.h"
+#include "Models/Consideration.h"
+#include "Models/AI.h"
+#include "Models/Game.h"
+
+
+
