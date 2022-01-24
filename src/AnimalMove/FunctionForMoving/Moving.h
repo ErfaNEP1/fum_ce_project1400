@@ -18,5 +18,4 @@ void move(int **winSwitch, int worldSize, struct Cell board[][worldSize], char a
     animalposition[i].x = xx;
     animalposition[i].y = yy;
     animalposition[i].energyPoint -= (Mcells * animalposition[i].gene.energyForMoving);
-    printf("Final Energy = %d\n",animalposition[i].energyPoint);
 }

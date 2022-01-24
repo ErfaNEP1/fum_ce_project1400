@@ -20,7 +20,6 @@ void animalDeath(int worldsize, struct Cell board[][worldsize],int x, int y, int
         foodcell[**foodcount].x = x;
         foodcell[**foodcount].y = y;
         ++**foodcount;
-        textcolor(2);
     }
     else
     {

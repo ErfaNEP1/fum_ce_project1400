@@ -164,8 +164,8 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
         animalPtr = &world->enemyanimalposition[i];
 
         // World Inputs Needed for AI
-        int ClosestDistanceToHeaven = ClosestDistance(animalPtr->x,animalPtr->y,world->heavenCell,world->heavenCount);
-        int ClosestDistanceToFood = ClosestDistance(animalPtr->x,animalPtr->y,world->foodCell,world->foodCount);
+        int ClosestDistanceToHeaven = ClosestDistance(animalPtr->x,animalPtr->y,world->heavenCell,world->heavenCount,worldSize,board);
+        int ClosestDistanceToFood = ClosestDistance(animalPtr->x,animalPtr->y,world->foodCell,world->foodCount,worldSize,board);
         int CurrentEnergy = animalPtr->energyPoint;
         int MaximumEnergy = animalPtr->maximumEnergy;
         // End World Inputs
@@ -195,11 +195,12 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
         double HeavenScore = MoveToHeavenScore(ClosestDistanceToHeaven,CurrentEnergy,MaximumEnergy);
         if(action == 0) {
             movetoheaven(world, worldSize, winSwitch, board, animalPtr, &i);
-            printf("PLAYER %d GOING TO HEAVEN\nFood Score : %f Heaven Score : %f\n\n\n\n",i,FoodScore,HeavenScore);
+            printf("PLAYER %d GOING TO HEAVEN\nFood Score : %f Heaven Score : %f\n",i,FoodScore,HeavenScore);
         }else if(action == 1){
             movetofood(world, worldSize, winSwitch, board, animalPtr, &i);
-            printf("PLAYER %d GOING FOR FOOD\nFood Score : %f Heaven Score : %f\n\n\n\n",i,FoodScore,HeavenScore);
+            printf("PLAYER %d GOING FOR FOOD\nFood Score : %f Heaven Score : %f\n",i,FoodScore,HeavenScore);
         }
+        printf("Final Energy = %d\n\n\n",animalPtr->energyPoint);
         
         // movetoheaven(world, worldSize, winSwitch, board, animalPtr, &i);
         if (*winSwitch == 1)
@@ -237,6 +238,7 @@ int initPlayerMove(World *world, int ch, int nPlayer, int worldSize, int *winSwi
             if (i == k - 1)
                 printWorld(world->size, board, k, *world);
             else
+                printf("Final Energy = %d\n",animalPtr->energyPoint);
                 printWorld(world->size, board, i + 1, *world);
         }
         if (i != world->alliedCount - 1)

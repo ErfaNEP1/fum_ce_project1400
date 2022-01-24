@@ -1,7 +1,7 @@
 void movetofood(World *world, int worldSize, int *winSwitch, Cell board[][worldSize], Animal *animalPtr, int *i)
 {
     // Finding the closest Heaven
-    int mindist = ClosestObject(animalPtr->x, animalPtr->y, world->foodCell, world->foodCount);
+    int mindist = ClosestObject(animalPtr->x, animalPtr->y, world->foodCell, world->foodCount,worldSize,board);
     // Initializing Queue Structure
     struct QueueNode items[world->size * world->size];
     int front = -1, rear = -1;
@@ -20,7 +20,7 @@ void movetofood(World *world, int worldSize, int *winSwitch, Cell board[][worldS
     {
         reverse(animalPtr->pointTomove, n);
         // found how many moves the enemy can make in a single round
-        int finalindex = cellsToMove(animalPtr->gene.energyForMoving, animalPtr->pointTomove, animalPtr->pointindex, animalPtr->gene.cellsToMove, n, world->size, board, animalPtr->energyPoint);
+        int finalindex = cellsToMove(animalPtr->gene.energyForMoving, animalPtr->pointTomove, animalPtr->pointindex, animalPtr->gene.cellsToMove, n, world->size, board, &animalPtr->energyPoint,world->foodCell,&world->foodCount);
         int Mcells = finalindex - (animalPtr->pointindex);
         animalPtr->pointindex = finalindex;
         // move the enemy
