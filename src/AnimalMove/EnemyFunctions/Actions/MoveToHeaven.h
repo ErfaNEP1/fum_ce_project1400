@@ -1,7 +1,7 @@
 void movetoheaven(World *world, int worldSize, int *winSwitch, Cell board[][worldSize], Animal *animalPtr, int *i)
 {
     // Finding the closest Heaven
-    int mindist = ClosestObject(animalPtr->x, animalPtr->y, world->heavenCell, world->heavenCount,worldSize,board);
+    int mindist = ClosestObject(animalPtr->x, animalPtr->y, world->heavenCell, world->heavenCount, worldSize, board);
     // Initializing Queue Structure
     struct QueueNode items[world->size * world->size];
     int front = -1, rear = -1;
@@ -20,7 +20,7 @@ void movetoheaven(World *world, int worldSize, int *winSwitch, Cell board[][worl
     {
         reverse(animalPtr->pointTomove, n);
         // found how many moves the enemy can make in a single round
-        int finalindex = cellsToMove(animalPtr->gene.energyForMoving, animalPtr->pointTomove, animalPtr->pointindex, animalPtr->gene.cellsToMove, n, world->size, board, &animalPtr->energyPoint,world->foodCell,&world->foodCount);
+        int finalindex = cellsToMove(animalPtr->gene.energyForMoving, animalPtr->pointTomove, animalPtr->pointindex, animalPtr->gene.cellsToMove, n, world->size, board, &animalPtr->energyPoint, world->foodCell, &world->foodCount);
         int Mcells = finalindex - (animalPtr->pointindex);
         animalPtr->pointindex = finalindex;
         // move the enemy

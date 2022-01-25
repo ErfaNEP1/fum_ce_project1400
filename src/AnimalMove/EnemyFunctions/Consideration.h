@@ -9,7 +9,6 @@ double energyModifierFood(int CurrentEnergy, int MaximumEnergy)
     return -1 * (pow((x), 4)) + 1;
 }
 
-
 double distanceModifier(int distance)
 {
     double x = (double)distance / 400;
