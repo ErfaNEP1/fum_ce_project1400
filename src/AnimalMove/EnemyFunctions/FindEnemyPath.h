@@ -108,7 +108,7 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
             while (xx != start.x || yy != start.y)
             {
                 //put coordinates in pointTomove that can make enemy closer to H
-                if (xx < worldsize - 1 && yy < worldsize - 1 && d[xx + 1][yy + 1] == dist - 2 && dist - 2 > 0)
+                if (xx < worldsize - 1 && yy < worldsize - 1 && d[xx + 1][yy + 1] == dist - 2 && dist - 2 >= 0)
                 {
                     pointTomove[counter].x = xx + 1;
                     pointTomove[counter].y = yy + 1;
@@ -119,7 +119,7 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
                     continue;
                 }
 
-                if (xx > 0 && yy < worldsize - 1 && d[xx - 1][yy + 1] == dist - 2 && dist - 2 > 0)
+                if (xx > 0 && yy < worldsize - 1 && d[xx - 1][yy + 1] == dist - 2 && dist - 2 >= 0)
                 {
                     pointTomove[counter].x = xx - 1;
                     pointTomove[counter].y = yy + 1;
@@ -130,7 +130,7 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
                     continue;
                 }
 
-                if (xx > 0 && yy > 0 && d[xx - 1][yy - 1] == dist - 2 && dist - 2 > 0)
+                if (xx > 0 && yy > 0 && d[xx - 1][yy - 1] == dist - 2 && dist - 2 >= 0)
                 {
                     pointTomove[counter].x = xx - 1;
                     pointTomove[counter].y = yy - 1;
@@ -141,7 +141,7 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
                     continue;
                 }
 
-                if (xx < worldsize - 1 && yy > 0 && d[xx + 1][yy - 1] == dist - 2 && dist - 2 > 0)
+                if (xx < worldsize - 1 && yy > 0 && d[xx + 1][yy - 1] == dist - 2 && dist - 2 >= 0)
                 {
                     pointTomove[counter].x = xx + 1;
                     pointTomove[counter].y = yy - 1;
