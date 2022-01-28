@@ -9,6 +9,7 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
         int ClosestDistanceToHeaven = ClosestDistance(animalPtr->x, animalPtr->y, world->heavenCell, world->heavenCount, worldSize, board);
         int ClosestDistanceToFood = ClosestDistance(animalPtr->x, animalPtr->y, world->foodCell, world->foodCount, worldSize, board);
         int CurrentEnergy = animalPtr->energyPoint;
+        int EnergyForMove = animalPtr->gene.energyForMoving;
         int MaximumEnergy = animalPtr->maximumEnergy;
         // End World Inputs
 
@@ -18,7 +19,7 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
         {
             if (j == 0)
             {
-                double new_score = MoveToHeavenScore(ClosestDistanceToHeaven, CurrentEnergy, MaximumEnergy);
+                double new_score = MoveToHeavenScore(ClosestDistanceToHeaven, CurrentEnergy, MaximumEnergy,EnergyForMove);
                 if (score < new_score)
                 {
                     score = new_score;
@@ -37,7 +38,7 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
         }
         //Debug
         double FoodScore = MoveToFoodScore(ClosestDistanceToFood, CurrentEnergy, MaximumEnergy);
-        double HeavenScore = MoveToHeavenScore(ClosestDistanceToHeaven, CurrentEnergy, MaximumEnergy);
+        double HeavenScore = MoveToHeavenScore(ClosestDistanceToHeaven, CurrentEnergy, MaximumEnergy,EnergyForMove);
         if (action == 0)
         {
             movetoheaven(world, worldSize, winSwitch, board, animalPtr, &i);
