@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "gamefunctions.h": "c",
+        "reverseenemypath.h": "c",
+        "point.h": "c",
+        "genome.h": "c",
+        "closestobject.h": "c",
+        "cmath": "cpp",
+        "consideration.h": "c"
+    },
+    "terminal.integrated.defaultProfile.windows": "PowerShell"
+}

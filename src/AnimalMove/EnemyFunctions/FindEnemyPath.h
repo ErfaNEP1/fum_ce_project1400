@@ -69,13 +69,13 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
 
     int sw = 0;
     //to mark cells that past
-    int visited[ROW][COL]; 
+    int visited[ROW][COL];
 
-    //it puts a number in all cells of an array 
+    //it puts a number in all cells of an array
     memset(visited, 0, sizeof visited);
 
     //to keep distance from start
-    int d[ROW][COL]; 
+    int d[ROW][COL];
     memset(d, -1, sizeof d);
 
     struct QueueNode node = {
@@ -84,7 +84,7 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
 
     visited[start.x][start.y] = 1;
     d[start.x][start.y] = 0;
-    
+
     //add start cell in queue
     push(node, front, rear, items);
 
@@ -103,12 +103,12 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
             //put start cell in pointtomve
             pointTomove[counter].x = xx;
             pointTomove[counter].y = yy;
-            
+
             counter++;
             while (xx != start.x || yy != start.y)
             {
                 //put coordinates in pointTomove that can make enemy closer to H
-                if (xx < worldsize - 1 && yy < worldsize - 1 && d[xx + 1][yy + 1] == dist - 2 && dist - 2 > 0)
+                if (xx < worldsize - 1 && yy < worldsize - 1 && d[xx + 1][yy + 1] == dist - 2 && dist - 2 >= 0)
                 {
                     pointTomove[counter].x = xx + 1;
                     pointTomove[counter].y = yy + 1;
@@ -119,7 +119,7 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
                     continue;
                 }
 
-                if (xx > 0 && yy < worldsize - 1 && d[xx - 1][yy + 1] == dist - 2 && dist - 2 > 0)
+                if (xx > 0 && yy < worldsize - 1 && d[xx - 1][yy + 1] == dist - 2 && dist - 2 >= 0)
                 {
                     pointTomove[counter].x = xx - 1;
                     pointTomove[counter].y = yy + 1;
@@ -130,7 +130,7 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
                     continue;
                 }
 
-                if (xx > 0 && yy > 0 && d[xx - 1][yy - 1] == dist - 2 && dist - 2 > 0)
+                if (xx > 0 && yy > 0 && d[xx - 1][yy - 1] == dist - 2 && dist - 2 >= 0)
                 {
                     pointTomove[counter].x = xx - 1;
                     pointTomove[counter].y = yy - 1;
@@ -141,7 +141,7 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
                     continue;
                 }
 
-                if (xx < worldsize - 1 && yy > 0 && d[xx + 1][yy - 1] == dist - 2 && dist - 2 > 0)
+                if (xx < worldsize - 1 && yy > 0 && d[xx + 1][yy - 1] == dist - 2 && dist - 2 >= 0)
                 {
                     pointTomove[counter].x = xx + 1;
                     pointTomove[counter].y = yy - 1;
@@ -195,7 +195,6 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
                     dist--;
                     continue;
                 }
-                
             }
 
             sw = 1; //enemy can reach H
@@ -212,7 +211,7 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
             //to keep distance from start
             if (isValid(x, y, worldsize) == 1 && visited[x][y] == 0)
             {
-                if (strcmp(board[x][y].identifierPlace, "F") == 0 || strcmp(board[x][y].identifierPlace, "H") == 0 || strcmp(board[x][y].identifierPlace, ".") == 0)
+                if (strcmp(board[x][y].typePlace, "animal") != 0 && *board[x][y].identifierPlace != '#')
                 {
                     visited[x][y] = 1;
                     struct QueueNode newNode = {
@@ -229,7 +228,6 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
                         d[x][y] = curr.distance + 1;
                     }
                     push(newNode, front, rear, items);
-                    
                 }
             }
         }
@@ -237,4 +235,21 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
 
     if (sw == 0) //enemy can't reach H
         return -1;
+}
+
+void reverse(struct Point pointTomove[], int number)
+{
+    int i, j;
+
+    for (i = 0, j = number - 1; j > i; i++, j--)
+    {
+
+        int tempX = pointTomove[i].x;
+        int tempY = pointTomove[i].y;
+        pointTomove[i].x = pointTomove[j].x;
+        pointTomove[i].y = pointTomove[j].y;
+        pointTomove[j].x = tempX;
+        pointTomove[j].y = tempY;
+    }
+    return;
 }

@@ -1,3 +1,4 @@
-typedef struct Food {
+typedef struct Food
+{
     int energy;
 } Food;

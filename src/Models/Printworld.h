@@ -1,23 +1,9 @@
-typedef struct World
-{
-    int size;
-    int deadEndCount, heavenCount, foodCount, animalCount, alliedCount, enemyCount;
-    char animalToControl[2];
-    char winner[2];
-    Cell deadEnds[100];
-    Cell heavenCell[100];
-    Cell foodCell[100];
-    Animal alliedanimalposition[100];
-    Animal enemyanimalposition[100];
-} World;
-
 void initWorld(struct World world, int worldSize, struct Cell board[][worldSize])
 {
     Cell defaultCell = {
         .typePlace = "default",
-        .identifierPlace = "."
-    };
-    
+        .identifierPlace = "."};
+
     for (int i = 0; i < worldSize; i++)
     {
         for (int j = 0; j < worldSize; j++)
@@ -66,20 +52,7 @@ void printFoodsDetails(int worldSize, struct Cell board[][worldSize])
         {
             if (strcmp(board[i][j].typePlace, "animal") == 0)
             {
-                printf("ANIMAL %s (%d,%d) \n", board[i][j].identifierPlace, board[i][j].animalPlace.energyPoint,board[i][j].animalPlace.gene.attackPower) ;
-            }
-        }
-    }
-}
-void giveCharactersGenome(Genome gene,char player[], int worldsize, struct Cell board[][worldsize], int energyPoint){
-    for (int i = 0; i < worldsize; i++)
-    {
-        for (int j = 0; j < worldsize; j++)
-        {
-            if (strcmp(board[i][j].identifierPlace, player) == 0)
-            {
-                board[i][j].animalPlace.energyPoint = energyPoint;
-                board[i][j].animalPlace.gene = gene;
+                printf("ANIMAL %s (%d,%d) \n", board[i][j].identifierPlace, board[i][j].animalPlace.energyPoint, board[i][j].animalPlace.gene.attackPower);
             }
         }
     }
