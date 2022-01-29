@@ -7,5 +7,6 @@
         "closestobject.h": "c",
         "cmath": "cpp",
         "consideration.h": "c"
-    }
+    },
+    "terminal.integrated.defaultProfile.windows": "PowerShell"
 }

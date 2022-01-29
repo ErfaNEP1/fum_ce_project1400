@@ -9,9 +9,9 @@ double energyModifierFood(int CurrentEnergy, int MaximumEnergy)
     return -1 * (pow((x), 4)) + 1;
 }
 
-double distanceModifier(int distance)
+double distanceModifier(int distance,int worldSize)
 {
     // printf("DISTANCE : %d\n",distance);
-    double x = (double) distance / 400;
+    double x = (double) distance / (worldSize * worldSize);
     return (-1 * pow(x, 4)) + 1;
 }
