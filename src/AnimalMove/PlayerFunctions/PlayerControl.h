@@ -88,6 +88,16 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                 }
                 else if (*board[x - k][y].identifierPlace == 'H' && TemporaryEnergy - (Mcells * AGptr->cellsToMove) >= 0)
                 {
+                    // add Food enegy to player
+                    for (int j = 1; j <= k; j++)
+                    {
+                        if (*board[x - j][y].identifierPlace == 'F')
+                        {
+                            alliedanimalposition[i].energyPoint += board[x - j][y].foodPlace.energy;
+                            delete_Food(x - j, y, Foodcell, &foodcount);
+                            board[x - j][y] = defaultCell;
+                        }
+                    }
                     // player won the game
                     board[x - k][y] = animalTocontrolcell;
                     board[x][y] = defaultCell;
@@ -186,6 +196,16 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                 }
                 else if (*board[x + k][y].identifierPlace == 'H' && TemporaryEnergy - (k * AGptr->energyForMoving) >= 0)
                 {
+                    // add Food enegy to player
+                    for (int j = 1; j <= k; j++)
+                    {
+                        if (*board[x - j][y].identifierPlace == 'F')
+                        {
+                            alliedanimalposition[i].energyPoint += board[x - j][y].foodPlace.energy;
+                            delete_Food(x - j, y, Foodcell, &foodcount);
+                            board[x - j][y] = defaultCell;
+                        }
+                    }
 
                     // player won the game
                     board[x + k][y] = animalTocontrolcell;
@@ -285,6 +305,16 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                 }
                 else if (*board[x][y + k].identifierPlace == 'H' && TemporaryEnergy - (k * AGptr->energyForMoving) >= 0)
                 {
+                    // add Food enegy to player
+                    for (int j = 1; j <= k; j++)
+                    {
+                        if (*board[x - j][y].identifierPlace == 'F')
+                        {
+                            alliedanimalposition[i].energyPoint += board[x - j][y].foodPlace.energy;
+                            delete_Food(x - j, y, Foodcell, &foodcount);
+                            board[x - j][y] = defaultCell;
+                        }
+                    }
 
                     // player von the game
                     board[x][y + k] = animalTocontrolcell;
@@ -384,6 +414,16 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                 }
                 else if (*board[x][y - k].identifierPlace == 'H' && TemporaryEnergy - (k * AGptr->energyForMoving) >= 0)
                 {
+                    // add Food enegy to player
+                    for (int j = 1; j <= k; j++)
+                    {
+                        if (*board[x - j][y].identifierPlace == 'F')
+                        {
+                            alliedanimalposition[i].energyPoint += board[x - j][y].foodPlace.energy;
+                            delete_Food(x - j, y, Foodcell, &foodcount);
+                            board[x - j][y] = defaultCell;
+                        }
+                    }
                     // player von the game
                     board[x][y - k] = animalTocontrolcell;
                     board[x][y] = defaultCell;
@@ -483,6 +523,16 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                 }
                 else if (*board[x - k][y - k].identifierPlace == 'H' && TemporaryEnergy - (k * AGptr->energyForMoving) >= 0)
                 {
+                    // add Food enegy to player
+                    for (int j = 1; j <= k; j++)
+                    {
+                        if (*board[x - j][y].identifierPlace == 'F')
+                        {
+                            alliedanimalposition[i].energyPoint += board[x - j][y].foodPlace.energy;
+                            delete_Food(x - j, y, Foodcell, &foodcount);
+                            board[x - j][y] = defaultCell;
+                        }
+                    }
 
                     // player won the game
                     board[x - k][y - k] = animalTocontrolcell;
@@ -584,6 +634,16 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                 }
                 else if (*board[x - k][y + k].identifierPlace == 'H' && TemporaryEnergy - (k * AGptr->energyForMoving) >= 0)
                 {
+                    // add Food enegy to player
+                    for (int j = 1; j <= k; j++)
+                    {
+                        if (*board[x - j][y].identifierPlace == 'F')
+                        {
+                            alliedanimalposition[i].energyPoint += board[x - j][y].foodPlace.energy;
+                            delete_Food(x - j, y, Foodcell, &foodcount);
+                            board[x - j][y] = defaultCell;
+                        }
+                    }
 
                     // player won the game
                     board[x - k][y + k] = animalTocontrolcell;
@@ -685,6 +745,16 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                 }
                 else if (*board[x + k][y + k].identifierPlace == 'H' && TemporaryEnergy - (k * AGptr->energyForMoving) >= 0)
                 {
+                    // add Food enegy to player
+                    for (int j = 1; j <= k; j++)
+                    {
+                        if (*board[x - j][y].identifierPlace == 'F')
+                        {
+                            alliedanimalposition[i].energyPoint += board[x - j][y].foodPlace.energy;
+                            delete_Food(x - j, y, Foodcell, &foodcount);
+                            board[x - j][y] = defaultCell;
+                        }
+                    }
 
                     // player won the game
                     board[x + k][y + k] = animalTocontrolcell;
@@ -785,6 +855,16 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                 }
                 else if (*board[x + k][y - k].identifierPlace == 'H' && TemporaryEnergy - (k * AGptr->energyForMoving) >= 0)
                 {
+                    // add Food enegy to player
+                    for (int j = 1; j <= k; j++)
+                    {
+                        if (*board[x - j][y].identifierPlace == 'F')
+                        {
+                            alliedanimalposition[i].energyPoint += board[x - j][y].foodPlace.energy;
+                            delete_Food(x - j, y, Foodcell, &foodcount);
+                            board[x - j][y] = defaultCell;
+                        }
+                    }
 
                     // player won the game
                     board[x + k][y - k] = animalTocontrolcell;
