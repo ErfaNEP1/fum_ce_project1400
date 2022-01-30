@@ -12,13 +12,13 @@ void findplace(int worldSize, Cell board[][worldSize], int xMother, int yMother,
         {
             int disM = (abs(xMother - i) + abs(yMother - j));
             int disF = (abs(xFather - i) + abs(yFather - j));
-            if (disM < mindis && strcmpd(boar[i][j]->typePlace, "default") == 0)
+            if (disM < mindis && strcmp(board[i][j]->typePlace, "default") == 0)
             {
                 mindis = disM;
                 xnewEnemy = i;
                 ynewEnemy = j;
             }
-            if (disF < mindis && strcmpd(boar[i][j]->typePlace, "default") == 0)
+            if (disF < mindis && strcmp(board[i][j]->typePlace, "default") == 0)
             {
                 mindis = disF;
                 xnewEnemy = i;
@@ -33,7 +33,7 @@ void findplace(int worldSize, Cell board[][worldSize], int xMother, int yMother,
     alliedanimalposition[AlliedCount]->y = ynewEnemy;
 }
 
-int reproduction(Animal enemyMother, Animal enemyFather, int AlliedCount, Animal alliedanimalposition[], int worldSize, Cell board[][worldSize])
+void reproduction(Animal enemyMother, Animal enemyFather, int AlliedCount, Animal alliedanimalposition[], int worldSize, Cell board[][worldSize])
 {
     enemyMother->energyPoint -= (enemyMother->gene->energyForReproduction / 2);
     enemyFather->energyPoint -= (enemyFather->gene->energyForReproduction / 2);
