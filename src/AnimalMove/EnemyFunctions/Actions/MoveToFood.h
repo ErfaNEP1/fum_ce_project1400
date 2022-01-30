@@ -46,6 +46,22 @@ void movetofood(World *world, int worldSize, int *winSwitch, Cell board[][worldS
         {
             move(&winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x, start.y - 1, world->enemyanimalposition, *i, 1);
         }
+        else if (strcmp(board[start.x - 1][start.y - 1].typePlace, "animal") != 0 && *board[start.x - 1][start.y - 1].identifierPlace != '#' && isValid(start.x - 1, start.y - 1, world->size))
+        {
+            move(&winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x - 1, start.y - 1, world->enemyanimalposition, *i, 1);
+        }
+        else if (strcmp(board[start.x + 1][start.y - 1].typePlace, "animal") != 0 && *board[start.x + 1][start.y - 1].identifierPlace != '#' && isValid(start.x + 1, start.y - 1, world->size))
+        {
+            move(&winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x + 1, start.y - 1, world->enemyanimalposition, *i, 1);
+        }
+        else if (strcmp(board[start.x - 1][start.y + 1].typePlace, "animal") != 0 && *board[start.x - 1][start.y + 1].identifierPlace != '#' && isValid(start.x - 1, start.y + 1, world->size))
+        {
+            move(&winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x - 1, start.y + 1, world->enemyanimalposition, *i, 1);
+        }
+        else if (strcmp(board[start.x + 1][start.y + 1].typePlace, "animal") != 0 && *board[start.x + 1][start.y + 1].identifierPlace != '#' && isValid(start.x + 1, start.y + 1, world->size))
+        {
+            move(&winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x + 1, start.y + 1, world->enemyanimalposition, *i, 1);
+        }
     }
     // check if game is finished
     if (*winSwitch == 1)
