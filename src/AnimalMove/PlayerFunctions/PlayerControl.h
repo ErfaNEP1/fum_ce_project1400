@@ -316,7 +316,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         }
                     }
 
-                    // player von the game
+                    // player won the game
                     board[x][y + k] = animalTocontrolcell;
                     board[x][y] = defaultCell;
                     alliedanimalposition[i].y += k;
@@ -423,7 +423,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                             board[x][y - j] = defaultCell;
                         }
                     }
-                    // player von the game
+                    // player won the game
                     board[x][y - k] = animalTocontrolcell;
                     board[x][y] = defaultCell;
                     alliedanimalposition[i].y -= k;

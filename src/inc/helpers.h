@@ -40,3 +40,11 @@ char *trim(char *s)
     ptr[1] = '\0';
     return s;
 }
+
+int random(int min, int max)
+{
+    int randomnumber;
+    srand(time(0));
+    randomnumber=rand() % (max - min + 1) + min;
+    return randomnumber;
+}
