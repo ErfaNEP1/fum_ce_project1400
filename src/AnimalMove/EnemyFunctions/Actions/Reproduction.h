@@ -1,4 +1,4 @@
-void findplace(int worldSize, Cell board[][worldSize], int xMother, int yMother, int xFather, int yFather, char identifier[], Animal alliedanimalposition[], int AlliedCount)
+void findplace(int worldSize, Cell **board[][worldSize], int xMother, int yMother, int xFather, int yFather, char identifier[], Animal **alliedanimalposition[], int AlliedCount)
 {
     Cell animalcell = {
         .typePlace = "animal",
@@ -33,7 +33,7 @@ void findplace(int worldSize, Cell board[][worldSize], int xMother, int yMother,
     alliedanimalposition[AlliedCount]->y = ynewEnemy;
 }
 
-void reproduction(Animal enemyMother, Animal enemyFather, int AlliedCount, Animal alliedanimalposition[], int worldSize, Cell board[][worldSize])
+void reproduction(Animal *enemyMother, Animal *enemyFather, int AlliedCount, Animal *alliedanimalposition[], int worldSize, Cell *board[][worldSize])
 {
     enemyMother->energyPoint -= (enemyMother->gene->energyForReproduction / 2);
     enemyFather->energyPoint -= (enemyFather->gene->energyForReproduction / 2);
@@ -47,7 +47,7 @@ void reproduction(Animal enemyMother, Animal enemyFather, int AlliedCount, Anima
     alliedanimalposition[AlliedCount]->gene->attackPower = random(20, 500);
     alliedanimalposition[AlliedCount]->gene->defensePower = random(20, 500);
 
-    findplace(worldSize, board, enemyMother->x, enemyMothr->y, enemyFather->x, enmyFther->y, enemyMother->gene->character, alliedanimalposition, AlliedCount);
+    findplace(worldSize, *board, enemyMother->x, enemyMother->y, enemyFather->x, enemyFather->y, enemyMother->gene->character, *alliedanimalposition, AlliedCount);
 
     board[alliedanimalposition[AlliedCount]->x][alliedanimalposition[AlliedCount]->y]->animalPlace->energyPoint = alliedanimalposition[AlliedCount]->energyPoint;
     board[alliedanimalposition[AlliedCount]->x][alliedanimalposition[AlliedCount]->y]->animalPlace->maximumEnergy = alliedanimalposition[AlliedCount]->maximumEnergy;
