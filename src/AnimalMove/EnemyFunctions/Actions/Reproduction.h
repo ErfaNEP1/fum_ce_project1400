@@ -12,13 +12,13 @@ void findplace(int worldSize, Cell board[][worldSize], int xMother, int yMother,
         {
             int disM = (abs(xMother - i) + abs(yMother - j));
             int disF = (abs(xFather - i) + abs(yFather - j));
-            if (disM < mindis && strcmp(board[i][j]->typePlace, "default") == 0)
+            if (disM < mindis && strcmp(board[i][j].typePlace, "default") == 0)
             {
                 mindis = disM;
                 xnewEnemy = i;
                 ynewEnemy = j;
             }
-            if (disF < mindis && strcmp(board[i][j]->typePlace, "default") == 0)
+            if (disF < mindis && strcmp(board[i][j].typePlace, "default") == 0)
             {
                 mindis = disF;
                 xnewEnemy = i;
@@ -53,8 +53,8 @@ void reproduction(Animal *enemyMother, Animal *enemyFather, int *AlliedCount, An
     board[alliedanimalposition[*AlliedCount].x][alliedanimalposition[*AlliedCount].y].animalPlace.maximumEnergy = alliedanimalposition[*AlliedCount].maximumEnergy;
     strcpy(board[alliedanimalposition[*AlliedCount].x][alliedanimalposition[*AlliedCount].y].animalPlace.gene.character, alliedanimalposition[*AlliedCount].gene.character);
     board[alliedanimalposition[*AlliedCount].x][alliedanimalposition[*AlliedCount].y].animalPlace.gene.energyForMoving = alliedanimalposition[*AlliedCount].gene.energyForMoving;
-    board[alliedanimalposition[*AlliedCount].x][alliedanimalposition[*AlliedCount].y].animalPlace.gene.cellToMove = alliedanimalposition[*AlliedCount].gene.cellsToMove;
-    board[alliedanimalposition[*AlliedCount].x][alliedanimalposition[*AlliedCount].y].animalPlace.gene.energuForReproduction = alliedanimalposition[*AlliedCount].gene.energyForReproduction;
+    board[alliedanimalposition[*AlliedCount].x][alliedanimalposition[*AlliedCount].y].animalPlace.gene.cellsToMove = alliedanimalposition[*AlliedCount].gene.cellsToMove;
+    board[alliedanimalposition[*AlliedCount].x][alliedanimalposition[*AlliedCount].y].animalPlace.gene.energyForReproduction = alliedanimalposition[*AlliedCount].gene.energyForReproduction;
     board[alliedanimalposition[*AlliedCount].x][alliedanimalposition[*AlliedCount].y].animalPlace.gene.attackPower = alliedanimalposition[*AlliedCount].gene.attackPower;
     board[alliedanimalposition[*AlliedCount].x][alliedanimalposition[*AlliedCount].y].animalPlace.gene.defensePower = alliedanimalposition[*AlliedCount].gene.defensePower;
     ++*AlliedCount;

@@ -98,3 +98,13 @@ void delete_Food(int x, int y, struct Cell FoodCell[], int **Foodcount)
     (**Foodcount)--;
     return;
 }
+
+int searchanimal(int x, int y, struct Animal animal[],int animalcount) {
+    int i;
+    for (i = 0; i < (animalcount); i++)
+    {
+        if (animal[i].x == x && animal[i].y == y)
+            return i;
+    }
+    return -1;
+}

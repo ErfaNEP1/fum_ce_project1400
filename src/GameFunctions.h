@@ -16,7 +16,6 @@
 #include "AnimalMove/EnemyFunctions/Actions/MovetoFood.h"
 #include "AnimalMove/EnemyFunctions/Actions/MovetoHeaven.h"
 #include "AnimalMove/EnemyFunctions/Actions/Reproduction.h"
-#include "AnimalMove/EnemyFunctions/Actions/Reproduction.h"
 #include "AnimalMove/EnemyFunctions/AI/Consideration.h"
 #include "AnimalMove/EnemyFunctions/AI/UtilityCalculator.h"
 #include "AnimalMove/EnemyFunctions/Enemymove.h"

@@ -12,6 +12,7 @@ int saveAnimalinfo(World *world, char player[], int worldsize, struct Cell board
                 if (strcmp(board[i][j].identifierPlace, player) == 0)
                 {
                     alliedanimalposition[nPlayer].energyPoint = board[i][j].animalPlace.energyPoint;
+                    alliedanimalposition[nPlayer].maximumEnergy = board[i][j].animalPlace.energyPoint;
                     alliedanimalposition[nPlayer].x = i;
                     alliedanimalposition[nPlayer].y = j;
                     alliedanimalposition[nPlayer].gene = board[i][j].animalPlace.gene;
