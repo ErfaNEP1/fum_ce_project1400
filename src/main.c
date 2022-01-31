@@ -74,24 +74,13 @@ int main()
     // ======================= End Of Input Map Details ======================= //
 
     // ======================= Preprations For Start ======================= //
-    // printFoodsDetails(world.size, board);
-    // printf("\n");
-    // printWorldDetails(world);
-    // printf("\n");
-    // printWorld(world.size, board, 0, world);
-    // printf("\n");
-    // printf("%s", world.animalToControl);
 
     // Allied Animals Count + Storing each animal in World structure
     int nPlayer = saveAnimalinfo(&world, world.animalToControl, world.size, board, world.alliedanimalposition, world.enemyanimalposition);
     int nEnemy = world.animalCount - nPlayer;
 
-    // textcolor(6);
-    // printWorld(world.size, board, 0, world);
-    // textcolor(13);
-    // clearScreen();
-
-    printf("\nSTART !!! ( Move With Arrow Keys. ) ( PRESS \"ESC\" TO EXIT )\n");
+    textcolor(13);
+    printf("\nSTART !!! ( Move With Arrow Keys.) ( DOUBLE CLICK ON \"ESC\" TO EXIT )\n\n- YOU CAN ALSO PLAY WITH NUMPAD FOR BETTER \n  NAVIGATION. TO DO SO, PLEASE TURN OFF YOUR NUMLOCK.\n- TO ATTACK ENEMIES, MOVE TO THEIR POSITION\n  WHEN YOU ARE NEXT TO THEM.\n- TO REPRODUCT MOVE TO YOUR ALLIED CHARACTER'S\n  POSITION WHEN YOU ARE NEXT TO THEM.\n\n");
     printWorld(world.size, board, 0, world);
 
     int ch;

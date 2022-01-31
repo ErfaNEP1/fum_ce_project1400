@@ -63,7 +63,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
         if (*board[x - 1][y].identifierPlace == *player)
         {
             textcolor(1);
-            printf("Do you decide to reproduce ?\nif Yes enter (y) else enter (n) : ");
+            printf("Do you want to reproduce ?\nif Yes enter (y) else enter (n) : ");
             decision = getch();
             if (decision == 'y')
             {
@@ -216,7 +216,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
         if (*board[x + 1][y].identifierPlace == *player)
         {
             textcolor(1);
-            printf("Do you decide to reproduce ?\nif Yes enter (y) else enter (n) : ");
+            printf("Do you want to reproduce ?\nif Yes enter (y) else enter (n) : ");
             decision = getch();
             if (decision == 'y')
             {
@@ -368,7 +368,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
         if (*board[x][y + 1].identifierPlace == *player)
         {
             textcolor(1);
-            printf("Do you decide to reproduce ?\nif Yes enter (y) else enter (n) : ");
+            printf("Do you want to reproduce ?\nif Yes enter (y) else enter (n) : ");
             decision = getch();
             if (decision == 'y')
             {
@@ -520,7 +520,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
         if (*board[x][y - 1].identifierPlace == *player)
         {
             textcolor(1);
-            printf("Do you decide to reproduce ?\nif Yes enter (y) else enter (n) : ");
+            printf("Do you want to reproduce ?\nif Yes enter (y) else enter (n) : ");
             decision = getch();
             if (decision == 'y')
             {
@@ -671,7 +671,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
         if (*board[x - 1][y - 1].identifierPlace == *player)
         {
             textcolor(1);
-            printf("Do you decide to reproduce ?\nif Yes enter (y) else enter (n) : ");
+            printf("Do you want to reproduce ?\nif Yes enter (y) else enter (n) : ");
             decision = getch();
             if (decision == 'y')
             {
@@ -825,7 +825,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
         if (*board[x - 1][y + 1].identifierPlace == *player)
         {
             textcolor(1);
-            printf("Do you decide to reproduce ?\nif Yes enter (y) else enter (n) : ");
+            printf("Do you want to reproduce ?\nif Yes enter (y) else enter (n) : ");
             decision = getch();
             if (decision == 'y')
             {
@@ -979,7 +979,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
         if (*board[x + 1][y + 1].identifierPlace == *player)
         {
             textcolor(1);
-            printf("Do you decide to reproduce ?\nif Yes enter (y) else enter (n) : ");
+            printf("Do you want to reproduce ?\nif Yes enter (y) else enter (n) : ");
             decision = getch();
             if (decision == 'y')
             {
@@ -1132,7 +1132,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
         if (*board[x + 1][y - 1].identifierPlace == *player)
         {
             textcolor(1);
-            printf("Do you decide to reproduce ?\nif Yes enter (y) else enter (n) : ");
+            printf("Do you want to reproduce ?\nif Yes enter (y) else enter (n) : ");
             decision = getch();
             if (decision == 'y')
             {
