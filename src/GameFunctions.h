@@ -17,6 +17,7 @@
 #include "AnimalMove/EnemyFunctions/Actions/MovetoHeaven.c"
 #include "AnimalMove/EnemyFunctions/Actions/Reproduction.c"
 #include "AnimalMove/EnemyFunctions/Actions/Attack.c"
+#include "AnimalMove/EnemyFunctions/Actions/Cooperation.c"
 #include "AnimalMove/EnemyFunctions/AI/Consideration.c"
 #include "AnimalMove/EnemyFunctions/AI/UtilityCalculator.c"
 #include "AnimalMove/EnemyFunctions/Enemymove.c"
