@@ -1,3 +1,18 @@
+/**
+ * find the place that new animal can be born into
+ * 
+ * @param {int-worldSize} size of map
+ * @param {Cell-board[]} world map
+ * @param {int-xMother} mother x coordinate
+ * @param {int-yMother} mother y coordinate
+ * @param {int-xFather} father x coordinate
+ * @param {int-yFather} father y coordinate
+ * @param {char-identifier[]} animal type
+ * @param {Animal-alliedanimalposition[]} array of allied animals 
+ * @param {int-AlliedCount} number of allied animals
+ * 
+ * @return {void}
+ */
 void findplace(int worldSize, Cell board[][worldSize], int xMother, int yMother, int xFather, int yFather, char identifier[], Animal alliedanimalposition[], int AlliedCount)
 {
     Cell animalcell = {
@@ -32,7 +47,18 @@ void findplace(int worldSize, Cell board[][worldSize], int xMother, int yMother,
     alliedanimalposition[AlliedCount].x = xnewEnemy;
     alliedanimalposition[AlliedCount].y = ynewEnemy;
 }
-
+/**
+ * reproduct given mother and father
+ * 
+ * @param {Animal-enemyMother} mother
+ * @param {Animal-enemyMother} father
+ * @param {int-AlliedCount} number of allied animals
+ * @param {Animal-alliedanimalposition[]} array of allied animals 
+ * @param {int-worldSize} size of map
+ * @param {Cell-board[]} world map
+ * 
+ * @return {void}
+ */
 void reproduction(Animal *enemyMother, Animal *enemyFather, int *AlliedCount, Animal alliedanimalposition[], int worldSize, Cell board[][worldSize])
 {
     enemyMother->energyPoint -= (enemyMother->gene.energyForReproduction / 2);

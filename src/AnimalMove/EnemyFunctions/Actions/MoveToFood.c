@@ -1,3 +1,16 @@
+
+/**
+ * move the animal to closest food
+ * 
+ * @param {World-world} game's database
+ * @param {int-worldSize} size of map
+ * @param {Cell-board[]} world map
+ * @param {Animal-animalPtr} animal that wants to move
+ * @param {char-identifier[]} animal type
+ * @param {int-i} index of animal in it's array ( World )
+ * 
+ * @return {void}
+ */
 void movetofood(World *world, int worldSize, int *winSwitch, Cell board[][worldSize], Animal *animalPtr, int *i)
 {
     // Finding the closest Heaven

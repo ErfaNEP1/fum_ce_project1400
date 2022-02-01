@@ -6,7 +6,24 @@
         "genome.h": "c",
         "closestobject.h": "c",
         "cmath": "cpp",
-        "consideration.h": "c"
+        "consideration.h": "c",
+        "saveinfo.h": "c",
+        "collectivefunctions.h": "c",
+        "worldfunctions.h": "c",
+        "playermove.h": "c",
+        "helpers.h": "c",
+        "getinput.h": "c",
+        "printworld.h": "c",
+        "findenemypath.h": "c",
+        "checkanimal.h": "c",
+        "findclosestobject.h": "c",
+        "cellstomove.h": "c",
+        "movetofood.h": "c",
+        "movetoheaven.h": "c",
+        "reproduction.h": "c",
+        "utilitycalculator.h": "c",
+        "enemymove.h": "c",
+        "playercontrol.h": "c"
     },
     "terminal.integrated.defaultProfile.windows": "PowerShell"
 }

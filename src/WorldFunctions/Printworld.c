@@ -1,3 +1,14 @@
+// #include "Printworld.h"
+
+/**
+ * Filling the map with default cells before getting the input from file.
+ * 
+ * @param {World-world} game's database.
+ * @param {int-worldsize} size of the map.
+ * @param {Cell-board[][]} game's map.
+ * 
+ * @return {void}
+ */
 void initWorld(struct World world, int worldSize, struct Cell board[][worldSize])
 {
     Cell defaultCell = {
@@ -12,10 +23,19 @@ void initWorld(struct World world, int worldSize, struct Cell board[][worldSize]
         }
     }
 }
-
+/**
+ * Prints Map
+ * 
+ * @param {int worldsize} size of the map.
+ * @param {Cell board[][]} game's map.
+ * @param {int index} the number of ally character to be highlited in map.
+ * @param {World-world} game's database.
+ * 
+ * @return {void}
+ */
 void printWorld(int worldSize, struct Cell board[][worldSize], int index, struct World world)
 {
-    goToXY(70,0);
+    // goToXY(70,0);
     textcolor(7);
     printf("%c",201);
     for (int i = 0; i < (worldSize*2)+1; i++)
@@ -23,7 +43,7 @@ void printWorld(int worldSize, struct Cell board[][worldSize], int index, struct
         printf("%c",205);
     }
     printf("%c\n",187);
-    goToXY(70,1);
+    // goToXY(70,1);
     for (int i = 0; i < worldSize; i++)
     {
         textcolor(7);
@@ -54,7 +74,7 @@ void printWorld(int worldSize, struct Cell board[][worldSize], int index, struct
         textcolor(7);
         printf("%c ",186);
         printf("\n");
-        goToXY(70,2+i);
+        // goToXY(70,2+i);
     }
     printf("%c",200);
     for (int i = 0; i < (worldSize*2)+1; i++)
@@ -62,24 +82,4 @@ void printWorld(int worldSize, struct Cell board[][worldSize], int index, struct
         printf("%c",205);
     }
     printf("%c\n",188);
-}
-void printWorldDetails(World world)
-{
-    printf("Animal count : %d\n", world.animalCount);
-    printf("DeadEnd count : %d\n", world.deadEndCount);
-    printf("HeavenCell count : %d\n", world.heavenCount);
-    printf("Food count : %d\n", world.foodCount);
-}
-void printFoodsDetails(int worldSize, struct Cell board[][worldSize])
-{
-    for (int i = 0; i < worldSize; i++)
-    {
-        for (int j = 0; j < worldSize; j++)
-        {
-            if (strcmp(board[i][j].typePlace, "animal") == 0)
-            {
-                printf("ANIMAL %s (%d,%d) \n", board[i][j].identifierPlace, board[i][j].animalPlace.energyPoint, board[i][j].animalPlace.gene.attackPower);
-            }
-        }
-    }
 }
