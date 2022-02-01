@@ -1,3 +1,17 @@
+// #include "WorldFunctions.h"
+
+/**
+ * Gets characters' info and stores them in World struct
+ *
+ * @param {World-world} game's database.
+ * @param {char-player} controlled player symbol.
+ * @param {int-worldsize} size of the map.
+ * @param {Cell-board[][]} game's map.
+ * @param {Animal-alliedanimalposition[]} array of allied animals in game.
+ * @param {Animal-enemyanimalposition[]} array of enemy animals in game.
+ * 
+ * @return {nPlayer} number of allied characters.
+ */
 int saveAnimalinfo(World *world, char player[], int worldsize, struct Cell board[][worldsize], struct Animal alliedanimalposition[], Animal enemyanimalposition[])
 {
     int nPlayer = 0, nEnemy = 0;
@@ -12,6 +26,7 @@ int saveAnimalinfo(World *world, char player[], int worldsize, struct Cell board
                 if (strcmp(board[i][j].identifierPlace, player) == 0)
                 {
                     alliedanimalposition[nPlayer].energyPoint = board[i][j].animalPlace.energyPoint;
+                    alliedanimalposition[nPlayer].maximumEnergy = board[i][j].animalPlace.energyPoint;
                     alliedanimalposition[nPlayer].x = i;
                     alliedanimalposition[nPlayer].y = j;
                     alliedanimalposition[nPlayer].gene = board[i][j].animalPlace.gene;
@@ -36,7 +51,16 @@ int saveAnimalinfo(World *world, char player[], int worldsize, struct Cell board
 
     return (nPlayer);
 }
-
+/**
+ * Gives the inputed character the inputed gene.
+ *
+ * @param {Genome-gene} gene to be given.
+ * @param {char-player[]} character.
+ * @param {int-worldsize} size of the map.
+ * @param {Cell-board[][]} game's map.
+ * @param {int-energyPoint} energy point.
+ * @return {void}
+ */
 void giveCharactersGenome(Genome gene, char player[], int worldsize, struct Cell board[][worldsize], int energyPoint)
 {
     for (int i = 0; i < worldsize; i++)

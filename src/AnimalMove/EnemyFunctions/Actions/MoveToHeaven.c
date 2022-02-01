@@ -1,3 +1,15 @@
+/**
+ * move the animal to closest heaven
+ * 
+ * @param {World-world} game's database
+ * @param {int-worldSize} size of map
+ * @param {Cell-board[]} world map
+ * @param {Animal-animalPtr} animal that wants to move
+ * @param {char-identifier[]} animal type
+ * @param {int-i} index of animal in it's array ( World )
+ * 
+ * @return {void}
+ */
 void movetoheaven(World *world, int worldSize, int *winSwitch, Cell board[][worldSize], Animal *animalPtr, int *i)
 {
     // Finding the closest Heaven
@@ -45,6 +57,22 @@ void movetoheaven(World *world, int worldSize, int *winSwitch, Cell board[][worl
         else if (strcmp(board[start.x][start.y - 1].typePlace, "animal") != 0 && *board[start.x][start.y - 1].identifierPlace != '#' && isValid(start.x, start.y - 1, world->size))
         {
             move(&winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x, start.y - 1, world->enemyanimalposition, *i, 1);
+        }
+        else if (strcmp(board[start.x - 1][start.y - 1].typePlace, "animal") != 0 && *board[start.x - 1][start.y - 1].identifierPlace != '#' && isValid(start.x - 1, start.y - 1, world->size))
+        {
+            move(&winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x - 1, start.y - 1, world->enemyanimalposition, *i, 1);
+        }
+        else if (strcmp(board[start.x + 1][start.y - 1].typePlace, "animal") != 0 && *board[start.x + 1][start.y - 1].identifierPlace != '#' && isValid(start.x + 1, start.y - 1, world->size))
+        {
+            move(&winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x + 1, start.y - 1, world->enemyanimalposition, *i, 1);
+        }
+        else if (strcmp(board[start.x - 1][start.y + 1].typePlace, "animal") != 0 && *board[start.x - 1][start.y + 1].identifierPlace != '#' && isValid(start.x - 1, start.y + 1, world->size))
+        {
+            move(&winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x - 1, start.y + 1, world->enemyanimalposition, *i, 1);
+        }
+        else if (strcmp(board[start.x + 1][start.y + 1].typePlace, "animal") != 0 && *board[start.x + 1][start.y + 1].identifierPlace != '#' && isValid(start.x + 1, start.y + 1, world->size))
+        {
+            move(&winSwitch, worldSize, board, board[start.x][start.y].identifierPlace, start.x, start.y, start.x + 1, start.y + 1, world->enemyanimalposition, *i, 1);
         }
     }
     // check if game is finished

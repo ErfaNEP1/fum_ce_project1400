@@ -1,7 +1,7 @@
 #define SIZE 400
 #define ROW 20
 #define COL 20
-
+// Initilize Queue DS
 struct QueueNode
 {
     struct Point p;
@@ -53,17 +53,40 @@ void pop(int *front, int *rear, struct QueueNode items[])
         return;
     }
 }
+// End Queue DS
 
-//to check that we're in board or not
+
+/**
+ * to check that we're in board or not
+ * 
+ * @param {int-row} x coordinate;
+ * @param {int-col} y coordinate;
+ * @param {int-worldSize} size of map
+ * 
+ * @return {int-bool} 0 : no , 1 : yes
+ */
 int isValid(int row, int col, int worldSize)
 {
     return ((row >= 0) && (col >= 0) && (row < worldSize) && (col < worldSize)) ? 1 : 0;
 }
-
+// Possible Moves
 int row[8] = {-1, 0, 0, 1, 1, -1, -1, 1};
 int col[8] = {0, -1, 1, 0, 1, 1, -1, -1};
 
-//it keeps coordinates of cells that take us to H by the shortest way
+/**
+ * it keeps coordinates of cells that take us to Destination by the shortest way
+ * 
+ * @param {int-worldSize} size of map
+ * @param {Cell-board[]} world map
+ * @param {Point-start} start point
+ * @param {Point-end} end point
+ * @param {Point-pointTomove[]} array of cells which makes a path to destination
+ * @param {QueueNode-items[]} Queue nodes;
+ * @param {int-front} queue front;
+ * @param {int-rear} queue rear;
+ * 
+ * @return {int} length of path created, if = -1 => impossible path
+ */
 int printPath(int worldsize, struct Cell board[][worldsize], struct Point start, struct Point end, struct Point pointTomove[], struct QueueNode items[], int *front, int *rear)
 {
 
@@ -236,7 +259,14 @@ int printPath(int worldsize, struct Cell board[][worldsize], struct Point start,
     if (sw == 0) //enemy can't reach H
         return -1;
 }
-
+/**
+ * make array reverse
+ * 
+ * @param {Point-pointTomove} array;
+ * @param {int-number} array length;
+ * 
+ * @return {void}
+ */
 void reverse(struct Point pointTomove[], int number)
 {
     int i, j;

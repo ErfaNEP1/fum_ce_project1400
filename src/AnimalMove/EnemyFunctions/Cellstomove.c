@@ -1,3 +1,19 @@
+/**
+ * Find How Many Moves Can Make In One Single Round
+ * 
+ * @param {int-energyForMoving} energy needed for every single move
+ * @param {Point-pointTomove[]} animal path
+ * @param {int-pointindex} which step animal is on (from pointToMove array)
+ * @param {int-Mcells} maximum number of steps animal can take according to it's genome
+ * @param {int-n} path length.
+ * @param {int-worldsize} size of the map.
+ * @param {Cell-board[]][]} game's map.
+ * @param {int-enemyanimalpositionEnergy} character's current energy
+ * @param {FoodCell} array of food cells in world.
+ * @param {foodcount} number of cells that contain food
+ * 
+ * @return {int} maximum steps character can make
+ */
 int cellsToMove(int energyForMoving, struct Point pointTomove[], int pointindex, int Mcells, int n, int wordsize, struct Cell board[][wordsize], int *enemyanimalpositionEnergy, struct Cell foodcell[], int *foodcount)
 {
     int p = pointindex;

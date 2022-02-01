@@ -1,3 +1,14 @@
+// #include "WorldFunctions.h"
+/**
+ * Get DeadEnds data from File.
+ *
+ * @param {int-worldsize} size of the map.
+ * @param {char-tok} pointer to input string from file.
+ * @param {World-world} game's database.
+ * @param {Cell-board[][]} game's map.
+ * 
+ * @return {void}
+ */
 void inputDeadEnds(int worldSize, char *tok, World *world, Cell board[][worldSize])
 {
     Cell deadEndCell = {
@@ -25,6 +36,15 @@ void inputDeadEnds(int worldSize, char *tok, World *world, Cell board[][worldSiz
         ++tok;
     }
 }
+/**
+ * Get Heaven data from File.
+ *
+ * @param {int-worldsize} size of the map.
+ * @param {char-tok} pointer to input string from file.
+ * @param {World-world} game's database.
+ * @param {Cell-board[][]} game's map.
+ * @return {void}
+ */
 void inputHeavens(int worldSize, char *tok, World *world, Cell board[][worldSize])
 {
     Cell heavenCell = {
@@ -52,6 +72,15 @@ void inputHeavens(int worldSize, char *tok, World *world, Cell board[][worldSize
         ++tok;
     }
 }
+/**
+ * Get Food data from File.
+ *
+ * @param {int-worldsize} size of the map.
+ * @param {char-tok} pointer to input string from file.
+ * @param {World-world} game's database.
+ * @param {Cell-board[][]} game's map.
+ * @return {void}
+ */
 void inputFood(int worldSize, char *tok, World *world, Cell board[][worldSize])
 {
     tok = strtok(NULL, " ");
@@ -78,7 +107,16 @@ void inputFood(int worldSize, char *tok, World *world, Cell board[][worldSize])
 
     world->foodCount++;
 }
-
+/**
+ * Get Animals data from File.
+ *
+ * @param {int-worldsize} size of the map.
+ * @param {char-tok} pointer to input string from file.
+ * @param {World-world} game's database.
+ * @param {Cell-board[][]} game's map.
+ * 
+ * @return {void}
+ */
 void inputAnimals(int worldSize, char *tok, World *world, Cell board[][worldSize])
 {
     Cell typeanimal = {
@@ -110,6 +148,16 @@ void inputAnimals(int worldSize, char *tok, World *world, Cell board[][worldSize
         ++tok;
     }
 }
+/**
+ * Get Genome data from File.
+ *
+ * @param {int-worldsize} size of the map.
+ * @param {char-tok} pointer to input string from file.
+ * @param {World-world} game's database.
+ * @param {Cell-board[][]} game's map.
+ * 
+ * @return {void}
+ */
 void inputGenome(int worldSize, char *tok, World *world, Cell board[][worldSize])
 {
     int energy;
