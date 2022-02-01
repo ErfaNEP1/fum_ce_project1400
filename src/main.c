@@ -149,5 +149,6 @@ int main()
         printf("PLAYER %s WON THE GAME !", world.winner);
     }
     // ======================= End of Printing the Winner ======================= //
+    getch();
     return 0;
 }
