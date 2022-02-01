@@ -1,7 +1,7 @@
 /**
  * Calculates the MoveToHeaven Action Score
  * 
- * @param {int-distance} current animal energy
+ * @param {int-distance} current animal distance to closest heaven cell
  * @param {int-energy} current animal energy
  * @param {int-maxEnergy} energy that this animal was born with
  * @param {int-EnergyForMove} energy needed for each step
@@ -19,7 +19,7 @@ double MoveToHeavenScore(int distance, int energy, int maxEnergy, int EnergyForM
 /**
  * Calculates the MoveToFood Action Score
  * 
- * @param {int-distance} current animal energy
+ * @param {int-distance} current animal distance to closest food
  * @param {int-energy} current animal energy
  * @param {int-maxEnergy} energy that this animal was born with
  * @param {int-worldSize} size of the map
@@ -32,4 +32,19 @@ double MoveToFoodScore(int distance, int energy, int maxEnergy, int worldSize)
     double distanceScore = distanceModifier(distance, worldSize);
     double energyScore = energyModifierFood(energy, maxEnergy);
     return weight * distanceScore * energyScore;
+}
+/**
+ * Calculates the Reproduction Action Score
+ * 
+ * @param {int-distance} current animal distance to closest ally
+ * @param {int-motherEnergy} mother's energy
+ * @param {int-fatherEnergy} father's energy
+ * @param {int-energyForReproduce} energy needed to reproduce according to genome
+ * 
+ * @return {double-score}
+ */
+double ReproductScore(int distance,int motherEnergy,int fatherEnergy,int energyForReproduce){
+    int weight = 3;
+    int energy_distance = (motherEnergy > (energyForReproduce / 2) && fatherEnergy > (energyForReproduce / 2) && distance < 2) ? 1 : -3;
+    return weight * energy_distance;
 }

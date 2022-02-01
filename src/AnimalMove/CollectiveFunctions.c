@@ -169,3 +169,27 @@ int searchanimal(int x, int y, struct Animal animal[],int animalcount) {
     }
     return -1;
 }
+/**
+ * returns number of specific characters
+ * 
+ * @param {int-worldsize} size of the map.
+ * @param {Cell-board[][]} game's map.
+ * @param {char-player} character type.
+ * 
+ * @return {number} character count
+ */
+int countAnimalType(int worldSize,struct Cell board[][worldSize],char player[]){
+    int count = 0;
+    for (int i = 0; i < worldSize; i++)
+    {
+        for (int j = 0; j < worldSize; j++)
+        {
+            if(strcmp(board[i][j].identifierPlace,player) == 0){
+                count++;
+            }
+        }
+        
+    }
+    return count;
+    
+}
