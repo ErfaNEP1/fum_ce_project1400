@@ -14,7 +14,6 @@
  * 
  * @return {void}
  */
-
 void attack(Animal *attacker, Animal *enemy, Animal attackerPosition[], Animal enemyPosition[], int *attackerCount, int attackerposition, int *enemyCount, int enemyposition, int worldSize, Cell board[][worldSize])
 {
     Cell defaultCell = {

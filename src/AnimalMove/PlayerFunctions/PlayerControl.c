@@ -212,7 +212,6 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
         // player want to move Down
     case ARROW_DOWN:
 
-
         if (*board[x + 1][y].identifierPlace == *player)
         {
             textcolor(1);
@@ -363,7 +362,6 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
         break;
     // player want to move Right
     case ARROW_RIGHT:
-
 
         if (*board[x][y + 1].identifierPlace == *player)
         {
@@ -516,7 +514,6 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
     // player want to move Left
     case ARROW_LEFT:
 
-
         if (*board[x][y - 1].identifierPlace == *player)
         {
             textcolor(1);
@@ -666,7 +663,6 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
 
     // player want to move LeftTUp
     case ARROW_LEFTUP:
-
 
         if (*board[x - 1][y - 1].identifierPlace == *player)
         {
@@ -821,7 +817,6 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
         // player want to move RightTUp
     case ARROW_RIGHTUP:
 
-
         if (*board[x - 1][y + 1].identifierPlace == *player)
         {
             textcolor(1);
@@ -975,7 +970,6 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
         // player want to move RightTDown
     case ARROW_RIGHTDOWN:
 
-
         if (*board[x + 1][y + 1].identifierPlace == *player)
         {
             textcolor(1);
@@ -1127,7 +1121,6 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
 
     // player want to move LeftTDown
     case ARROW_LEFTDOWN:
-
 
         if (*board[x + 1][y - 1].identifierPlace == *player)
         {

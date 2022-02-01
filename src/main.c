@@ -90,7 +90,7 @@ int main()
     // ======================= Start Game ======================= //
 
     // ch == 27 => ESC
-    int num,numofplayer = -1;
+    int num, numofplayer = -1;
     while ((ch = get_code()) != 27 && winSwitch == 0)
     {
         // Start Player Moves
@@ -130,7 +130,8 @@ int main()
             clearScreen();
             printf("NEXT ROUND STARTED, MOVE !\n");
             printWorld(world.size, board, 0, world);
-            if (world.alliedCount == 0 && world.enemyCount == 0) {
+            if (world.alliedCount == 0 && world.enemyCount == 0)
+            {
                 textcolor(14);
                 printf("THE GAME WAS TIED\n");
                 break;
@@ -142,7 +143,8 @@ int main()
     // ======================= End of Game ======================= //
 
     // ======================= Printing the Winner ======================= //
-    if (winSwitch == 1){
+    if (winSwitch == 1)
+    {
         clearScreen();
         printWorld(world.size, board, numofplayer, world);
         textcolor(2);

@@ -40,7 +40,6 @@ int ClosestObject(int animalX, int animalY, struct Cell cell[], int count, int w
     return mukhtasat;
 }
 
-
 /**
  * Find Closest Object Distance
  * 
@@ -92,22 +91,23 @@ int ClosestDistance(int animalX, int animalY, struct Cell cell[], int count, int
  * 
  * @return {int-index} index of nearst object in array
  */
-int ClosestAlly(int animalX, int animalY,int worldsize, World world, struct Cell board[][worldsize])
+int ClosestAlly(int animalX, int animalY, int worldsize, World world, struct Cell board[][worldsize])
 {
     int mindis = 999;
     int index = -1;
     for (int i = 0; i < world.enemyCount; i++)
     {
-        if(world.enemyanimalposition[i].x != animalX || world.enemyanimalposition[i].y != animalY){
+        if (world.enemyanimalposition[i].x != animalX || world.enemyanimalposition[i].y != animalY)
+        {
             int dis = abs(animalX - world.enemyanimalposition[i].x) + abs(animalY - world.enemyanimalposition[i].y);
-            if(dis < mindis && strcmp(board[world.enemyanimalposition[i].x][world.enemyanimalposition[i].y].identifierPlace,board[animalX][animalY].identifierPlace) == 0){
+            if (dis < mindis && strcmp(board[world.enemyanimalposition[i].x][world.enemyanimalposition[i].y].identifierPlace, board[animalX][animalY].identifierPlace) == 0)
+            {
                 mindis = dis;
                 index = i;
             }
         }
     }
     return index;
-    
 }
 /**
  * Find Closest Ally Distance
@@ -120,14 +120,16 @@ int ClosestAlly(int animalX, int animalY,int worldsize, World world, struct Cell
  * 
  * @return {int-distance} distance of nearst ally in array
  */
-int ClosestAllyDistance(int animalX, int animalY,int worldsize, World world, struct Cell board[][worldsize])
+int ClosestAllyDistance(int animalX, int animalY, int worldsize, World world, struct Cell board[][worldsize])
 {
     int mindis = 999;
     for (int i = 0; i < world.enemyCount; i++)
     {
-        if(world.enemyanimalposition[i].x != animalX || world.enemyanimalposition[i].y != animalY){
+        if (world.enemyanimalposition[i].x != animalX || world.enemyanimalposition[i].y != animalY)
+        {
             int dis = abs(animalX - world.enemyanimalposition[i].x) + abs(animalY - world.enemyanimalposition[i].y);
-            if(dis < mindis && strcmp(board[world.enemyanimalposition[i].x][world.enemyanimalposition[i].y].identifierPlace,board[animalX][animalY].identifierPlace) == 0){
+            if (dis < mindis && strcmp(board[world.enemyanimalposition[i].x][world.enemyanimalposition[i].y].identifierPlace, board[animalX][animalY].identifierPlace) == 0)
+            {
                 mindis = dis;
             }
         }

@@ -43,7 +43,8 @@ double MoveToFoodScore(int distance, int energy, int maxEnergy, int worldSize)
  * 
  * @return {double-score}
  */
-double ReproductScore(int distance,int motherEnergy,int fatherEnergy,int energyForReproduceMother,int energyForReproduceFather){
+double ReproductScore(int distance, int motherEnergy, int fatherEnergy, int energyForReproduceMother, int energyForReproduceFather)
+{
     int weight = 3;
     int energy_distance = (motherEnergy >= (energyForReproduceMother / 2) && fatherEnergy >= (energyForReproduceFather / 2) && distance < 2) ? 1 : -3;
     return weight * energy_distance;

@@ -5,11 +5,10 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
         Animal *animalPtr;
         animalPtr = &world->enemyanimalposition[i];
 
-        
         // World Inputs Needed for AI
         int ClosestAllied = ClosestAlly(animalPtr->x, animalPtr->y, world->size, *world, board);
         int ClosestAlliedDistance = ClosestAllyDistance(animalPtr->x, animalPtr->y, world->size, *world, board);
-        printf("DISTANCE FROM %d : %d\n",ClosestAllied,ClosestAlliedDistance);
+        printf("DISTANCE FROM %d : %d\n", ClosestAllied, ClosestAlliedDistance);
         Animal *fatherPtr;
         fatherPtr = &world->enemyanimalposition[ClosestAllied];
 
@@ -28,7 +27,7 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
         {
             if (j == 0)
             {
-                double new_score = MoveToHeavenScore(ClosestDistanceToHeaven, CurrentEnergy, MaximumEnergy,EnergyForMove,world->size);
+                double new_score = MoveToHeavenScore(ClosestDistanceToHeaven, CurrentEnergy, MaximumEnergy, EnergyForMove, world->size);
                 if (score < new_score)
                 {
                     score = new_score;
@@ -37,14 +36,16 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
             }
             else if (j == 1)
             {
-                double new_score = MoveToFoodScore(ClosestDistanceToFood, CurrentEnergy, MaximumEnergy,world->size);
+                double new_score = MoveToFoodScore(ClosestDistanceToFood, CurrentEnergy, MaximumEnergy, world->size);
                 if (score < new_score)
                 {
                     score = new_score;
                     action = j;
                 }
-            }else if (j == 2){
-                double new_score = ReproductScore(ClosestAlliedDistance,animalPtr->energyPoint,fatherPtr->energyPoint,EnergyToReproduceMother,EnergyToReproduceFather);
+            }
+            else if (j == 2)
+            {
+                double new_score = ReproductScore(ClosestAlliedDistance, animalPtr->energyPoint, fatherPtr->energyPoint, EnergyToReproduceMother, EnergyToReproduceFather);
                 if (score < new_score)
                 {
                     score = new_score;
@@ -53,26 +54,25 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
             }
         }
         //Debug
-        double FoodScore = MoveToFoodScore(ClosestDistanceToFood, CurrentEnergy, MaximumEnergy,world->size);
-        double HeavenScore = MoveToHeavenScore(ClosestDistanceToHeaven, CurrentEnergy, MaximumEnergy,EnergyForMove,world->size);
-        double Reproduct = ReproductScore(ClosestAlliedDistance,animalPtr->energyPoint,fatherPtr->energyPoint,EnergyToReproduceMother,EnergyToReproduceFather);
-        
+        double FoodScore = MoveToFoodScore(ClosestDistanceToFood, CurrentEnergy, MaximumEnergy, world->size);
+        double HeavenScore = MoveToHeavenScore(ClosestDistanceToHeaven, CurrentEnergy, MaximumEnergy, EnergyForMove, world->size);
+        double Reproduct = ReproductScore(ClosestAlliedDistance, animalPtr->energyPoint, fatherPtr->energyPoint, EnergyToReproduceMother, EnergyToReproduceFather);
+
         if (action == 0)
         {
             movetoheaven(world, worldSize, winSwitch, board, animalPtr, &i);
-            printf("PLAYER %d GOING TO HEAVEN\nFood Score : %f Heaven Score : %f Reproduce Score : %f\n", i, FoodScore, HeavenScore,Reproduct);
+            printf("PLAYER %d GOING TO HEAVEN\nFood Score : %f Heaven Score : %f Reproduce Score : %f\n", i, FoodScore, HeavenScore, Reproduct);
         }
         else if (action == 1)
         {
             movetofood(world, worldSize, winSwitch, board, animalPtr, &i);
-            printf("PLAYER %d GOING FOR FOOD\nFood Score : %f Heaven Score : %f Reproduce Score : %f\n", i, FoodScore, HeavenScore,Reproduct);
+            printf("PLAYER %d GOING FOR FOOD\nFood Score : %f Heaven Score : %f Reproduce Score : %f\n", i, FoodScore, HeavenScore, Reproduct);
         }
-        else if (action == 2){
-            reproduction(animalPtr,fatherPtr,&world->enemyCount,world->enemyanimalposition,worldSize,board);
-            printf("PLAYER %d GOING TO REPRODUCE\nFood Score : %f Heaven Score : %f Reproduce Score : %f\n", i, FoodScore, HeavenScore,Reproduct);
+        else if (action == 2)
+        {
+            reproduction(animalPtr, fatherPtr, &world->enemyCount, world->enemyanimalposition, worldSize, board);
+            printf("PLAYER %d GOING TO REPRODUCE\nFood Score : %f Heaven Score : %f Reproduce Score : %f\n", i, FoodScore, HeavenScore, Reproduct);
         }
-
-
 
         printf("Final Energy = %d\n\n\n", animalPtr->energyPoint);
 
