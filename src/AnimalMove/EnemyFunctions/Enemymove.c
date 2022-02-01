@@ -17,7 +17,8 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
         int ClosestDistanceToFood = ClosestDistance(animalPtr->x, animalPtr->y, world->foodCell, world->foodCount, worldSize, board);
         int CurrentEnergy = animalPtr->energyPoint;
         int EnergyForMove = animalPtr->gene.energyForMoving;
-        int EnergyToReproduce = animalPtr->gene.energyForReproduction;
+        int EnergyToReproduceMother = animalPtr->gene.energyForReproduction;
+        int EnergyToReproduceFather = fatherPtr->gene.energyForReproduction;
         int MaximumEnergy = animalPtr->maximumEnergy;
         // End World Inputs
 
@@ -43,7 +44,7 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
                     action = j;
                 }
             }else if (j == 2){
-                double new_score = ReproductScore(ClosestAlliedDistance,animalPtr->energyPoint,fatherPtr->energyPoint,EnergyToReproduce);
+                double new_score = ReproductScore(ClosestAlliedDistance,animalPtr->energyPoint,fatherPtr->energyPoint,EnergyToReproduceMother,EnergyToReproduceFather);
                 if (score < new_score)
                 {
                     score = new_score;
@@ -54,7 +55,7 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
         //Debug
         double FoodScore = MoveToFoodScore(ClosestDistanceToFood, CurrentEnergy, MaximumEnergy,world->size);
         double HeavenScore = MoveToHeavenScore(ClosestDistanceToHeaven, CurrentEnergy, MaximumEnergy,EnergyForMove,world->size);
-        double Reproduct = ReproductScore(ClosestAlliedDistance,animalPtr->energyPoint,fatherPtr->energyPoint,EnergyToReproduce);
+        double Reproduct = ReproductScore(ClosestAlliedDistance,animalPtr->energyPoint,fatherPtr->energyPoint,EnergyToReproduceMother,EnergyToReproduceFather);
         
         if (action == 0)
         {
