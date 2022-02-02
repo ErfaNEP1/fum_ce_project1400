@@ -61,17 +61,17 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
         if (action == 0)
         {
             movetoheaven(world, worldSize, winSwitch, board, animalPtr, &i);
-            printf("PLAYER %d GOING TO HEAVEN\nFood Score : %f Heaven Score : %f Reproduce Score : %f\n", i, FoodScore, HeavenScore, Reproduct);
+            printf("PLAYER %d(%d,%d) GOING TO HEAVEN\nFood Score : %f Heaven Score : %f Reproduce Score : %f\n", i,animalPtr->x,animalPtr->y, FoodScore, HeavenScore, Reproduct);
         }
         else if (action == 1)
         {
             movetofood(world, worldSize, winSwitch, board, animalPtr, &i);
-            printf("PLAYER %d GOING FOR FOOD\nFood Score : %f Heaven Score : %f Reproduce Score : %f\n", i, FoodScore, HeavenScore, Reproduct);
+            printf("PLAYER %d(%d,%d) GOING FOR FOOD\nFood Score : %f Heaven Score : %f Reproduce Score : %f\n", i,animalPtr->x,animalPtr->y, FoodScore, HeavenScore, Reproduct);
         }
         else if (action == 2)
         {
             reproduction(animalPtr, fatherPtr, &world->enemyCount, world->enemyanimalposition, worldSize, board);
-            printf("PLAYER %d GOING TO REPRODUCE\nFood Score : %f Heaven Score : %f Reproduce Score : %f\n", i, FoodScore, HeavenScore, Reproduct);
+            printf("PLAYER %d(%d,%d) GOING TO REPRODUCE\nFood Score : %f Heaven Score : %f Reproduce Score : %f\n", i,animalPtr->x,animalPtr->y, FoodScore, HeavenScore, Reproduct);
         }
 
         printf("Final Energy = %d\n\n\n", animalPtr->energyPoint);

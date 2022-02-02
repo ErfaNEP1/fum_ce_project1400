@@ -9,7 +9,7 @@ int initPlayerMove(World *world, int ch, int nPlayer, int worldSize, int *winSwi
         if (clickedKey != 0)
         {
 
-            i = animalTocontrol(&winSwitch, world->animalToControl, world->size, board, i, world->alliedanimalposition, clickedKey, world->foodCell, &world->foodCount, &world->alliedCount);
+            i = animalTocontrol(&winSwitch, world->animalToControl, world->size, board, i, world->alliedanimalposition, clickedKey, world->foodCell, &world->foodCount, &world->alliedCount,world->enemyanimalposition,&world->enemyCount);
             if (*winSwitch == 1)
                 return i;
             clearScreen();

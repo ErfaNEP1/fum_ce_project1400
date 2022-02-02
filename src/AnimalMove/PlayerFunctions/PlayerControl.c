@@ -8,7 +8,8 @@ enum
     ARROW_LEFTUP = 71,
     ARROW_LEFTDOWN = 79,
     ARROW_RIGHTUP = 73,
-    ARROW_RIGHTDOWN = 81
+    ARROW_RIGHTDOWN = 81,
+    ARROW_COOPERATION = 99
 };
 
 // get Arrow code
@@ -19,10 +20,10 @@ int get_code()
     if (ch == 0 || ch == 224)
         return getch();
 
-    return getch();
+    return ch;
 }
 
-int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell board[][worldsize], int i, struct Animal alliedanimalposition[], int clickedKey, struct Cell Foodcell[], int *foodcount, int *alliedcount)
+int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell board[][worldsize], int i, struct Animal alliedanimalposition[], int clickedKey, struct Cell Foodcell[], int *foodcount, int *alliedcount, struct Animal enemyanimalposition[], int *enemycount)
 {
     Genome *AGptr;
     AGptr = &alliedanimalposition[i].gene;
@@ -53,40 +54,73 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
         delete_animal(i, alliedanimalposition, &alliedcount);
         return i - 1;
     }
-    //========End of preparation for PlayerMove============//
 
     switch (clickedKey)
     {
         // player want to move Up
     case ARROW_UP:
 
-        if (*board[x - 1][y].identifierPlace == *player)
+        if (strcmp(board[x - 1][y].typePlace, "animal") == 0)
         {
-            textcolor(1);
-            printf("Do you want to reproduce ?\nif Yes enter (y) else enter (n) : ");
-            decision = getch();
-            if (decision == 'y')
+
+            //=============Reproduct============//
+            if (*board[x - 1][y].identifierPlace == *player)
             {
-                int Mother_num = searchanimal(x - 1, y, alliedanimalposition, *alliedcount);
-                if (alliedanimalposition[i].energyPoint >= AGptr->energyForReproduction / 2 && alliedanimalposition[Mother_num].energyPoint >= alliedanimalposition[Mother_num].gene.energyForReproduction / 2)
+                textcolor(1);
+                printf("Do you want to reproduce ?\nif Yes enter (y) else enter (n) :\n ");
+                decision = getch();
+                if (decision == 'y')
                 {
-                    Animal *Motherptr, *Fatherptr;
-                    Fatherptr = &alliedanimalposition[i];
-                    Motherptr = &alliedanimalposition[Mother_num];
-                    reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
-                    break;
+                    int Mother_num = searchanimal(x - 1, y, alliedanimalposition, *alliedcount);
+                    if (alliedanimalposition[i].energyPoint >= AGptr->energyForReproduction / 2 && alliedanimalposition[Mother_num].energyPoint >= alliedanimalposition[Mother_num].gene.energyForReproduction / 2)
+                    {
+                        Animal *Motherptr, *Fatherptr;
+                        Fatherptr = &alliedanimalposition[i];
+                        Motherptr = &alliedanimalposition[Mother_num];
+                        reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
+                        break;
+                    }
+                    else
+                    {
+                        textcolor(12);
+                        printf("DON'T HAVE EANOGH ENERGY FOR REPRODUCTION\n");
+                        i--;
+                        break;
+                    }
                 }
-                else
+            }
+
+            //=============Attack============//
+            else
+            {
+                textcolor(1);
+                printf("Do you want to attack ?\nif Yes enter (y) else enter (n) : \n");
+                decision = getch();
+                if (decision == 'y')
                 {
-                    textcolor(12);
-                    printf("DON'T HAVE EANOGH ENERGY FOR REPRODUCTION\n");
-                    i--;
-                    break;
+                    int enemy_num = searchanimal(x - 1, y, enemyanimalposition, *enemycount);
+                    if (alliedanimalposition[i].energyPoint >= 3 * AGptr->energyForMoving)
+                    {
+
+                        Animal *attacker, *enemy;
+                        attacker = &alliedanimalposition[i];
+                        enemy = &enemyanimalposition[enemy_num];
+                        attack(attacker, enemy, alliedanimalposition, enemyanimalposition, alliedcount, &i, enemycount, enemy_num, worldsize, board);
+                        break;
+                    }
+                    else
+                    {
+                        textcolor(12);
+                        printf("DON'T HAVE EANOGH ENERGY FOR ATTACK\n");
+                        i--;
+                        break;
+                    }
                 }
             }
         }
 
-        if (decision != 'y' || *board[x - 1][y].identifierPlace != *player)
+        //=============Moving============//
+        if (decision != 'y' || strcmp(board[x - 1][y].typePlace, "animal") != 0)
         {
             textcolor(1);
             printf("Maximum number for moving : %d\n", AGptr->cellsToMove);
@@ -212,33 +246,67 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
         // player want to move Down
     case ARROW_DOWN:
 
-        if (*board[x + 1][y].identifierPlace == *player)
+        if (strcmp(board[x + 1][y].typePlace, "animal") == 0)
         {
-            textcolor(1);
-            printf("Do you want to reproduce ?\nif Yes enter (y) else enter (n) : ");
-            decision = getch();
-            if (decision == 'y')
+
+            //=============Reproduct============//
+            if (*board[x + 1][y].identifierPlace == *player)
             {
-                int Mother_num = searchanimal(x + 1, y, alliedanimalposition, *alliedcount);
-                if (alliedanimalposition[i].energyPoint >= AGptr->energyForReproduction / 2 && alliedanimalposition[Mother_num].energyPoint >= alliedanimalposition[Mother_num].gene.energyForReproduction / 2)
+                textcolor(1);
+                printf("Do you want to reproduce ?\nif Yes enter (y) else enter (n) : \n");
+                decision = getch();
+                if (decision == 'y')
                 {
-                    Animal *Motherptr, *Fatherptr;
-                    Fatherptr = &alliedanimalposition[i];
-                    Motherptr = &alliedanimalposition[Mother_num];
-                    reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
-                    break;
+                    int Mother_num = searchanimal(x + 1, y, alliedanimalposition, *alliedcount);
+                    if (alliedanimalposition[i].energyPoint >= AGptr->energyForReproduction / 2 && alliedanimalposition[Mother_num].energyPoint >= alliedanimalposition[Mother_num].gene.energyForReproduction / 2)
+                    {
+                        Animal *Motherptr, *Fatherptr;
+                        Fatherptr = &alliedanimalposition[i];
+                        Motherptr = &alliedanimalposition[Mother_num];
+                        reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
+                        break;
+                    }
+                    else
+                    {
+                        textcolor(12);
+                        printf("DON'T HAVE EANOGH ENERGY FOR REPRODUCTION\n");
+                        i--;
+                        break;
+                    }
                 }
-                else
+            }
+
+            //=============Attack============//
+            else
+            {
+                textcolor(1);
+                printf("Do you want to attack ?\nif Yes enter (y) else enter (n) : \n");
+                decision = getch();
+                if (decision == 'y')
                 {
-                    textcolor(12);
-                    printf("DON'T HAVE EANOGH ENERGY FOR REPRODUCTION\n");
-                    i--;
-                    break;
+                    int enemy_num = searchanimal(x + 1, y, enemyanimalposition, *enemycount);
+                    if (alliedanimalposition[i].energyPoint >= 3 * AGptr->energyForMoving)
+                    {
+
+                        Animal *attacker, *enemy;
+                        attacker = &alliedanimalposition[i];
+                        enemy = &enemyanimalposition[enemy_num];
+                        attack(attacker, enemy, alliedanimalposition, enemyanimalposition, alliedcount, &i, enemycount, enemy_num, worldsize, board);
+                        break;
+                    }
+                    else
+                    {
+                        textcolor(12);
+                        printf("DON'T HAVE EANOGH ENERGY FOR ATTACK\n");
+                        i--;
+                        break;
+                    }
                 }
             }
         }
 
-        if (decision != 'y' || *board[x + 1][y].identifierPlace != *player)
+        //=============Moving============//
+        if (decision != 'y' || strcmp(board[x + 1][y].typePlace, "animal") != 0)
         {
             textcolor(1);
             printf("Maximum number for moving : %d\n", AGptr->cellsToMove);
@@ -363,32 +431,67 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
     // player want to move Right
     case ARROW_RIGHT:
 
-        if (*board[x][y + 1].identifierPlace == *player)
+        if (strcmp(board[x][y + 1].typePlace, "animal") == 0)
         {
-            textcolor(1);
-            printf("Do you want to reproduce ?\nif Yes enter (y) else enter (n) : ");
-            decision = getch();
-            if (decision == 'y')
+
+            //==========Reproduct===========//
+            if (*board[x][y + 1].identifierPlace == *player)
             {
-                int Mother_num = searchanimal(x, y + 1, alliedanimalposition, *alliedcount);
-                if (alliedanimalposition[i].energyPoint >= AGptr->energyForReproduction / 2 && alliedanimalposition[Mother_num].energyPoint >= alliedanimalposition[Mother_num].gene.energyForReproduction / 2)
+                textcolor(1);
+                printf("Do you want to reproduce ?\nif Yes enter (y) else enter (n) : \n");
+                decision = getch();
+                if (decision == 'y')
                 {
-                    Animal *Motherptr, *Fatherptr;
-                    Fatherptr = &alliedanimalposition[i];
-                    Motherptr = &alliedanimalposition[Mother_num];
-                    reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
-                    break;
+                    int Mother_num = searchanimal(x, y + 1, alliedanimalposition, *alliedcount);
+                    if (alliedanimalposition[i].energyPoint >= AGptr->energyForReproduction / 2 && alliedanimalposition[Mother_num].energyPoint >= alliedanimalposition[Mother_num].gene.energyForReproduction / 2)
+                    {
+                        Animal *Motherptr, *Fatherptr;
+                        Fatherptr = &alliedanimalposition[i];
+                        Motherptr = &alliedanimalposition[Mother_num];
+                        reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
+                        break;
+                    }
+                    else
+                    {
+                        textcolor(12);
+                        printf("DON'T HAVE EANOGH ENERGY FOR REPRODUCTION\n");
+                        i--;
+                        break;
+                    }
                 }
-                else
+            }
+
+            //===========Attack============//
+            else
+            {
+                textcolor(1);
+                printf("Do you want to attack ?\nif Yes enter (y) else enter (n) : \n");
+                decision = getch();
+                if (decision == 'y')
                 {
-                    textcolor(12);
-                    printf("DON'T HAVE EANOGH ENERGY FOR REPRODUCTION\n");
-                    i--;
-                    break;
+                    int enemy_num = searchanimal(x, y + 1, enemyanimalposition, *enemycount);
+                    if (alliedanimalposition[i].energyPoint >= 3 * AGptr->energyForMoving)
+                    {
+
+                        Animal *attacker, *enemy;
+                        attacker = &alliedanimalposition[i];
+                        enemy = &enemyanimalposition[enemy_num];
+                        attack(attacker, enemy, alliedanimalposition, enemyanimalposition, alliedcount, &i, enemycount, enemy_num, worldsize, board);
+                        break;
+                    }
+                    else
+                    {
+                        textcolor(12);
+                        printf("DON'T HAVE EANOGH ENERGY FOR ATTACK\n");
+                        i--;
+                        break;
+                    }
                 }
             }
         }
-        if (decision != 'y' || *board[x][y + 1].identifierPlace != *player)
+
+        //=============Moving============//
+        if (decision != 'y' || strcmp(board[x][y + 1].typePlace, "animal") != 0)
         {
             textcolor(1);
             printf("Maximum number for moving : %d\n", AGptr->cellsToMove);
@@ -514,32 +617,67 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
     // player want to move Left
     case ARROW_LEFT:
 
-        if (*board[x][y - 1].identifierPlace == *player)
+        if (strcmp(board[x][y - 1].typePlace, "animal") == 0)
         {
-            textcolor(1);
-            printf("Do you want to reproduce ?\nif Yes enter (y) else enter (n) : ");
-            decision = getch();
-            if (decision == 'y')
+
+            //==========Reproduct===========//
+            if (*board[x][y - 1].identifierPlace == *player)
             {
-                int Mother_num = searchanimal(x, y - 1, alliedanimalposition, *alliedcount);
-                if (alliedanimalposition[i].energyPoint >= AGptr->energyForReproduction / 2 && alliedanimalposition[Mother_num].energyPoint >= alliedanimalposition[Mother_num].gene.energyForReproduction / 2)
+                textcolor(1);
+                printf("Do you want to reproduce ?\nif Yes enter (y) else enter (n) : \n");
+                decision = getch();
+                if (decision == 'y')
                 {
-                    Animal *Motherptr, *Fatherptr;
-                    Fatherptr = &alliedanimalposition[i];
-                    Motherptr = &alliedanimalposition[Mother_num];
-                    reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
-                    break;
+                    int Mother_num = searchanimal(x, y - 1, alliedanimalposition, *alliedcount);
+                    if (alliedanimalposition[i].energyPoint >= AGptr->energyForReproduction / 2 && alliedanimalposition[Mother_num].energyPoint >= alliedanimalposition[Mother_num].gene.energyForReproduction / 2)
+                    {
+                        Animal *Motherptr, *Fatherptr;
+                        Fatherptr = &alliedanimalposition[i];
+                        Motherptr = &alliedanimalposition[Mother_num];
+                        reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
+                        break;
+                    }
+                    else
+                    {
+                        textcolor(12);
+                        printf("DON'T HAVE EANOGH ENERGY FOR REPRODUCTION\n");
+                        i--;
+                        break;
+                    }
                 }
-                else
+            }
+
+            //===========Attack============//
+            else
+            {
+                textcolor(1);
+                printf("Do you want to attack ?\nif Yes enter (y) else enter (n) : \n");
+                decision = getch();
+                if (decision == 'y')
                 {
-                    textcolor(12);
-                    printf("DON'T HAVE EANOGH ENERGY FOR REPRODUCTION\n");
-                    i--;
-                    break;
+                    int enemy_num = searchanimal(x, y - 1, enemyanimalposition, *enemycount);
+                    if (alliedanimalposition[i].energyPoint >= 3 * AGptr->energyForMoving)
+                    {
+
+                        Animal *attacker, *enemy;
+                        attacker = &alliedanimalposition[i];
+                        enemy = &enemyanimalposition[enemy_num];
+                        attack(attacker, enemy, alliedanimalposition, enemyanimalposition, alliedcount, &i, enemycount, enemy_num, worldsize, board);
+                        break;
+                    }
+                    else
+                    {
+                        textcolor(12);
+                        printf("DON'T HAVE EANOGH ENERGY FOR ATTACK\n");
+                        i--;
+                        break;
+                    }
                 }
             }
         }
-        if (decision != 'y' || *board[x][y - 1].identifierPlace != *player)
+
+        //=============Moving============//
+        if (decision != 'y' || strcmp(board[x][y - 1].typePlace, "animal") != 0)
         {
             textcolor(1);
             printf("Maximum number for moving : %d\n", AGptr->cellsToMove);
@@ -664,32 +802,67 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
     // player want to move LeftTUp
     case ARROW_LEFTUP:
 
-        if (*board[x - 1][y - 1].identifierPlace == *player)
+        if (strcmp(board[x - 1][y - 1].typePlace, "animal") == 0)
         {
-            textcolor(1);
-            printf("Do you want to reproduce ?\nif Yes enter (y) else enter (n) : ");
-            decision = getch();
-            if (decision == 'y')
+
+            //==========Reproduct===========//
+            if (*board[x - 1][y - 1].identifierPlace == *player)
             {
-                int Mother_num = searchanimal(x - 1, y - 1, alliedanimalposition, *alliedcount);
-                if (alliedanimalposition[i].energyPoint >= AGptr->energyForReproduction / 2 && alliedanimalposition[Mother_num].energyPoint >= alliedanimalposition[Mother_num].gene.energyForReproduction / 2)
+                textcolor(1);
+                printf("Do you want to reproduce ?\nif Yes enter (y) else enter (n) : \n");
+                decision = getch();
+                if (decision == 'y')
                 {
-                    Animal *Motherptr, *Fatherptr;
-                    Fatherptr = &alliedanimalposition[i];
-                    Motherptr = &alliedanimalposition[Mother_num];
-                    reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
-                    break;
+                    int Mother_num = searchanimal(x - 1, y - 1, alliedanimalposition, *alliedcount);
+                    if (alliedanimalposition[i].energyPoint >= AGptr->energyForReproduction / 2 && alliedanimalposition[Mother_num].energyPoint >= alliedanimalposition[Mother_num].gene.energyForReproduction / 2)
+                    {
+                        Animal *Motherptr, *Fatherptr;
+                        Fatherptr = &alliedanimalposition[i];
+                        Motherptr = &alliedanimalposition[Mother_num];
+                        reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
+                        break;
+                    }
+                    else
+                    {
+                        textcolor(12);
+                        printf("DON'T HAVE EANOGH ENERGY FOR REPRODUCTION\n");
+                        i--;
+                        break;
+                    }
                 }
-                else
+            }
+
+            //===========Attack============//
+            else
+            {
+                textcolor(1);
+                printf("Do you want to attack ?\nif Yes enter (y) else enter (n) : \n");
+                decision = getch();
+                if (decision == 'y')
                 {
-                    textcolor(12);
-                    printf("DON'T HAVE EANOGH ENERGY FOR REPRODUCTION\n");
-                    i--;
-                    break;
+                    int enemy_num = searchanimal(x - 1, y - 1, enemyanimalposition, *enemycount);
+                    if (alliedanimalposition[i].energyPoint >= 3 * AGptr->energyForMoving)
+                    {
+
+                        Animal *attacker, *enemy;
+                        attacker = &alliedanimalposition[i];
+                        enemy = &enemyanimalposition[enemy_num];
+                        attack(attacker, enemy, alliedanimalposition, enemyanimalposition, alliedcount, &i, enemycount, enemy_num, worldsize, board);
+                        break;
+                    }
+                    else
+                    {
+                        textcolor(12);
+                        printf("DON'T HAVE EANOGH ENERGY FOR ATTACK\n");
+                        i--;
+                        break;
+                    }
                 }
             }
         }
-        if (decision != 'y' || *board[x - 1][y - 1].identifierPlace != *player)
+
+        //=============Moving============//
+        if (decision != 'y' || strcmp(board[x - 1][y - 1].typePlace, "animal") != 0)
         {
             textcolor(1);
             printf("Maximum number for moving : %d\n", AGptr->cellsToMove);
@@ -817,32 +990,67 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
         // player want to move RightTUp
     case ARROW_RIGHTUP:
 
-        if (*board[x - 1][y + 1].identifierPlace == *player)
+        if (strcmp(board[x - 1][y + 1].typePlace, "animal") == 0)
         {
-            textcolor(1);
-            printf("Do you want to reproduce ?\nif Yes enter (y) else enter (n) : ");
-            decision = getch();
-            if (decision == 'y')
+
+            //==========Reproduct===========//
+            if (*board[x - 1][y + 1].identifierPlace == *player)
             {
-                int Mother_num = searchanimal(x - 1, y + 1, alliedanimalposition, *alliedcount);
-                if (alliedanimalposition[i].energyPoint >= AGptr->energyForReproduction / 2 && alliedanimalposition[Mother_num].energyPoint >= alliedanimalposition[Mother_num].gene.energyForReproduction / 2)
+                textcolor(1);
+                printf("Do you want to reproduce ?\nif Yes enter (y) else enter (n) : \n");
+                decision = getch();
+                if (decision == 'y')
                 {
-                    Animal *Motherptr, *Fatherptr;
-                    Fatherptr = &alliedanimalposition[i];
-                    Motherptr = &alliedanimalposition[Mother_num];
-                    reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
-                    break;
+                    int Mother_num = searchanimal(x - 1, y + 1, alliedanimalposition, *alliedcount);
+                    if (alliedanimalposition[i].energyPoint >= AGptr->energyForReproduction / 2 && alliedanimalposition[Mother_num].energyPoint >= alliedanimalposition[Mother_num].gene.energyForReproduction / 2)
+                    {
+                        Animal *Motherptr, *Fatherptr;
+                        Fatherptr = &alliedanimalposition[i];
+                        Motherptr = &alliedanimalposition[Mother_num];
+                        reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
+                        break;
+                    }
+                    else
+                    {
+                        textcolor(12);
+                        printf("DON'T HAVE EANOGH ENERGY FOR REPRODUCTION\n");
+                        i--;
+                        break;
+                    }
                 }
-                else
+            }
+
+            //===========Attack============//
+            else
+            {
+                textcolor(1);
+                printf("Do you want to attack ?\nif Yes enter (y) else enter (n) : \n");
+                decision = getch();
+                if (decision == 'y')
                 {
-                    textcolor(12);
-                    printf("DON'T HAVE EANOGH ENERGY FOR REPRODUCTION\n");
-                    i--;
-                    break;
+                    int enemy_num = searchanimal(x - 1, y + 1, enemyanimalposition, *enemycount);
+                    if (alliedanimalposition[i].energyPoint >= 3 * AGptr->energyForMoving)
+                    {
+
+                        Animal *attacker, *enemy;
+                        attacker = &alliedanimalposition[i];
+                        enemy = &enemyanimalposition[enemy_num];
+                        attack(attacker, enemy, alliedanimalposition, enemyanimalposition, alliedcount, &i, enemycount, enemy_num, worldsize, board);
+                        break;
+                    }
+                    else
+                    {
+                        textcolor(12);
+                        printf("DON'T HAVE EANOGH ENERGY FOR ATTACK\n");
+                        i--;
+                        break;
+                    }
                 }
             }
         }
-        if (decision != 'y' || *board[x - 1][y + 1].identifierPlace != *player)
+
+        //=============Moving============//
+        if (decision != 'y' || strcmp(board[x - 1][y + 1].typePlace, "animal") != 0)
         {
             textcolor(1);
             printf("Maximum number for moving : %d\n", AGptr->cellsToMove);
@@ -970,32 +1178,67 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
         // player want to move RightTDown
     case ARROW_RIGHTDOWN:
 
-        if (*board[x + 1][y + 1].identifierPlace == *player)
+        if (strcmp(board[x + 1][y + 1].typePlace, "animal") == 0)
         {
-            textcolor(1);
-            printf("Do you want to reproduce ?\nif Yes enter (y) else enter (n) : ");
-            decision = getch();
-            if (decision == 'y')
+
+            //==========Reproduct===========//
+            if (*board[x + 1][y + 1].identifierPlace == *player)
             {
-                int Mother_num = searchanimal(x + 1, y + 1, alliedanimalposition, *alliedcount);
-                if (alliedanimalposition[i].energyPoint >= AGptr->energyForReproduction / 2 && alliedanimalposition[Mother_num].energyPoint >= alliedanimalposition[Mother_num].gene.energyForReproduction / 2)
+                textcolor(1);
+                printf("Do you want to reproduce ?\nif Yes enter (y) else enter (n) : \n");
+                decision = getch();
+                if (decision == 'y')
                 {
-                    Animal *Motherptr, *Fatherptr;
-                    Fatherptr = &alliedanimalposition[i];
-                    Motherptr = &alliedanimalposition[Mother_num];
-                    reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
-                    break;
+                    int Mother_num = searchanimal(x + 1, y + 1, alliedanimalposition, *alliedcount);
+                    if (alliedanimalposition[i].energyPoint >= AGptr->energyForReproduction / 2 && alliedanimalposition[Mother_num].energyPoint >= alliedanimalposition[Mother_num].gene.energyForReproduction / 2)
+                    {
+                        Animal *Motherptr, *Fatherptr;
+                        Fatherptr = &alliedanimalposition[i];
+                        Motherptr = &alliedanimalposition[Mother_num];
+                        reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
+                        break;
+                    }
+                    else
+                    {
+                        textcolor(12);
+                        printf("DON'T HAVE EANOGH ENERGY FOR REPRODUCTION\n");
+                        i--;
+                        break;
+                    }
                 }
-                else
+            }
+
+            //===========Attack============//
+            else
+            {
+                textcolor(1);
+                printf("Do you want to attack ?\nif Yes enter (y) else enter (n) : \n");
+                decision = getch();
+                if (decision == 'y')
                 {
-                    textcolor(12);
-                    printf("DON'T HAVE EANOGH ENERGY FOR REPRODUCTION\n");
-                    i--;
-                    break;
+                    int enemy_num = searchanimal(x + 1, y + 1, enemyanimalposition, *enemycount);
+                    if (alliedanimalposition[i].energyPoint >= 3 * AGptr->energyForMoving)
+                    {
+
+                        Animal *attacker, *enemy;
+                        attacker = &alliedanimalposition[i];
+                        enemy = &enemyanimalposition[enemy_num];
+                        attack(attacker, enemy, alliedanimalposition, enemyanimalposition, alliedcount, &i, enemycount, enemy_num, worldsize, board);
+                        break;
+                    }
+                    else
+                    {
+                        textcolor(12);
+                        printf("DON'T HAVE EANOGH ENERGY FOR ATTACK\n");
+                        i--;
+                        break;
+                    }
                 }
             }
         }
-        if (decision != 'y' || *board[x + 1][y + 1].identifierPlace != *player)
+
+        //=============Moving============//
+        if (decision != 'y' || strcmp(board[x + 1][y + 1].typePlace, "animal") != 0)
         {
             textcolor(1);
             printf("Maximum number for moving : %d\n", AGptr->cellsToMove);
@@ -1122,32 +1365,67 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
     // player want to move LeftTDown
     case ARROW_LEFTDOWN:
 
-        if (*board[x + 1][y - 1].identifierPlace == *player)
+        if (strcmp(board[x + 1][y - 1].typePlace, "animal") == 0)
         {
-            textcolor(1);
-            printf("Do you want to reproduce ?\nif Yes enter (y) else enter (n) : ");
-            decision = getch();
-            if (decision == 'y')
+
+            //==========Reproduct===========//
+            if (*board[x + 1][y - 1].identifierPlace == *player)
             {
-                int Mother_num = searchanimal(x + 1, y - 1, alliedanimalposition, *alliedcount);
-                if (alliedanimalposition[i].energyPoint >= AGptr->energyForReproduction / 2 && alliedanimalposition[Mother_num].energyPoint >= alliedanimalposition[Mother_num].gene.energyForReproduction / 2)
+                textcolor(1);
+                printf("Do you want to reproduce ?\nif Yes enter (y) else enter (n) : \n");
+                decision = getch();
+                if (decision == 'y')
                 {
-                    Animal *Motherptr, *Fatherptr;
-                    Fatherptr = &alliedanimalposition[i];
-                    Motherptr = &alliedanimalposition[Mother_num];
-                    reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
-                    break;
+                    int Mother_num = searchanimal(x + 1, y - 1, alliedanimalposition, *alliedcount);
+                    if (alliedanimalposition[i].energyPoint >= AGptr->energyForReproduction / 2 && alliedanimalposition[Mother_num].energyPoint >= alliedanimalposition[Mother_num].gene.energyForReproduction / 2)
+                    {
+                        Animal *Motherptr, *Fatherptr;
+                        Fatherptr = &alliedanimalposition[i];
+                        Motherptr = &alliedanimalposition[Mother_num];
+                        reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
+                        break;
+                    }
+                    else
+                    {
+                        textcolor(12);
+                        printf("DON'T HAVE EANOGH ENERGY FOR REPRODUCTION\n");
+                        i--;
+                        break;
+                    }
                 }
-                else
+            }
+
+            //===========Attack============//
+            else
+            {
+                textcolor(1);
+                printf("Do you want to attack ?\nif Yes enter (y) else enter (n) : \n");
+                decision = getch();
+                if (decision == 'y')
                 {
-                    textcolor(12);
-                    printf("DON'T HAVE EANOGH ENERGY FOR REPRODUCTION\n");
-                    i--;
-                    break;
+                    int enemy_num = searchanimal(x + 1, y - 1, enemyanimalposition, *enemycount);
+                    if (alliedanimalposition[i].energyPoint >= 3 * AGptr->energyForMoving)
+                    {
+
+                        Animal *attacker, *enemy;
+                        attacker = &alliedanimalposition[i];
+                        enemy = &enemyanimalposition[enemy_num];
+                        attack(attacker, enemy, alliedanimalposition, enemyanimalposition, alliedcount, &i, enemycount, enemy_num, worldsize, board);
+                        break;
+                    }
+                    else
+                    {
+                        textcolor(12);
+                        printf("DON'T HAVE EANOGH ENERGY FOR ATTACK\n");
+                        i--;
+                        break;
+                    }
                 }
             }
         }
-        if (decision != 'y' || *board[x + 1][y - 1].identifierPlace != *player)
+
+        //=============Moving============//
+        if (decision != 'y' || strcmp(board[x + 1][y - 1].typePlace, "animal") != 0)
         {
             textcolor(1);
             printf("Maximum number for moving : %d\n", AGptr->cellsToMove);
@@ -1269,6 +1547,39 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                 printf("\n");
                 i--;
             }
+        }
+        break;
+
+    // player want to cooperat//
+    case ARROW_COOPERATION:
+
+        if (alliedanimalposition[i].energyPoint - AGptr->energyForMoving >= 0)
+        {
+            int animalX, animalY;
+            printf("please enter the position of animal for cooperat :");
+            scanf("%d %d", &animalX, &animalY);
+            printf("\n");
+            Animal *helperanimal, *animal;
+            helperanimal = &alliedanimalposition[i];
+            int find = searchanimal(animalX, animalY, alliedanimalposition, *alliedcount);
+            while (find == -1)
+            {
+                textcolor(12);
+                printf("in this position don't exist animal or Out of bounds\npleas enter another position :");
+                textcolor(1);
+                scanf("%d %d", &animalX, &animalY);
+                printf("\n");
+                find = searchanimal(animalX, animalY, alliedanimalposition, *alliedcount);
+            }
+            animal = &alliedanimalposition[find];
+            cooperation(helperanimal,animal);
+        }
+        else
+        {
+            textcolor(12);
+            printf("YOU DON'T HAVE ENOUGH ENERGY FOR COOPERATION !");
+            printf("\n");
+            i--;
         }
         break;
 
