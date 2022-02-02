@@ -49,3 +49,45 @@ double ReproductScore(int distance, int motherEnergy, int fatherEnergy, int ener
     int energy_distance = (motherEnergy >= (energyForReproduceMother / 2) && fatherEnergy >= (energyForReproduceFather / 2) && distance < 2) ? 1 : -3;
     return weight * energy_distance;
 }
+
+/**
+ * Calculates the Attack Action Score
+ * 
+ * @param {int-distance} current attacker distance to closest enemy
+ * @param {int-attackerEnergy} attacker's energy
+ * @param {int-enemyEnergy} enemy's energy
+ * @param {int-AttackerEnergyToAttack} energy needed to attack
+ * @param {int-AttackerPower} Attack power of Attacker
+ * @param {int-DefenderPower} Defense power of Defender
+ * 
+ * @return {double-score}
+ */
+double AttackScore(int distance, int attackerEnergy, int enemyEnergy, int AttackerEnergyToAttack, int AttackerPower, int DefenderPower)
+{
+    int weight = 4;
+    int energy_distance = (attackerEnergy >= AttackerEnergyToAttack && AttackerPower > DefenderPower) ? 1 : -3;
+    int enemy_energy = energyModifier(enemyEnergy,600);
+    if(distance >= 2){
+        return -999;
+    }
+    return weight * energy_distance * enemy_energy;
+}
+/**
+ * Calculates the Co-op Action Score
+ * 
+ * @param {int-distance} distance of closest teammate to heaven from heaven
+ * @param {int-EnergyNeededToMove} Energy Needed to get to heaven
+ * @param {int-teammateEnergy} teammate energy
+ * @param {int-helperEnergy} helper energy
+ * 
+ * @return {double-score}
+ */
+double CoopScore(int distance, int EnergyNeededToMove, int teammateEnergy, int helperEnergy,int worldSize)
+{
+    int weight = 4;
+    
+    int energy_distance = (teammateEnergy < EnergyNeededToMove * distance && teammateEnergy > EnergyNeededToMove) ? 1 : -3;
+    double distanceScore = distanceModifier(distance,worldSize);
+    
+    return weight * energy_distance * distanceScore;
+}

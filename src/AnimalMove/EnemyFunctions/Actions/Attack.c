@@ -6,7 +6,7 @@
  * @param {Animal-attackerPosition[]} array of attacker animals
  * @param {Animal-enemyPosition[]} array of enemy animals
  * @param {int-attackerCount} number of attacker animals
- * @param {int-attacherposition} position of attacher in array
+ * @param {int-attackerposition} position of attacher in array
  * @param {int-enemyCount} number of enemy animals
  * @param {int-enemyposition} position of enemy in array
  * @param {int-worldSize} size of map
