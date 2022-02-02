@@ -24,14 +24,14 @@ void attack(Animal *attacker, Animal *enemy, Animal attackerPosition[], Animal e
         if (attacker->gene.attackPower > enemy->gene.defensePower)
         {
             attacker->energyPoint += enemy->energyPoint;
-            attacker->energyPoint -= (attacker->gene.attackPower);
+            attacker->energyPoint -= (3 * attacker->gene.energyForMoving);
             board[enemy->x][enemy->y] = defaultCell;
             delete_animal(enemyposition, enemyPosition, &enemyCount);
         }
         else if (enemy->gene.attackPower > attacker->gene.defensePower)
         {
             enemy->energyPoint += attacker->energyPoint;
-            enemy->energyPoint -= (enemy->gene.attackPower);
+            enemy->energyPoint -= (3 * enemy->gene.energyForMoving);
             board[attacker->x][attacker->y] = defaultCell;
             delete_animal(*attackerposition, attackerPosition, &attackerCount);
             --*attackerposition;

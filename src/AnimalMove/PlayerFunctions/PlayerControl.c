@@ -47,7 +47,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
     printf("energy = %d\n", alliedanimalposition[i].energyPoint);
 
     // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
-    if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+    if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint && checkNeighborPlaces(worldsize, board, x, y))
     {
         // animal died
         animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
@@ -78,6 +78,14 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         Fatherptr = &alliedanimalposition[i];
                         Motherptr = &alliedanimalposition[Mother_num];
                         reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
+                        // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
+                        if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+                            {
+                                // animal died
+                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                                delete_animal(i, alliedanimalposition, &alliedcount);
+                                return i - 1;
+                            }
                         break;
                     }
                     else
@@ -106,6 +114,14 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         attacker = &alliedanimalposition[i];
                         enemy = &enemyanimalposition[enemy_num];
                         attack(attacker, enemy, alliedanimalposition, enemyanimalposition, alliedcount, &i, enemycount, enemy_num, worldsize, board);
+                        // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
+                        if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+                            {
+                                // animal died
+                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                                delete_animal(i, alliedanimalposition, &alliedcount);
+                                return i - 1;
+                            }
                         break;
                     }
                     else
@@ -264,6 +280,14 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         Fatherptr = &alliedanimalposition[i];
                         Motherptr = &alliedanimalposition[Mother_num];
                         reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
+                        // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
+                        if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+                            {
+                                // animal died
+                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                                delete_animal(i, alliedanimalposition, &alliedcount);
+                                return i - 1;
+                            }
                         break;
                     }
                     else
@@ -292,6 +316,14 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         attacker = &alliedanimalposition[i];
                         enemy = &enemyanimalposition[enemy_num];
                         attack(attacker, enemy, alliedanimalposition, enemyanimalposition, alliedcount, &i, enemycount, enemy_num, worldsize, board);
+                        // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
+                        if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+                            {
+                                // animal died
+                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                                delete_animal(i, alliedanimalposition, &alliedcount);
+                                return i - 1;
+                            }
                         break;
                     }
                     else
@@ -449,6 +481,14 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         Fatherptr = &alliedanimalposition[i];
                         Motherptr = &alliedanimalposition[Mother_num];
                         reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
+                        // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
+                        if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+                            {
+                                // animal died
+                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                                delete_animal(i, alliedanimalposition, &alliedcount);
+                                return i - 1;
+                            }
                         break;
                     }
                     else
@@ -477,6 +517,14 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         attacker = &alliedanimalposition[i];
                         enemy = &enemyanimalposition[enemy_num];
                         attack(attacker, enemy, alliedanimalposition, enemyanimalposition, alliedcount, &i, enemycount, enemy_num, worldsize, board);
+                        // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
+                        if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+                            {
+                                // animal died
+                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                                delete_animal(i, alliedanimalposition, &alliedcount);
+                                return i - 1;
+                            }
                         break;
                     }
                     else
@@ -635,6 +683,14 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         Fatherptr = &alliedanimalposition[i];
                         Motherptr = &alliedanimalposition[Mother_num];
                         reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
+                        // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
+                        if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+                            {
+                                // animal died
+                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                                delete_animal(i, alliedanimalposition, &alliedcount);
+                                return i - 1;
+                            }
                         break;
                     }
                     else
@@ -663,6 +719,14 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         attacker = &alliedanimalposition[i];
                         enemy = &enemyanimalposition[enemy_num];
                         attack(attacker, enemy, alliedanimalposition, enemyanimalposition, alliedcount, &i, enemycount, enemy_num, worldsize, board);
+                        // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
+                        if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+                            {
+                                // animal died
+                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                                delete_animal(i, alliedanimalposition, &alliedcount);
+                                return i - 1;
+                            }
                         break;
                     }
                     else
@@ -820,6 +884,14 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         Fatherptr = &alliedanimalposition[i];
                         Motherptr = &alliedanimalposition[Mother_num];
                         reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
+                        // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
+                        if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+                            {
+                                // animal died
+                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                                delete_animal(i, alliedanimalposition, &alliedcount);
+                                return i - 1;
+                            }
                         break;
                     }
                     else
@@ -848,6 +920,14 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         attacker = &alliedanimalposition[i];
                         enemy = &enemyanimalposition[enemy_num];
                         attack(attacker, enemy, alliedanimalposition, enemyanimalposition, alliedcount, &i, enemycount, enemy_num, worldsize, board);
+                        // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
+                        if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+                            {
+                                // animal died
+                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                                delete_animal(i, alliedanimalposition, &alliedcount);
+                                return i - 1;
+                            }
                         break;
                     }
                     else
@@ -1008,6 +1088,14 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         Fatherptr = &alliedanimalposition[i];
                         Motherptr = &alliedanimalposition[Mother_num];
                         reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
+                        // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
+                        if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+                            {
+                                // animal died
+                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                                delete_animal(i, alliedanimalposition, &alliedcount);
+                                return i - 1;
+                            }
                         break;
                     }
                     else
@@ -1036,6 +1124,14 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         attacker = &alliedanimalposition[i];
                         enemy = &enemyanimalposition[enemy_num];
                         attack(attacker, enemy, alliedanimalposition, enemyanimalposition, alliedcount, &i, enemycount, enemy_num, worldsize, board);
+                        // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
+                        if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+                            {
+                                // animal died
+                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                                delete_animal(i, alliedanimalposition, &alliedcount);
+                                return i - 1;
+                            }
                         break;
                     }
                     else
@@ -1196,6 +1292,14 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         Fatherptr = &alliedanimalposition[i];
                         Motherptr = &alliedanimalposition[Mother_num];
                         reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
+                        // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
+                        if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+                            {
+                                // animal died
+                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                                delete_animal(i, alliedanimalposition, &alliedcount);
+                                return i - 1;
+                            }
                         break;
                     }
                     else
@@ -1224,6 +1328,14 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         attacker = &alliedanimalposition[i];
                         enemy = &enemyanimalposition[enemy_num];
                         attack(attacker, enemy, alliedanimalposition, enemyanimalposition, alliedcount, &i, enemycount, enemy_num, worldsize, board);
+                        // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
+                        if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+                            {
+                                // animal died
+                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                                delete_animal(i, alliedanimalposition, &alliedcount);
+                                return i - 1;
+                            }
                         break;
                     }
                     else
@@ -1383,6 +1495,14 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         Fatherptr = &alliedanimalposition[i];
                         Motherptr = &alliedanimalposition[Mother_num];
                         reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
+                        // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
+                        if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+                            {
+                                // animal died
+                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                                delete_animal(i, alliedanimalposition, &alliedcount);
+                                return i - 1;
+                            }
                         break;
                     }
                     else
@@ -1411,6 +1531,14 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         attacker = &alliedanimalposition[i];
                         enemy = &enemyanimalposition[enemy_num];
                         attack(attacker, enemy, alliedanimalposition, enemyanimalposition, alliedcount, &i, enemycount, enemy_num, worldsize, board);
+                        // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
+                        if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+                            {
+                                // animal died
+                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                                delete_animal(i, alliedanimalposition, &alliedcount);
+                                return i - 1;
+                            }
                         break;
                     }
                     else
@@ -1572,7 +1700,15 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                 find = searchanimal(animalX, animalY, alliedanimalposition, *alliedcount);
             }
             animal = &alliedanimalposition[find];
-            cooperation(helperanimal,animal);
+            cooperation(helperanimal, animal);
+            // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
+            if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
+                {
+                    // animal died
+                    animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                    delete_animal(i, alliedanimalposition, &alliedcount);
+                    return i - 1;
+                }
         }
         else
         {

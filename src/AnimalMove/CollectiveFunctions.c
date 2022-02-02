@@ -194,3 +194,21 @@ int countAnimalType(int worldSize, struct Cell board[][worldSize], char player[]
     }
     return count;
 }
+
+int checkNeighborPlaces(int worldsize, struct Cell board[][worldsize], int x, int y) {
+    int Neighbors[8][2] = {
+        {-1,-1},
+        {-1,0},
+        {-1,1},
+        {0,1},
+        {1,1},
+        {1,0},
+        {1,-1},
+    };
+    for (int i = 0;i < 8;i ++) {
+        int xx = x+Neighbors[i][0];
+        int yy = y+Neighbors[i][1];
+        if (strcmp(board[xx][yy].identifierPlace,"animal") == 0) return 0;
+    }
+    return 1;
+}
