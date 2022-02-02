@@ -47,7 +47,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
     printf("energy = %d\n", alliedanimalposition[i].energyPoint);
 
     // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
-    if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint && checkNeighborPlaces(worldsize, board, x, y))
+    if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint || ((minenergy(*AGptr) == AGptr->attackPower || minenergy(*AGptr) == AGptr->energyForReproduction) && checkNeighborPlaces(worldsize, board, x, y)))
     {
         // animal died
         animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
