@@ -20,7 +20,7 @@ int get_code()
     if (ch == 0 || ch == 224)
         return getch();
 
-    return ch;
+    return getch();
 }
 
 int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell board[][worldsize], int i, struct Animal alliedanimalposition[], int clickedKey, struct Cell Foodcell[], int *foodcount, int *alliedcount, struct Animal enemyanimalposition[], int *enemycount)
@@ -43,7 +43,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
 
     //========preparation for PlayerMove============//
     textcolor(1);
-    printf("you control player %s (%d,%d)\n", player, alliedanimalposition[i].x + 1, alliedanimalposition[i].y + 1);
+    printf("you control player %s (%d,%d)\n", player, alliedanimalposition[i].x, alliedanimalposition[i].y);
     printf("energy = %d\n", alliedanimalposition[i].energyPoint);
 
     // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
@@ -93,6 +93,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     }
                     else
                     {
+                        clearScreen();
                         textcolor(12);
                         printf("DON'T HAVE ENOUGH ENERGY FOR REPRODUCTION\n");
                         i--;
@@ -303,6 +304,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     }
                     else
                     {
+                        clearScreen();
                         textcolor(12);
                         printf("DON'T HAVE ENOUGH ENERGY FOR REPRODUCTION\n");
                         i--;
@@ -512,6 +514,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     }
                     else
                     {
+                        clearScreen();
                         textcolor(12);
                         printf("DON'T HAVE ENOUGH ENERGY FOR REPRODUCTION\n");
                         i--;
@@ -722,6 +725,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     }
                     else
                     {
+                        clearScreen();
                         textcolor(12);
                         printf("DON'T HAVE ENOUGH ENERGY FOR REPRODUCTION\n");
                         i--;
@@ -931,6 +935,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     }
                     else
                     {
+                        clearScreen();
                         textcolor(12);
                         printf("DON'T HAVE ENOUGH ENERGY FOR REPRODUCTION\n");
                         i--;
@@ -1143,6 +1148,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     }
                     else
                     {
+                        clearScreen();
                         textcolor(12);
                         printf("DON'T HAVE ENOUGH ENERGY FOR REPRODUCTION\n");
                         i--;
@@ -1355,6 +1361,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     }
                     else
                     {
+                        clearScreen();
                         textcolor(12);
                         printf("DON'T HAVE ENOUGH ENERGY FOR REPRODUCTION\n");
                         i--;
@@ -1566,6 +1573,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     }
                     else
                     {
+                        clearScreen();
                         textcolor(12);
                         printf("DON'T HAVE ENOUGH ENERGY FOR REPRODUCTION\n");
                         i--;

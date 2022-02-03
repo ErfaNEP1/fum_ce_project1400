@@ -21,6 +21,10 @@ void attack(Animal *attacker, Animal *enemy, Animal attackerPosition[], Animal e
         .identifierPlace = "."};
     if (attacker->energyPoint >= 3 * attacker->gene.energyForMoving)
     {
+        if (attacker->gene.attackPower == enemy->gene.defensePower)
+        {
+            return;
+        }
         if (attacker->gene.attackPower > enemy->gene.defensePower)
         {
             attacker->energyPoint += enemy->energyPoint;
@@ -28,7 +32,13 @@ void attack(Animal *attacker, Animal *enemy, Animal attackerPosition[], Animal e
             board[enemy->x][enemy->y] = defaultCell;
             delete_animal(enemyposition, enemyPosition, &enemyCount);
         }
+        else
+        {
+            enemy->energyPoint += attacker->energyPoint;
+            enemy->energyPoint -= (3 * enemy->gene.energyForMoving);
+            board[attacker->x][attacker->y] = defaultCell;
+            delete_animal(*attackerposition, attackerPosition, &attackerCount);
+            --*attackerposition;
+        }
     }
-    
-    return;
 }
