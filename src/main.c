@@ -9,6 +9,15 @@
 
 int main()
 {
+    // Set Output console to desired size
+    SetConsoleTitle("TO THE HEAVEN GAME PROJECT");
+    HWND console = GetConsoleWindow();
+    RECT r;
+    GetWindowRect(console, &r); //stores the console's current dimensions
+
+    MoveWindow(console, r.left, r.top, 1300, 500, TRUE); // 800 width, 100 height
+
+    
     // ======================= Getting World Size ======================= //
     int worldSize;
     World world;
@@ -79,8 +88,6 @@ int main()
     int nPlayer = saveAnimalinfo(&world, world.animalToControl, world.size, board, world.alliedanimalposition, world.enemyanimalposition);
     int nEnemy = world.animalCount - nPlayer;
 
-    textcolor(13);
-    printf("\nSTART !!! ( Move With Arrow Keys.) ( DOUBLE CLICK ON \"ESC\" TO EXIT )\n\n- YOU CAN ALSO PLAY WITH NUMPAD FOR BETTER \n  NAVIGATION. TO DO SO, PLEASE TURN OFF YOUR NUMLOCK.\n- TO ATTACK ENEMIES, MOVE TO THEIR POSITION\n  WHEN YOU ARE NEXT TO THEM.\n- TO REPRODUCT MOVE TO YOUR ALLIED CHARACTER'S\n  POSITION WHEN YOU ARE NEXT TO THEM.\n\n");
     printWorld(world.size, board, 0, world);
 
     int ch;
@@ -90,7 +97,7 @@ int main()
     // ======================= Start Game ======================= //
 
     // ch == 27 => ESC
-    int num,numofplayer = -1;
+    int num, numofplayer = -1;
     while ((ch = get_code()) != 27 && winSwitch == 0)
     {
         // Start Player Moves
@@ -130,7 +137,8 @@ int main()
             clearScreen();
             printf("NEXT ROUND STARTED, MOVE !\n");
             printWorld(world.size, board, 0, world);
-            if (world.alliedCount == 0 && world.enemyCount == 0) {
+            if (world.alliedCount == 0 && world.enemyCount == 0)
+            {
                 textcolor(14);
                 printf("THE GAME WAS TIED\n");
                 break;
@@ -142,12 +150,14 @@ int main()
     // ======================= End of Game ======================= //
 
     // ======================= Printing the Winner ======================= //
-    if (winSwitch == 1){
+    if (winSwitch == 1)
+    {
         clearScreen();
         printWorld(world.size, board, numofplayer, world);
         textcolor(2);
         printf("PLAYER %s WON THE GAME !", world.winner);
     }
     // ======================= End of Printing the Winner ======================= //
+    getch();
     return 0;
 }

@@ -160,7 +160,8 @@ void delete_Food(int x, int y, struct Cell FoodCell[], int **Foodcount)
  * 
  * @return {number} index of character in animal array
  */
-int searchanimal(int x, int y, struct Animal animal[],int animalcount) {
+int searchanimal(int x, int y, struct Animal animal[], int animalcount)
+{
     int i;
     for (i = 0; i < (animalcount); i++)
     {
@@ -178,18 +179,36 @@ int searchanimal(int x, int y, struct Animal animal[],int animalcount) {
  * 
  * @return {number} character count
  */
-int countAnimalType(int worldSize,struct Cell board[][worldSize],char player[]){
+int countAnimalType(int worldSize, struct Cell board[][worldSize], char player[])
+{
     int count = 0;
     for (int i = 0; i < worldSize; i++)
     {
         for (int j = 0; j < worldSize; j++)
         {
-            if(strcmp(board[i][j].identifierPlace,player) == 0){
+            if (strcmp(board[i][j].identifierPlace, player) == 0)
+            {
                 count++;
             }
         }
-        
     }
     return count;
-    
+}
+
+int checkNeighborPlaces(int worldsize, struct Cell board[][worldsize], int x, int y) {
+    int Neighbors[8][2] = {
+        {-1,-1},
+        {-1,0},
+        {-1,1},
+        {0,1},
+        {1,1},
+        {1,0},
+        {1,-1},
+    };
+    for (int i = 0;i < 8;i ++) {
+        int xx = x+Neighbors[i][0];
+        int yy = y+Neighbors[i][1];
+        if (strcmp(board[xx][yy].identifierPlace,"animal") == 0) return 0;
+    }
+    return 1;
 }

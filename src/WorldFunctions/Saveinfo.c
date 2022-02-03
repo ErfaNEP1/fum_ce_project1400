@@ -14,14 +14,13 @@
  */
 int saveAnimalinfo(World *world, char player[], int worldsize, struct Cell board[][worldsize], struct Animal alliedanimalposition[], Animal enemyanimalposition[])
 {
-    int nPlayer = 0, nEnemy = 0;
+    int nPlayer = 0, nEnemy = 0, nAnimal = 0;
     for (int i = 0; i < worldsize; i++)
     {
         for (int j = 0; j < worldsize; j++)
         {
             if (strcmp(board[i][j].typePlace, "animal") == 0)
             {
-
                 //save players' info
                 if (strcmp(board[i][j].identifierPlace, player) == 0)
                 {

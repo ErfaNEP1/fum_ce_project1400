@@ -55,7 +55,6 @@ void pop(int *front, int *rear, struct QueueNode items[])
 }
 // End Queue DS
 
-
 /**
  * to check that we're in board or not
  * 

@@ -38,11 +38,11 @@ void textcolor(unsigned short color)
  */
 void clearScreen()
 {
-    for (int i = 0; i < 40; i++)
-    {
-        printf("\n");
-    }
-    // system("cls");
+    // for (int i = 0; i < 40; i++)
+    // {
+    //     printf("\n");
+    // }
+    system("cls");
 }
 /**
  * Set cursor position
@@ -100,6 +100,6 @@ int random(int min, int max)
 {
     int randomnumber;
     srand(time(0));
-    randomnumber=rand() % (max - min + 1) + min;
+    randomnumber = rand() % (max - min + 1) + min;
     return randomnumber;
 }

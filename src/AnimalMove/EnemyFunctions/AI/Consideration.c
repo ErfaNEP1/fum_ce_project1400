@@ -34,7 +34,6 @@ double energyModifierFood(int CurrentEnergy, int MaximumEnergy)
  */
 double distanceModifier(int distance, int worldSize)
 {
-    // printf("DISTANCE : %d\n",distance);
-    double x = (double)distance / (worldSize * worldSize);
+    double x = (double) distance / (double) (worldSize * worldSize);
     return (-1 * pow(x, 4)) + 1;
 }

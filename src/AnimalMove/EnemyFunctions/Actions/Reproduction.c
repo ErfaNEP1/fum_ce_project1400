@@ -85,4 +85,3 @@ void reproduction(Animal *enemyMother, Animal *enemyFather, int *AlliedCount, An
     board[alliedanimalposition[*AlliedCount].x][alliedanimalposition[*AlliedCount].y].animalPlace.gene.defensePower = alliedanimalposition[*AlliedCount].gene.defensePower;
     ++*AlliedCount;
 }
-
