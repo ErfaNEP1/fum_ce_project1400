@@ -35,7 +35,23 @@ void initWorld(struct World world, int worldSize, struct Cell board[][worldSize]
  */
 void printWorld(int worldSize, struct Cell board[][worldSize], int index, struct World world)
 {
-    // goToXY(70,0);
+    textcolor(13);
+    printf("\n  START !!! ( Move With Arrow Keys.) ( DOUBLE CLICK ON \"ESC\" TO EXIT )\n\n- YOU CAN ALSO PLAY WITH NUMPAD FOR BETTER \n  NAVIGATION. TO DO SO, PLEASE TURN OFF YOUR NUMLOCK.\n- TO ATTACK ENEMIES, MOVE TO THEIR POSITION\n  WHEN YOU ARE NEXT TO THEM.\n- TO REPRODUCT MOVE TO YOUR ALLIED CHARACTER'S\n  POSITION WHEN YOU ARE NEXT TO THEM.\n- TO COOPERATE CLICK ON \"C\" IN START OF EACH ROUND\n");
+    textcolor(6);
+    printf("\n  YOUR CHARACTERS' STATS (ENERGY/ATTACK POWER/DEFENSE POWER/ENERGY TO REPRODUCE/ENERGY TO MOVE)\n");
+    for (int i = 0; i < world.alliedCount; i++)
+    {
+        Animal animal = world.alliedanimalposition[i];
+        printf("  %s (%d,%d) : %d/%d/%d/%d/%d\n",world.animalToControl,animal.x,animal.y,animal.energyPoint,animal.gene.attackPower,animal.gene.defensePower,animal.gene.energyForReproduction,animal.gene.energyForMoving);
+    }
+    for (int i = 0; i < world.enemyCount; i++)
+    {
+        Animal animal = world.enemyanimalposition[i];
+        printf("  %s (%d,%d) : %d/%d/%d/%d/%d\n",board[animal.x][animal.y].identifierPlace,animal.x,animal.y,animal.energyPoint,animal.gene.attackPower,animal.gene.defensePower,animal.gene.energyForReproduction,animal.gene.energyForMoving);
+    }
+    
+
+    goToXY(105,2);
     textcolor(7);
     printf("%c", 201);
     for (int i = 0; i < (worldSize * 2) + 1; i++)
@@ -43,7 +59,7 @@ void printWorld(int worldSize, struct Cell board[][worldSize], int index, struct
         printf("%c", 205);
     }
     printf("%c\n", 187);
-    // goToXY(70,1);
+    goToXY(105,3);
     for (int i = 0; i < worldSize; i++)
     {
         textcolor(7);
@@ -85,7 +101,7 @@ void printWorld(int worldSize, struct Cell board[][worldSize], int index, struct
         textcolor(7);
         printf("%c ", 186);
         printf("\n");
-        // goToXY(70,2+i);
+        goToXY(105,4+i);
     }
     printf("%c", 200);
     for (int i = 0; i < (worldSize * 2) + 1; i++)

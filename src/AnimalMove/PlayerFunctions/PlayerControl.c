@@ -9,7 +9,7 @@ enum
     ARROW_LEFTDOWN = 79,
     ARROW_RIGHTUP = 73,
     ARROW_RIGHTDOWN = 81,
-    ARROW_COOPERATION = 99
+    ARROW_COOPERATION = 43
 };
 
 // get Arrow code
@@ -50,6 +50,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
     if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint || ((minenergy(*AGptr) == AGptr->attackPower || minenergy(*AGptr) == AGptr->energyForReproduction) && checkNeighborPlaces(worldsize, board, x, y)))
     {
         // animal died
+        clearScreen();
         animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
         delete_animal(i, alliedanimalposition, &alliedcount);
         return i - 1;
@@ -80,18 +81,20 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
                         // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
                         if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
-                            {
-                                // animal died
-                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
-                                delete_animal(i, alliedanimalposition, &alliedcount);
-                                return i - 1;
-                            }
+                        {
+                            // animal died
+                            clearScreen();
+
+                            animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                            delete_animal(i, alliedanimalposition, &alliedcount);
+                            return i - 1;
+                        }
                         break;
                     }
                     else
                     {
                         textcolor(12);
-                        printf("DON'T HAVE EANOGH ENERGY FOR REPRODUCTION\n");
+                        printf("DON'T HAVE ENOUGH ENERGY FOR REPRODUCTION\n");
                         i--;
                         break;
                     }
@@ -116,18 +119,20 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         attack(attacker, enemy, alliedanimalposition, enemyanimalposition, alliedcount, &i, enemycount, enemy_num, worldsize, board);
                         // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
                         if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
-                            {
-                                // animal died
-                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
-                                delete_animal(i, alliedanimalposition, &alliedcount);
-                                return i - 1;
-                            }
+                        {
+                            // animal died
+                            clearScreen();
+                            animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                            delete_animal(i, alliedanimalposition, &alliedcount);
+                            return i - 1;
+                        }
                         break;
                     }
                     else
                     {
                         textcolor(12);
-                        printf("DON'T HAVE EANOGH ENERGY FOR ATTACK\n");
+                        clearScreen();
+                        printf("DON'T HAVE ENOUGH ENERGY FOR ATTACK\n");
                         i--;
                         break;
                     }
@@ -160,6 +165,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     if (*board[x - k][y].identifierPlace == '#')
                     {
                         textcolor(12);
+                        clearScreen();
                         printf("YOU CAN'T GO THERE ! (#)");
                         printf("\n");
                         sw = 0;
@@ -198,6 +204,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     {
                         // in this place exist an animal
                         textcolor(12);
+                        clearScreen();
                         printf("YOU CAN'T GO THERE ! (%s)", board[x - k][y].identifierPlace);
                         printf("\n");
                         sw = 0;
@@ -229,6 +236,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
                         {
                             // animal died
+                            clearScreen();
 
                             animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
                             delete_animal(i, alliedanimalposition, &alliedcount);
@@ -241,6 +249,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     else
                     {
                         textcolor(12);
+                        clearScreen();
                         printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING", Mcells);
                         printf("\n");
                         i--;
@@ -252,6 +261,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
             {
                 // player can't Go Up (go out of board)
                 textcolor(12);
+                clearScreen();
                 printf("YOU CAN'T GO THERE !");
                 printf("\n");
                 i--;
@@ -282,18 +292,19 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
                         // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
                         if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
-                            {
-                                // animal died
-                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
-                                delete_animal(i, alliedanimalposition, &alliedcount);
-                                return i - 1;
-                            }
+                        {
+                            // animal died
+                            clearScreen();
+                            animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                            delete_animal(i, alliedanimalposition, &alliedcount);
+                            return i - 1;
+                        }
                         break;
                     }
                     else
                     {
                         textcolor(12);
-                        printf("DON'T HAVE EANOGH ENERGY FOR REPRODUCTION\n");
+                        printf("DON'T HAVE ENOUGH ENERGY FOR REPRODUCTION\n");
                         i--;
                         break;
                     }
@@ -318,18 +329,20 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         attack(attacker, enemy, alliedanimalposition, enemyanimalposition, alliedcount, &i, enemycount, enemy_num, worldsize, board);
                         // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
                         if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
-                            {
-                                // animal died
-                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
-                                delete_animal(i, alliedanimalposition, &alliedcount);
-                                return i - 1;
-                            }
+                        {
+                            // animal died
+                            clearScreen();
+                            animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                            delete_animal(i, alliedanimalposition, &alliedcount);
+                            return i - 1;
+                        }
                         break;
                     }
                     else
                     {
                         textcolor(12);
-                        printf("DON'T HAVE EANOGH ENERGY FOR ATTACK\n");
+                        clearScreen();
+                        printf("DON'T HAVE ENOUGH ENERGY FOR ATTACK\n");
                         i--;
                         break;
                     }
@@ -362,6 +375,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     if (*board[x + k][y].identifierPlace == '#')
                     {
                         textcolor(12);
+                        clearScreen();
                         printf("YOU CAN'T GO THERE ! (#)");
                         printf("\n");
                         sw = 0;
@@ -400,6 +414,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     {
                         // in this place exist an animal
                         textcolor(12);
+                        clearScreen();
                         printf("YOU CAN'T GO THERE ! (%s)", board[x + k][y].identifierPlace);
                         printf("\n");
                         sw = 0;
@@ -431,6 +446,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
                         {
                             // animal died
+                            clearScreen();
 
                             animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
                             delete_animal(i, alliedanimalposition, &alliedcount);
@@ -443,6 +459,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     else
                     {
                         textcolor(12);
+                        clearScreen();
                         printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING", Mcells);
                         printf("\n");
                         i--;
@@ -454,6 +471,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
             {
                 // player can't Go Down (go out of board)
                 textcolor(12);
+                clearScreen();
                 printf("YOU CAN'T GO THERE !");
                 printf("\n");
                 i--;
@@ -483,18 +501,19 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
                         // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
                         if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
-                            {
-                                // animal died
-                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
-                                delete_animal(i, alliedanimalposition, &alliedcount);
-                                return i - 1;
-                            }
+                        {
+                            // animal died
+                            clearScreen();
+                            animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                            delete_animal(i, alliedanimalposition, &alliedcount);
+                            return i - 1;
+                        }
                         break;
                     }
                     else
                     {
                         textcolor(12);
-                        printf("DON'T HAVE EANOGH ENERGY FOR REPRODUCTION\n");
+                        printf("DON'T HAVE ENOUGH ENERGY FOR REPRODUCTION\n");
                         i--;
                         break;
                     }
@@ -519,18 +538,20 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         attack(attacker, enemy, alliedanimalposition, enemyanimalposition, alliedcount, &i, enemycount, enemy_num, worldsize, board);
                         // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
                         if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
-                            {
-                                // animal died
-                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
-                                delete_animal(i, alliedanimalposition, &alliedcount);
-                                return i - 1;
-                            }
+                        {
+                            // animal died
+                            clearScreen();
+                            animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                            delete_animal(i, alliedanimalposition, &alliedcount);
+                            return i - 1;
+                        }
                         break;
                     }
                     else
                     {
                         textcolor(12);
-                        printf("DON'T HAVE EANOGH ENERGY FOR ATTACK\n");
+                        clearScreen();
+                        printf("DON'T HAVE ENOUGH ENERGY FOR ATTACK\n");
                         i--;
                         break;
                     }
@@ -563,6 +584,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     if (*board[x][y + k].identifierPlace == '#')
                     {
                         textcolor(12);
+                        clearScreen();
                         printf("YOU CAN'T GO THERE ! (#)");
                         printf("\n");
                         sw = 0;
@@ -602,6 +624,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     {
                         // in this place exist an animal
                         textcolor(12);
+                        clearScreen();
                         printf("YOU CAN'T GO THERE ! (%s)", board[x][y + k].identifierPlace);
                         printf("\n");
                         sw = 0;
@@ -633,6 +656,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         {
 
                             // animal died
+                            clearScreen();
 
                             animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
                             delete_animal(i, alliedanimalposition, &alliedcount);
@@ -645,6 +669,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     else
                     {
                         textcolor(12);
+                        clearScreen();
                         printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING", Mcells);
                         printf("\n");
                         i--;
@@ -656,6 +681,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
             {
                 // player can't Go Right (go out of board)
                 textcolor(12);
+                clearScreen();
                 printf("YOU CAN'T GO THERE !");
                 printf("\n");
                 i--;
@@ -685,18 +711,19 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
                         // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
                         if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
-                            {
-                                // animal died
-                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
-                                delete_animal(i, alliedanimalposition, &alliedcount);
-                                return i - 1;
-                            }
+                        {
+                            // animal died
+                            clearScreen();
+                            animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                            delete_animal(i, alliedanimalposition, &alliedcount);
+                            return i - 1;
+                        }
                         break;
                     }
                     else
                     {
                         textcolor(12);
-                        printf("DON'T HAVE EANOGH ENERGY FOR REPRODUCTION\n");
+                        printf("DON'T HAVE ENOUGH ENERGY FOR REPRODUCTION\n");
                         i--;
                         break;
                     }
@@ -721,18 +748,20 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         attack(attacker, enemy, alliedanimalposition, enemyanimalposition, alliedcount, &i, enemycount, enemy_num, worldsize, board);
                         // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
                         if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
-                            {
-                                // animal died
-                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
-                                delete_animal(i, alliedanimalposition, &alliedcount);
-                                return i - 1;
-                            }
+                        {
+                            // animal died
+                            clearScreen();
+                            animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                            delete_animal(i, alliedanimalposition, &alliedcount);
+                            return i - 1;
+                        }
                         break;
                     }
                     else
                     {
                         textcolor(12);
-                        printf("DON'T HAVE EANOGH ENERGY FOR ATTACK\n");
+                        clearScreen();
+                        printf("DON'T HAVE ENOUGH ENERGY FOR ATTACK\n");
                         i--;
                         break;
                     }
@@ -765,6 +794,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     if (*board[x][y - k].identifierPlace == '#')
                     {
                         textcolor(12);
+                        clearScreen();
                         printf("YOU CAN'T GO THERE ! (#)");
                         printf("\n");
                         sw = 0;
@@ -802,6 +832,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     {
                         // in this place exist an animal
                         textcolor(12);
+                        clearScreen();
                         printf("YOU CAN'T GO THERE ! (%s)", board[x][y - k].identifierPlace);
                         printf("\n");
                         sw = 0;
@@ -833,6 +864,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
                         {
                             // animal died
+                            clearScreen();
 
                             animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
                             delete_animal(i, alliedanimalposition, &alliedcount);
@@ -845,6 +877,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     else
                     {
                         textcolor(12);
+                        clearScreen();
                         printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING", Mcells);
                         printf("\n");
                         i--;
@@ -856,6 +889,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
             {
                 // player can't Go Left (go out of board)
                 textcolor(12);
+                clearScreen();
                 printf("YOU CAN'T GO THERE !");
                 printf("\n");
                 i--;
@@ -886,18 +920,19 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
                         // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
                         if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
-                            {
-                                // animal died
-                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
-                                delete_animal(i, alliedanimalposition, &alliedcount);
-                                return i - 1;
-                            }
+                        {
+                            // animal died
+                            clearScreen();
+                            animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                            delete_animal(i, alliedanimalposition, &alliedcount);
+                            return i - 1;
+                        }
                         break;
                     }
                     else
                     {
                         textcolor(12);
-                        printf("DON'T HAVE EANOGH ENERGY FOR REPRODUCTION\n");
+                        printf("DON'T HAVE ENOUGH ENERGY FOR REPRODUCTION\n");
                         i--;
                         break;
                     }
@@ -922,18 +957,20 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         attack(attacker, enemy, alliedanimalposition, enemyanimalposition, alliedcount, &i, enemycount, enemy_num, worldsize, board);
                         // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
                         if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
-                            {
-                                // animal died
-                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
-                                delete_animal(i, alliedanimalposition, &alliedcount);
-                                return i - 1;
-                            }
+                        {
+                            // animal died
+                            clearScreen();
+                            animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                            delete_animal(i, alliedanimalposition, &alliedcount);
+                            return i - 1;
+                        }
                         break;
                     }
                     else
                     {
                         textcolor(12);
-                        printf("DON'T HAVE EANOGH ENERGY FOR ATTACK\n");
+                        clearScreen();
+                        printf("DON'T HAVE ENOUGH ENERGY FOR ATTACK\n");
                         i--;
                         break;
                     }
@@ -966,6 +1003,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     if (*board[x - k][y - k].identifierPlace == '#')
                     {
                         textcolor(12);
+                        clearScreen();
                         printf("YOU CAN'T GO THERE ! (#)");
                         printf("\n");
                         sw = 0;
@@ -1006,6 +1044,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     {
                         // in this place exist an animal
                         textcolor(12);
+                        clearScreen();
                         printf("YOU CAN'T GO THERE ! (%s)", board[x - k][y - k].identifierPlace);
                         printf("\n");
                         sw = 0;
@@ -1037,6 +1076,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
                         {
                             // animal died
+                            clearScreen();
 
                             animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
                             delete_animal(i, alliedanimalposition, &alliedcount);
@@ -1049,6 +1089,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     else
                     {
                         textcolor(12);
+                        clearScreen();
                         printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING", Mcells);
                         printf("\n");
                         i--;
@@ -1060,6 +1101,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
             {
                 // player can't Go LeftTUp (go out of board)
                 textcolor(12);
+                clearScreen();
                 printf("YOU CAN'T GO THERE !");
                 printf("\n");
                 i--;
@@ -1090,18 +1132,19 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
                         // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
                         if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
-                            {
-                                // animal died
-                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
-                                delete_animal(i, alliedanimalposition, &alliedcount);
-                                return i - 1;
-                            }
+                        {
+                            // animal died
+                            clearScreen();
+                            animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                            delete_animal(i, alliedanimalposition, &alliedcount);
+                            return i - 1;
+                        }
                         break;
                     }
                     else
                     {
                         textcolor(12);
-                        printf("DON'T HAVE EANOGH ENERGY FOR REPRODUCTION\n");
+                        printf("DON'T HAVE ENOUGH ENERGY FOR REPRODUCTION\n");
                         i--;
                         break;
                     }
@@ -1126,18 +1169,20 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         attack(attacker, enemy, alliedanimalposition, enemyanimalposition, alliedcount, &i, enemycount, enemy_num, worldsize, board);
                         // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
                         if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
-                            {
-                                // animal died
-                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
-                                delete_animal(i, alliedanimalposition, &alliedcount);
-                                return i - 1;
-                            }
+                        {
+                            // animal died
+                            clearScreen();
+                            animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                            delete_animal(i, alliedanimalposition, &alliedcount);
+                            return i - 1;
+                        }
                         break;
                     }
                     else
                     {
                         textcolor(12);
-                        printf("DON'T HAVE EANOGH ENERGY FOR ATTACK\n");
+                        clearScreen();
+                        printf("DON'T HAVE ENOUGH ENERGY FOR ATTACK\n");
                         i--;
                         break;
                     }
@@ -1170,6 +1215,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     if (*board[x - k][y + k].identifierPlace == '#')
                     {
                         textcolor(12);
+                        clearScreen();
                         printf("YOU CAN'T GO THERE ! (#)");
                         printf("\n");
                         sw = 0;
@@ -1210,6 +1256,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     {
                         // in this place exist an animal
                         textcolor(12);
+                        clearScreen();
                         printf("YOU CAN'T GO THERE ! (%s)", board[x - k][y + k].identifierPlace);
                         printf("\n");
                         sw = 0;
@@ -1240,6 +1287,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
                         {
                             // animal died
+                            clearScreen();
 
                             animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
                             delete_animal(i, alliedanimalposition, &alliedcount);
@@ -1252,6 +1300,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     else
                     {
                         textcolor(12);
+                        clearScreen();
                         printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING", Mcells);
                         printf("\n");
                         i--;
@@ -1264,6 +1313,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
             {
                 // player can't Go RightTUp (go out of board)
                 textcolor(12);
+                clearScreen();
                 printf("YOU CAN'T GO THERE !");
                 printf("\n");
                 i--;
@@ -1294,18 +1344,19 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
                         // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
                         if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
-                            {
-                                // animal died
-                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
-                                delete_animal(i, alliedanimalposition, &alliedcount);
-                                return i - 1;
-                            }
+                        {
+                            // animal died
+                            clearScreen();
+                            animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                            delete_animal(i, alliedanimalposition, &alliedcount);
+                            return i - 1;
+                        }
                         break;
                     }
                     else
                     {
                         textcolor(12);
-                        printf("DON'T HAVE EANOGH ENERGY FOR REPRODUCTION\n");
+                        printf("DON'T HAVE ENOUGH ENERGY FOR REPRODUCTION\n");
                         i--;
                         break;
                     }
@@ -1330,18 +1381,20 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         attack(attacker, enemy, alliedanimalposition, enemyanimalposition, alliedcount, &i, enemycount, enemy_num, worldsize, board);
                         // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
                         if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
-                            {
-                                // animal died
-                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
-                                delete_animal(i, alliedanimalposition, &alliedcount);
-                                return i - 1;
-                            }
+                        {
+                            // animal died
+                            clearScreen();
+                            animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                            delete_animal(i, alliedanimalposition, &alliedcount);
+                            return i - 1;
+                        }
                         break;
                     }
                     else
                     {
                         textcolor(12);
-                        printf("DON'T HAVE EANOGH ENERGY FOR ATTACK\n");
+                        clearScreen();
+                        printf("DON'T HAVE ENOUGH ENERGY FOR ATTACK\n");
                         i--;
                         break;
                     }
@@ -1374,6 +1427,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     if (*board[x + k][y + k].identifierPlace == '#')
                     {
                         textcolor(12);
+                        clearScreen();
                         printf("YOU CAN'T GO THERE ! (#)");
                         printf("\n");
                         sw = 0;
@@ -1414,6 +1468,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     {
                         // in this place exist an animal
                         textcolor(12);
+                        clearScreen();
                         printf("YOU CAN'T GO THERE ! (%s)", board[x + k][y + k].identifierPlace);
                         printf("\n");
                         sw = 0;
@@ -1444,6 +1499,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
                         {
                             // animal died
+                            clearScreen();
 
                             animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
                             delete_animal(i, alliedanimalposition, &alliedcount);
@@ -1456,6 +1512,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     else
                     {
                         textcolor(12);
+                        clearScreen();
                         printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING", Mcells);
                         printf("\n");
                         i--;
@@ -1467,6 +1524,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
             {
                 // player can't Go RightTDown (go out of board)
                 textcolor(12);
+                clearScreen();
                 printf("YOU CAN'T GO THERE !");
                 printf("\n");
                 i--;
@@ -1497,18 +1555,19 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         reproduction(Motherptr, Fatherptr, alliedcount, alliedanimalposition, worldsize, board);
                         // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
                         if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
-                            {
-                                // animal died
-                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
-                                delete_animal(i, alliedanimalposition, &alliedcount);
-                                return i - 1;
-                            }
+                        {
+                            // animal died
+                            clearScreen();
+                            animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                            delete_animal(i, alliedanimalposition, &alliedcount);
+                            return i - 1;
+                        }
                         break;
                     }
                     else
                     {
                         textcolor(12);
-                        printf("DON'T HAVE EANOGH ENERGY FOR REPRODUCTION\n");
+                        printf("DON'T HAVE ENOUGH ENERGY FOR REPRODUCTION\n");
                         i--;
                         break;
                     }
@@ -1533,18 +1592,20 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         attack(attacker, enemy, alliedanimalposition, enemyanimalposition, alliedcount, &i, enemycount, enemy_num, worldsize, board);
                         // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
                         if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
-                            {
-                                // animal died
-                                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
-                                delete_animal(i, alliedanimalposition, &alliedcount);
-                                return i - 1;
-                            }
+                        {
+                            // animal died
+                            clearScreen();
+                            animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                            delete_animal(i, alliedanimalposition, &alliedcount);
+                            return i - 1;
+                        }
                         break;
                     }
                     else
                     {
                         textcolor(12);
-                        printf("DON'T HAVE EANOGH ENERGY FOR ATTACK\n");
+                        clearScreen();
+                        printf("DON'T HAVE ENOUGH ENERGY FOR ATTACK\n");
                         i--;
                         break;
                     }
@@ -1577,6 +1638,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     if (*board[x + k][y - k].identifierPlace == '#')
                     {
                         textcolor(12);
+                        clearScreen();
                         printf("YOU CAN'T GO THERE ! (#)");
                         printf("\n");
                         sw = 0;
@@ -1617,6 +1679,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     {
                         // in this place exist an animal
                         textcolor(12);
+                        clearScreen();
                         printf("YOU CAN'T GO THERE ! (%s)", board[x + k][y - k].identifierPlace);
                         printf("\n");
                         sw = 0;
@@ -1648,6 +1711,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
                         {
                             // animal died
+                            clearScreen();
 
                             animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
                             delete_animal(i, alliedanimalposition, &alliedcount);
@@ -1660,6 +1724,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                     else
                     {
                         textcolor(12);
+                        clearScreen();
                         printf("YOU DON'T HAVE ENOUGH ENERGY FOR %d MOVING", Mcells);
                         printf("\n");
                         i--;
@@ -1671,6 +1736,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
             {
                 // player can't Go LeftTDown (go out of board)
                 textcolor(12);
+                clearScreen();
                 printf("YOU CAN'T GO THERE !");
                 printf("\n");
                 i--;
@@ -1703,16 +1769,18 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
             cooperation(helperanimal, animal);
             // to check energy of allied animal at first round to know can it do anything(reproduction or moving or...) or it should be die
             if (minenergy(*AGptr) > alliedanimalposition[i].energyPoint)
-                {
-                    // animal died
-                    animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
-                    delete_animal(i, alliedanimalposition, &alliedcount);
-                    return i - 1;
-                }
+            {
+                // animal died
+                clearScreen();
+                animalDeath(worldsize, board, alliedanimalposition[i].x, alliedanimalposition[i].y, alliedanimalposition[i].energyPoint, Foodcell, &foodcount);
+                delete_animal(i, alliedanimalposition, &alliedcount);
+                return i - 1;
+            }
         }
         else
         {
             textcolor(12);
+            clearScreen();
             printf("YOU DON'T HAVE ENOUGH ENERGY FOR COOPERATION !");
             printf("\n");
             i--;

@@ -38,11 +38,11 @@ void textcolor(unsigned short color)
  */
 void clearScreen()
 {
-    for (int i = 0; i < 40; i++)
-    {
-        printf("\n");
-    }
-    // system("cls");
+    // for (int i = 0; i < 40; i++)
+    // {
+    //     printf("\n");
+    // }
+    system("cls");
 }
 /**
  * Set cursor position

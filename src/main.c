@@ -9,6 +9,15 @@
 
 int main()
 {
+    // Set Output console to desired size
+    SetConsoleTitle("GAME PROJECT");
+    HWND console = GetConsoleWindow();
+    RECT r;
+    GetWindowRect(console, &r); //stores the console's current dimensions
+
+    MoveWindow(console, r.left, r.top, 1300, 500, TRUE); // 800 width, 100 height
+
+    
     // ======================= Getting World Size ======================= //
     int worldSize;
     World world;
@@ -79,8 +88,6 @@ int main()
     int nPlayer = saveAnimalinfo(&world, world.animalToControl, world.size, board, world.alliedanimalposition, world.enemyanimalposition);
     int nEnemy = world.animalCount - nPlayer;
 
-    textcolor(13);
-    printf("\nSTART !!! ( Move With Arrow Keys.) ( DOUBLE CLICK ON \"ESC\" TO EXIT )\n\n- YOU CAN ALSO PLAY WITH NUMPAD FOR BETTER \n  NAVIGATION. TO DO SO, PLEASE TURN OFF YOUR NUMLOCK.\n- TO ATTACK ENEMIES, MOVE TO THEIR POSITION\n  WHEN YOU ARE NEXT TO THEM.\n- TO REPRODUCT MOVE TO YOUR ALLIED CHARACTER'S\n  POSITION WHEN YOU ARE NEXT TO THEM.\n\n");
     printWorld(world.size, board, 0, world);
 
     int ch;

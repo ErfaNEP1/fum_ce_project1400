@@ -45,7 +45,7 @@ double MoveToFoodScore(int distance, int energy, int maxEnergy, int worldSize)
  */
 double ReproductScore(int distance, int motherEnergy, int fatherEnergy, int energyForReproduceMother, int energyForReproduceFather)
 {
-    int weight = 3;
+    int weight = 2;
     int energy_distance = (motherEnergy >= (energyForReproduceMother / 2) && fatherEnergy >= (energyForReproduceFather / 2) && distance < 2) ? 1 : -3;
     return weight * energy_distance;
 }
@@ -86,7 +86,7 @@ double CoopScore(int distance, int EnergyNeededToMove, int teammateEnergy, int h
 {
     int weight = 4;
     
-    int energy_distance = (teammateEnergy < EnergyNeededToMove * distance && teammateEnergy > EnergyNeededToMove) ? 1 : -3;
+    int energy_distance = (teammateEnergy < EnergyNeededToMove * distance && teammateEnergy > EnergyNeededToMove && distance < 6) ? 1 : -3;
     double distanceScore = distanceModifier(distance,worldSize);
     
     return weight * energy_distance * distanceScore;
