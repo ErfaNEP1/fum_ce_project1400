@@ -197,7 +197,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         printf("\n");
                         break;
                     }
-                    else if (*board[x - k][y].identifierPlace == 'F')
+                    else if (*board[x - k][y].identifierPlace == 'F' && k != Mcells)
                     {
                         TemporaryEnergy += board[x - k][y].foodPlace.energy;
                     }
@@ -408,7 +408,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         printf("\n");
                         break;
                     }
-                    else if (*board[x + k][y].identifierPlace == 'F')
+                    else if (*board[x + k][y].identifierPlace == 'F' && k != Mcells)
                     {
                         TemporaryEnergy += board[x + k][y].foodPlace.energy;
                     }
@@ -619,7 +619,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         printf("\n");
                         break;
                     }
-                    else if (*board[x][y + k].identifierPlace == 'F')
+                    else if (*board[x][y + k].identifierPlace == 'F' && k != Mcells)
                     {
                         TemporaryEnergy += board[x][y + k].foodPlace.energy;
                     }
@@ -828,7 +828,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         printf("\n");
                         break;
                     }
-                    else if (*board[x][y - k].identifierPlace == 'F')
+                    else if (*board[x][y - k].identifierPlace == 'F' && k != Mcells)
                     {
                         TemporaryEnergy += board[x][y - k].foodPlace.energy;
                     }
@@ -1041,7 +1041,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         printf("\n");
                         break;
                     }
-                    else if (*board[x - k][y - k].identifierPlace == 'F')
+                    else if (*board[x - k][y - k].identifierPlace == 'F' && k != Mcells)
                     {
                         TemporaryEnergy += board[x - k][y - k].foodPlace.energy;
                     }
@@ -1254,7 +1254,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         printf("\n");
                         break;
                     }
-                    else if (*board[x - k][y + k].identifierPlace == 'F')
+                    else if (*board[x - k][y + k].identifierPlace == 'F' && k != Mcells)
                     {
                         TemporaryEnergy += board[x - k][y + k].foodPlace.energy;
                     }
@@ -1467,7 +1467,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         printf("\n");
                         break;
                     }
-                    else if (*board[x + k][y + k].identifierPlace == 'F')
+                    else if (*board[x + k][y + k].identifierPlace == 'F' && k != Mcells)
                     {
                         TemporaryEnergy += board[x + k][y + k].foodPlace.energy;
                     }
@@ -1679,7 +1679,7 @@ int animalTocontrol(int **winSwitch, char player[], int worldsize, struct Cell b
                         printf("\n");
                         break;
                     }
-                    else if (*board[x + k][y - k].identifierPlace == 'F')
+                    else if (*board[x + k][y - k].identifierPlace == 'F' && k != Mcells)
                     {
                         TemporaryEnergy += board[x + k][y - k].foodPlace.energy;
                     }
