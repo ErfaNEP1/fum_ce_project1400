@@ -10,7 +10,7 @@
 int main()
 {
     // Set Output console to desired size
-    SetConsoleTitle("GAME PROJECT");
+    SetConsoleTitle("TO THE HEAVEN GAME PROJECT");
     HWND console = GetConsoleWindow();
     RECT r;
     GetWindowRect(console, &r); //stores the console's current dimensions
