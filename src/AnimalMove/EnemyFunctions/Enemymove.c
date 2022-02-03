@@ -46,7 +46,7 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
         int MaximumEnergy = animalPtr->maximumEnergy;
         // End World Inputs
 
-        int action; // 0 : Heaven, 1 : Food
+        int action; 
         double score = -1;
         for (int j = 0; j < 5; j++)
         {
@@ -94,37 +94,27 @@ void initAImovie(World *world, int nEnemy, int worldSize, int *winSwitch, Cell b
                 }
             }
         }
-        //Debug
-        double FoodScore = MoveToFoodScore(ClosestDistanceToFood, CurrentEnergy, MaximumEnergy, world->size);
-        double HeavenScore = MoveToHeavenScore(ClosestDistanceToHeaven, CurrentEnergy, MaximumEnergy, EnergyForMove, world->size);
-        double Reproduct = ReproductScore(ClosestAlliedDistance, animalPtr->energyPoint, fatherPtr->energyPoint, EnergyToReproduceMother, EnergyToReproduceFather);
-        double Attack = AttackScore(ClosestEnemyDis, CurrentEnergy, EnemyEnergy , EnergyForMove * 3, AttackPower, DefensePower);
-        double Coop = CoopScore(ClosestTeamMateDistanceToHeaven, animalPtr->gene.energyForMoving, teammatePtr->energyPoint , animalPtr->energyPoint, worldSize);
+        
 
         if (action == 0)
         {
             movetoheaven(world, worldSize, winSwitch, board, animalPtr, &i);
-            printf("PLAYER %d(%d,%d) GOING TO HEAVEN\nFood Score : %f Heaven Score : %f Reproduce Score : %f Attack Score : %f Co-Op Score : %f\n", i,animalPtr->x,animalPtr->y, FoodScore, HeavenScore, Reproduct,Attack,Coop);
         }
         else if (action == 1)
         {
             movetofood(world, worldSize, winSwitch, board, animalPtr, &i);
-            printf("PLAYER %d(%d,%d) GOING FOR FOOD\nFood Score : %f Heaven Score : %f Reproduce Score : %f Attack Score : %f Co-Op Score : %f\n", i,animalPtr->x,animalPtr->y, FoodScore, HeavenScore, Reproduct,Attack,Coop);
         }
         else if (action == 2)
         {
             reproduction(animalPtr, fatherPtr, &world->enemyCount, world->enemyanimalposition, worldSize, board);
-            printf("PLAYER %d(%d,%d) GOING TO REPRODUCE\nFood Score : %f Heaven Score : %f Reproduce Score : %f Attack Score : %f Co-Op Score : %f\n", i,animalPtr->x,animalPtr->y, FoodScore, HeavenScore, Reproduct,Attack,Coop);
         }
         else if (action == 3)
         {
             attack(animalPtr, enemyPtr, world->enemyanimalposition, world->enemyanimalposition, &world->enemyCount, &index, &world->enemyCount, ClosestEnemyIndex, worldSize, board);
-            printf("PLAYER %d(%d,%d) GOING TO ATTACK\nFood Score : %f Heaven Score : %f Reproduce Score : %f Attack Score : %f Co-Op Score : %f\n", i,animalPtr->x,animalPtr->y, FoodScore, HeavenScore, Reproduct,Attack,Coop);
         }
         else if (action == 4)
         {
             cooperation(animalPtr,teammatePtr);
-            printf("PLAYER %d(%d,%d) WANT TO CO-OP\nFood Score : %f Heaven Score : %f Reproduce Score : %f Attack Score : %f Co-Op Score : %f\n", i,animalPtr->x,animalPtr->y, FoodScore, HeavenScore, Reproduct,Attack,Coop);
         }
 
         printf("Final Energy = %d\n\n\n", animalPtr->energyPoint);
