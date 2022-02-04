@@ -51,7 +51,7 @@ void printWorld(int worldSize, struct Cell board[][worldSize], int index, struct
     }
     
 
-    goToXY(105,2);
+    goToXY(105,10);
     textcolor(7);
     printf("%c", 201);
     for (int i = 0; i < (worldSize * 2) + 1; i++)
@@ -59,7 +59,7 @@ void printWorld(int worldSize, struct Cell board[][worldSize], int index, struct
         printf("%c", 205);
     }
     printf("%c\n", 187);
-    goToXY(105,3);
+    goToXY(105,11);
     for (int i = 0; i < worldSize; i++)
     {
         textcolor(7);
@@ -101,7 +101,7 @@ void printWorld(int worldSize, struct Cell board[][worldSize], int index, struct
         textcolor(7);
         printf("%c ", 186);
         printf("\n");
-        goToXY(105,4+i);
+        goToXY(105,12+i);
     }
     printf("%c", 200);
     for (int i = 0; i < (worldSize * 2) + 1; i++)
